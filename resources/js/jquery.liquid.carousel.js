@@ -86,6 +86,16 @@ var jqueryLiquidCarousel = function(options){
 			}
 		},
 		
+		setCurrentNumberNormalizing: function (moveNum) {
+			if (moveNum > $item.length - 1){
+				moveNum = 0;
+			}
+			if (moveNum < 0){
+				moveNum = $item.length - 1;
+			}
+			currentNumber = moveNum;
+		},
+		
 		//[currentNumber] * itemWidth分だけ$listを左にずらす
 		setMove: function () {
 			$list.animate({
@@ -100,32 +110,13 @@ var jqueryLiquidCarousel = function(options){
 			})
 		},
 		
-		//set Add CurrentNumber + 1
-		setAddCurrentNumber: function () {
-			if (currentNumber < $item.length - 1){
-				currentNumber = currentNumber + 1;
-			} else {
-				currentNumber = 0;
-			}
-		},
-		
-		//set Subtract CurrentNumber - 1
-		setSubtractCurrentNumber: function () {
-			if (currentNumber > 0){
-				currentNumber = currentNumber - 1;
-			} else {
-				currentNumber = $item.length - 1;
-			}
-		},
-		
 		//set Move Combo
-		setMoveCombo: function () {
+		setMoveCombo: function (moveNum) {
+			set.setCurrentNumberNormalizing(moveNum);
 			set.setCurrentClass();
 			set.setHighlightEffect();
 			set.setMove();
-		},
-		
-		
+		}
 	}
 	
 	
@@ -133,6 +124,7 @@ var jqueryLiquidCarousel = function(options){
 	run
 	-------------------------------------------*/
 	//onload
+	set.setCurrentNumberNormalizing(currentNumber);
 	set.setDefaultStyle();
 	set.setCurrentClass();
 	set.setHighlightEffect();
@@ -140,29 +132,25 @@ var jqueryLiquidCarousel = function(options){
 	//hover
 	$controlItem.on('click', function(e){
 		//何番目の要素かを取得しcurrentNumberへセット
-		currentNumber = $controlItem.index(this);
-		set.setMoveCombo();
+		set.setMoveCombo($controlItem.index(this));
 		e.preventDefault();
 	});
 	
 	//click
-	$prevNavi.on('click', function(){
-		set.setSubtractCurrentNumber();
-		set.setMoveCombo();
-		return false;
+	$prevNavi.on('click', function(e){
+		set.setMoveCombo(currentNumber - 1);
+		e.preventDefault();
 	});
 	
-	$nextNavi.on('click', function(){
-		set.setAddCurrentNumber();
-		set.setMoveCombo();
-		return false;
+	$nextNavi.on('click', function(e){
+		set.setMoveCombo(currentNumber + 1);
+		e.preventDefault();
 	});
 	
 	if (o.autoPlay) {
 		(function () {
 			var autoPlay = function(){
-				set.setAddCurrentNumber();
-				set.setMoveCombo();
+				set.setMoveCombo(currentNumber + 1);
 			};
 			var timer = setInterval(autoPlay, o.autoInterval);
 			
