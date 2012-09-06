@@ -53,9 +53,15 @@ a:active  {}
 	}
 	
 		.mod-topContents-visual-item {
-			padding: 10px;
 			float: left;
 			display: inline;
+			margin: 10px;
+			padding: 10px 0px 0px 0px;
+			border: 1px solid #999;
+			width: 40px;
+			height: 30px;
+			background-color: #eee;
+			text-align: center;
 		}
 		
 	.mod-topContents-button {

@@ -15,7 +15,9 @@ $(window).load(function(){
 	  , prevSelector: '.mod-topContents-prev'
 	  , nextSelector: '.mod-topContents-next'
 	  , loop: true
-	  , speed: 1000
+	  , speed: 500
+	  //, autoPlay: true
+	  //, autoInterval: 500
 	});
 });
 
@@ -56,50 +58,58 @@ var jqueryLiquidCarousel = function(options){
 	var $allItem  = $controlItem.add($item);
 	var $allItemAndNavi  = $allItem.add($prevNavi).add($nextNavi);
 	
+	//other variables
 	var clonePrependNum = (o.loop)? 1 : 0;//#todo
 	var cloneAppendNum = (o.loop)? 1 : 0;//#todo
 	
-	//other variables
 	var itemWidth = $item.outerWidth(true);
-	//var listWidth = $item.length * itemWidth;
-	var listWidth = (o.loop)? ($item.length + (clonePrependNum + cloneAppendNum )) * itemWidth : $item.length * itemWidth;
+	//var listWidth = (o.loop)? ($item.length + (clonePrependNum + cloneAppendNum )) * itemWidth : $item.length * itemWidth;
+	var listWidth = (function () {
+		if (o.loop) {
+			return ($item.length + (clonePrependNum + cloneAppendNum )) * itemWidth;
+		} else {
+			return $item.length * itemWidth;
+		}
+	})();
+	
 	var currentNumber = o.currentNumber - 1;
-	//var currentNumber = (o.loop)? o.currentNumber : o.currentNumber - 1;
+	var isMoving = false;
 	
 	/*-------------------------------------------
 	object > set 
 	-------------------------------------------*/
 	var set = {
-		//set default style
-		setDefaultStyle: function () {
+		//初期style
+		defaultStyle: function () {
 			$list.css({
 				width: listWidth + "px",
 				marginLeft: "-" + itemWidth * (currentNumber + clonePrependNum) + "px"
 			});
 		},
 		
-		//clone
-		setClone: function () {
+		//roop用のcloneを作成
+		makeClone: function () {
 			$list.prepend($item.clone()[$item.length - 1]);
 			$list.append($item.clone()[0]);
 		},
 		
 		//[currentNumber]番目の要素にcurrentClassをセット
-		setCurrentClass: function () {
+		addCurrentClass: function () {
 			$allItem.removeClass(o.currentClass);
 			$item.eq(currentNumber).addClass(o.currentClass);
 			$controlItem.eq(currentNumber).addClass(o.currentClass);
 		},
 		
 		//currentClass が付いた要素をハイライト
-		setHighlightEffect: function () {
+		highlightEffect: function () {
 			if (o.currentHighlight) {
 				$controlItem.animate({opacity: 0.4}, {duration: 300, queue: false})
 				$controlItem + $("." + o.currentClass).animate({opacity: 1}, {duration: 300, queue: false})
 			}
 		},
 		
-		setCurrentNumberNormalizing: function (moveNum) {
+		//currentNumberがアイテムの最大値より大きければ最小値を、最小値より小さければ最大値をセット。
+		currentNumberNormalizing: function (moveNum) {
 			if (o.loop) {
 				if (moveNum > $item.length){ moveNum = 0; }
 				if (moveNum < -1){ moveNum = $item.length - 1; }
@@ -110,26 +120,39 @@ var jqueryLiquidCarousel = function(options){
 			currentNumber = moveNum;
 		},
 		
+		//currentNumberNormalizing よりも最大値・最小値が1少ない値で最大値より大きければ最小値を、最小値より小さければ最大値をセットし位置をリセット。
+		roopReset: function () {
+			var moveNum = 0;
+			
+			if (currentNumber < 0) { currentNumber = $item.length - 1; }
+			if (currentNumber > $item.length - 1) { currentNumber = 0; }
+			$list.css('marginLeft', "-" + itemWidth * (currentNumber + clonePrependNum) + "px");
+			
+		},
+		
 		//[currentNumber] * itemWidth分だけ$listを左にずらす
-		setMove: function () {
+		move: function () {
+			isMoving = true;
 			$list.animate({
 				marginLeft: "-" + itemWidth * (currentNumber + clonePrependNum) + "px"
 			}, {
 				duration: o.speed,
 				easing: o.animation,
 				complete: function(){
-					console.log("asdf");
+					if (o.loop) { set.roopReset() }
+					isMoving = false;
 				},
 				queue: false
 			})
 		},
 		
-		//set Move Combo
-		setMoveCombo: function (moveNum) {
-			set.setCurrentNumberNormalizing(moveNum);
-			set.setCurrentClass();
-			set.setHighlightEffect();
-			set.setMove();
+		moveCombo: function (moveNum) {
+			if (!isMoving){
+				set.currentNumberNormalizing(moveNum);
+				set.addCurrentClass();
+				set.highlightEffect();
+				set.move();
+			}
 		}
 	}
 	
@@ -138,36 +161,35 @@ var jqueryLiquidCarousel = function(options){
 	run
 	-------------------------------------------*/
 	//onload
-	set.setCurrentNumberNormalizing(currentNumber);
+	set.currentNumberNormalizing(currentNumber);
 	if (o.loop) {
-		set.setClone();
+		set.makeClone();
 	}
-	set.setDefaultStyle();
-	set.setCurrentClass();
-	set.setHighlightEffect();
+	set.defaultStyle();
+	set.addCurrentClass();
+	set.highlightEffect();
 	
 	//hover
 	$controlItem.on('click', function(e){
-		//何番目の要素かを取得しcurrentNumberへセット
-		set.setMoveCombo($controlItem.index(this));
+		set.moveCombo($controlItem.index(this));
 		e.preventDefault();
 	});
 	
 	//click
 	$prevNavi.on('click', function(e){
-		set.setMoveCombo(currentNumber - 1);
+		set.moveCombo(currentNumber - 1);
 		e.preventDefault();
 	});
 	
 	$nextNavi.on('click', function(e){
-		set.setMoveCombo(currentNumber + 1);
+		set.moveCombo(currentNumber + 1);
 		e.preventDefault();
 	});
 	
 	if (o.autoPlay) {
 		(function () {
 			var autoPlay = function(){
-				set.setMoveCombo(currentNumber + 1);
+				set.moveCombo(currentNumber + 1);
 			};
 			var timer = setInterval(autoPlay, o.autoInterval);
 			
