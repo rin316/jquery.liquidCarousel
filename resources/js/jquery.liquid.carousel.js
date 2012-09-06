@@ -168,13 +168,12 @@ var jqueryLiquidCarousel = function(options){
 	set.addCurrentClass();
 	set.highlightEffect();
 	
-	//hover
+	//click
 	$controlItem.on('click', function(e){
 		set.moveCombo($controlItem.index(this));
 		e.preventDefault();
 	});
 	
-	//click
 	$prevNavi.on('click', function(e){
 		set.moveCombo(currentNumber - 1);
 		e.preventDefault();
