@@ -1,0 +1,113 @@
+@charset "utf-8";
+
+/*!
+ * base.css
+ *
+ * ページ・テンプレートとなる大枠部分、
+ * 背景・ヘッダー・フッター・大枠のカラム分けなどの設定ファイル。
+ */
+
+/**
+ * structure
+ *
+ * 基本的なエリア（枠組み）のカラム分けと背景を設定
+ */
+
+html, body {
+	/* メイン背景・文字色 */
+	background-color: #FFFFFF;
+	color: #333333;
+}
+
+body {
+}
+
+
+a {
+	color: #001F3F;
+	text-decoration: underline;
+}
+
+a:link    {}
+a:visited {}
+a:hover   { text-decoration: none; }
+a:active  {}
+
+
+.box {
+	margin: 0px auto 0px auto;
+	padding: 50px;
+	width: 1000px;
+	background-color: #fcc;
+}
+
+
+.mod-topContents {
+	width: 100%;
+}
+
+	.mod-topContents-visual-list {
+	}
+	.mod-topContents-visual-list:after {
+		content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
+	}
+	
+		.mod-topContents-visual-item {
+			margin: 10px;
+			float: left;
+			display: inline;
+		}
+		
+	.mod-topContents-button {
+	}
+	.mod-topContents-button:after {
+		content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
+	}
+		.mod-topContents-prev,
+		.mod-topContents-next {
+			display: inline;
+			float: left;
+			margin: 10px;
+		}
+			.mod-topContents-prev a,
+			.mod-topContents-next a {
+				display: block;
+				padding: 20px;
+				width: 100px;
+				background-color: #ccf;
+			}
+			
+		.mod-topContents-prev {
+		}
+			.mod-topContents-prev a {
+			}
+		
+		.mod-topContents-next {
+		}
+			.mod-topContents-next a {
+			}
+			
+	.mod-topContents-controller {
+	}
+		.mod-topContents-controller-list {
+		}
+		.mod-topContents-controller-list:after {
+			content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
+		}
+			.mod-topContents-controller-item {
+				float: left;
+				display: inline;
+				margin: 10px;
+			}
+				.mod-topContents-controller-item a {
+					display: block;
+					padding: 10px;
+					background-color: #cfc;
+				}
+
+
+
+
+
+
+

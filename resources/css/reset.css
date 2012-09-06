@@ -1,0 +1,198 @@
+@charset "utf-8";
+
+/*!
+ * 牧野工房 Reset CSS for HTML5
+ *
+ * Copyright (c) 2011 Skill Partners Inc. All Rights Reserved.
+ * 
+ * @version : 0
+ * @author  : http://www.makinokobo.com - kobo@makinokobo.com
+ * 
+ */
+
+
+/**
+ * Browser Style Reset
+ *
+ * ブラウザスタイルをリセットする。
+ * フォントサイズは body要素直下の div#documentを10pxにセットし、
+ * 移行の設定は相対でem指定する。
+ * これにより、IE6でもブラウザ機能の文字サイズ変更が可能。
+ */
+
+
+html, body {
+	background: #FFFFFF;
+	color: #000000;
+}
+
+body, div, span,
+h1, h2, h3, h4, h5, h6,
+dl, dt, dd, ul, ol, li, dfn,
+p, blockquote, pre, code, abbr, address, cite, del,
+strong, em, img, b, i, small,
+table, thead, tbody, tfoot, tr, th, td, caption,
+object, iframe, form, fieldset, legend, label {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font: 13px/1 "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "メイリオ", "Meiryo", "ＭＳ Ｐゴシック", sans-serif;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+* html body {font-size: small;}
+*:first-child+html body {font-size: small;}
+head~/* */body {font-size: small;}
+html:not(:target) body {font-size: 13px;}
+
+#document {font-size: 77%;} /* 10px */
+
+
+img {
+	border: none;
+	vertical-align: bottom;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	clear: both;
+	font-weight: bold;
+}
+
+
+strong, dt, dfn {
+	font-style: normal;
+	font-weight: bold;
+}
+
+em {
+	font-style: italic;
+	font-weight: normal;
+}
+
+address, caption, cite, code, th {
+	font-style: normal;
+	font-weight: normal;
+}
+
+sup { vertical-align: text-top;    font-size: 0.75em; line-height: 1; }
+sub { vertical-align: text-bottom; font-size: 0.75em; line-height: 1; }
+
+input,textarea,select {font-family: inherit; font-size: inherit; font-weight:inherit;}
+* html input,* html textarea,* html select {font-size: 100%;}
+*:first-child+html+input,*:first-child html+textarea,*:first-child+html select {font-size: 100%;}
+head~/* */body input, head~/* */body textarea, head~/* */body select {font-size: 100%;}
+html:not(:target) body input, html:not(:target) body textarea, html:not(:target) body select {font-size: inherit;}
+
+pre, code { font-family: monospace; }
+
+table {border-collapse: collapse; border-spacing: 0; font-size: inherit;}
+th,td {text-align: left; vertical-align: top;}
+caption {text-align: left;}
+
+ul, dl, ol {
+	text-indent: 0;
+}
+
+li {
+	list-style: none;
+	list-style-position: outside;
+}
+
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+audio, video {
+  margin: 0;
+  padding: 0;
+}
+
+input[type="radio"]    {}
+input[type="checkbox"] {}
+
+input[type="text"]     {}
+input[type="password"] {}
+input[type="email"]    {}
+input[type="tel"]      {}
+input[type="number"]   {}
+
+select   {}
+textarea {}
+
+
+
+/**
+ * Utillity Class
+ *
+ * !important設定により、どこでも使える微調整用のclass群。
+ * CSS設計時には使用せず、主に運用や修正フェーズで、
+ * 共通設定されたCSSを書き換えるより個別に設定したほうがよいと判断される場合に使用する。
+ *
+ * Prefix: ".imp-"
+ */
+
+.imp-fz-LLL { font-size:   2em !important; }
+.imp-fz-LL  { font-size: 1.8em !important; }
+.imp-fz-L   { font-size: 1.6em !important; }
+.imp-fz-M   { font-size: 1.4em !important; }
+.imp-fz-S   { font-size: 1.2em !important; }
+.imp-fz-SS  { font-size:   1em !important; }
+.imp-fz-SSS { font-size: 0.8em !important; }
+
+
+.imp-al-right  { text-align: right  !important;}
+.imp-al-center { text-align: center !important;}
+.imp-al-left   { text-align: left   !important;}
+
+.imp-va-top    { vertical-align: top    !important;}
+.imp-va-middle { vertical-align: middle !important;}
+.imp-va-bottom { vertical-align: bottom !important;}
+
+
+.imp-fw-bold   { font-weight: bold   !important;}
+.imp-fw-normal { font-weight: normal !important;}
+
+.imp-fs-italic { font-style: italic !important;}
+.imp-fs-none   { font-style: none   !important;}
+
+
+.imp-fl-left  { float: left  !important;}
+.imp-fl-right { float: right !important;}
+
+.imp-fl-imgLeft  { float: left  !important; margin-right: 10px !important;}
+.imp-fl-imgRight { float: right !important; margin-left:  10px !important;}
+
+.imp-clear { clear: both !important;}
+.imp-clearfix:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0; }
+
+
+.imp-w-auto   { width: auto !important;}
+.imp-w-100per { width: 100% !important;}
+
+
+.imp-tbl-fixed { table-layout: fixed !important;}
+
+
+.imp-whs-nowrap { white-space: nowrap !important;}
+.imp-whs-normal { white-space: normal !important;}
+
+
+.imp-bd-none  { border:        none !important;}
+.imp-bdt-none { border-top:    none !important;}
+.imp-bdl-none { border-left:   none !important;}
+.imp-bdr-none { border-right:  none !important;}
+.imp-bdb-none { border-bottom: none !important;}
+
+
+/*
+ * Release Notes:
+ *
+ * 2011-08-06 - oosugi@skillpartners.co.jp
+ *              初回作成
+ */

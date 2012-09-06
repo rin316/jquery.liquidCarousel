@@ -1,0 +1,17 @@
+@charset "utf-8";
+
+/*!
+ * Import CSS
+ *
+ * サイト共通で使うCSS全てを読み込む。
+ *
+ * [!] スタイル継承に不具合が起きる可能性があるので順番を入れ替えてはならない。
+ *
+ * reset.css: ブラウザリセット用
+ * base.css : ページ・テンプレート部分の設定ファイル
+ * parts.css: 共通パーツ群の設定ファイル
+ */
+
+
+@import "reset.css";
+@import "base.css";
