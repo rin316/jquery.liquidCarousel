@@ -63,7 +63,6 @@ var jqueryLiquidCarousel = function(options){
 	var cloneAppendNum = (o.loop)? 1 : 0;//#todo
 	
 	var itemWidth = $item.outerWidth(true);
-	//var listWidth = (o.loop)? ($item.length + (clonePrependNum + cloneAppendNum )) * itemWidth : $item.length * itemWidth;
 	var listWidth = (function () {
 		if (o.loop) {
 			return ($item.length + (clonePrependNum + cloneAppendNum )) * itemWidth;
