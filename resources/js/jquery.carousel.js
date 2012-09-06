@@ -14,8 +14,6 @@ $(window).load(function(){
 	  , controlItem: '.mod-topContents-controller-item'
 	  , prevSelector: '.mod-topContents-prev'
 	  , nextSelector: '.mod-topContents-next'
-	  , loop: true
-	  , speed: 1000
 	});
 });
 
@@ -36,7 +34,6 @@ var jqueryLiquidCarousel = function(options){
 		currentHighlight: false,
 		autoPlay: false,
 		autoInterval: 5000,
-		loop: false,
 		prevSelector: false,
 		nextSelector: false
 	};
@@ -56,15 +53,11 @@ var jqueryLiquidCarousel = function(options){
 	var $allItem  = $controlItem.add($item);
 	var $allItemAndNavi  = $allItem.add($prevNavi).add($nextNavi);
 	
-	var clonePrependNum = (o.loop)? 1 : 0;//#todo
-	var cloneAppendNum = (o.loop)? 1 : 0;//#todo
-	
 	//other variables
 	var itemWidth = $item.outerWidth(true);
-	//var listWidth = $item.length * itemWidth;
-	var listWidth = (o.loop)? ($item.length + (clonePrependNum + cloneAppendNum )) * itemWidth : $item.length * itemWidth;
+	var listWidth = $item.length * itemWidth;
 	var currentNumber = o.currentNumber - 1;
-	//var currentNumber = (o.loop)? o.currentNumber : o.currentNumber - 1;
+	
 	
 	/*-------------------------------------------
 	object > set 
@@ -74,14 +67,8 @@ var jqueryLiquidCarousel = function(options){
 		setDefaultStyle: function () {
 			$list.css({
 				width: listWidth + "px",
-				marginLeft: "-" + itemWidth * (currentNumber + clonePrependNum) + "px"
+				marginLeft: "-" + itemWidth * currentNumber + "px"
 			});
-		},
-		
-		//clone
-		setClone: function () {
-			$list.prepend($item.clone()[$item.length - 1]);
-			$list.append($item.clone()[0]);
 		},
 		
 		//[currentNumber]番目の要素にcurrentClassをセット
@@ -100,12 +87,11 @@ var jqueryLiquidCarousel = function(options){
 		},
 		
 		setCurrentNumberNormalizing: function (moveNum) {
-			if (o.loop) {
-				if (moveNum > $item.length){ moveNum = 0; }
-				if (moveNum < -1){ moveNum = $item.length - 1; }
-			} else {
-				if (moveNum > $item.length - 1){ moveNum = 0; }
-				if (moveNum < 0){ moveNum = $item.length - 1; }
+			if (moveNum > $item.length - 1){
+				moveNum = 0;
+			}
+			if (moveNum < 0){
+				moveNum = $item.length - 1;
 			}
 			currentNumber = moveNum;
 		},
@@ -113,12 +99,12 @@ var jqueryLiquidCarousel = function(options){
 		//[currentNumber] * itemWidth分だけ$listを左にずらす
 		setMove: function () {
 			$list.animate({
-				marginLeft: "-" + itemWidth * (currentNumber + clonePrependNum) + "px"
+				marginLeft: "-" + itemWidth * currentNumber + "px"
 			}, {
 				duration: o.speed,
 				easing: o.animation,
 				complete: function(){
-					console.log("asdf");
+					//after
 				},
 				queue: false
 			})
@@ -139,9 +125,6 @@ var jqueryLiquidCarousel = function(options){
 	-------------------------------------------*/
 	//onload
 	set.setCurrentNumberNormalizing(currentNumber);
-	if (o.loop) {
-		set.setClone();
-	}
 	set.setDefaultStyle();
 	set.setCurrentClass();
 	set.setHighlightEffect();

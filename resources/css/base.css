@@ -53,7 +53,7 @@ a:active  {}
 	}
 	
 		.mod-topContents-visual-item {
-			margin: 10px;
+			padding: 10px;
 			float: left;
 			display: inline;
 		}
