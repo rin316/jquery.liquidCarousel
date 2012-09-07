@@ -4,6 +4,22 @@
  */
 ;(function ($, window, undefined) {
 
+
+//debug
+var d = function (element) {
+	$('input').on('click', function (e) {
+		console.log(element);
+		
+		if (element instanceof jQuery) {
+			$('.box2 h1').html(element.clone());
+		} else {
+			$('.box2 h1').text(element);
+		}
+	});
+}
+
+
+//window load
 $(window).load(function(){
 	jqueryLiquidCarousel({
 		containerSelector: '.mod-topContents'
@@ -17,12 +33,15 @@ $(window).load(function(){
 	  , loop: true
 	  , speed: 300
       , currentHighlight: true
+      , currentNumber: 1
+	  
 	  //, autoPlay: true
-	  //, autoInterval: 500
+	  //, autoInterval: 1000
 	});
 });
 
 
+//jqueryLiquidCarousel
 var jqueryLiquidCarousel = function(options){
 	//default options
 	var defaults = {
@@ -59,28 +78,62 @@ var jqueryLiquidCarousel = function(options){
 	var $allItem  = $controlItem.add($item);
 	var $allItemAndNavi  = $allItem.add($prevNavi).add($nextNavi);
 	
-	//other variables
-	var clonePrependNum = (o.loop)? 1 : 0;//#todo
-	var cloneAppendNum = (o.loop)? 1 : 0;//#todo
-	
-	cloneAppendNum = 8;//#test
+	//other
+	var clonePrependNum = 0;//init
+	var cloneAppendNum = 0;//init
 	
 	var itemWidth = $item.outerWidth(true);
-	var listWidth = (function () {
-		if (o.loop) {
-			return ($item.length + (clonePrependNum + cloneAppendNum )) * itemWidth;
-		} else {
-			return $item.length * itemWidth;
-		}
-	})();
+	var listWidth = 0;//init
 	
 	var currentNumber = o.currentNumber - 1;
 	var isMoving = false;
+	
+	
 	
 	/*-------------------------------------------
 	object > set 
 	-------------------------------------------*/
 	var set = {
+		//setListWidth
+		setListWidth: function () {
+			listWidth = function () {
+				if (o.loop) {
+					return ($item.length + (clonePrependNum + cloneAppendNum )) * itemWidth;
+				} else {
+					return $item.length * itemWidth;
+				}
+			}
+		},
+		
+		//setCloneNum
+		setCloneNum: function () {
+			//test
+			var deficiencyWidth = $element.width() - (listWidth + parseFloat($list.css('margin-left')) );
+			d($element.width());
+			d(listWidth);
+			d(deficiencyWidth);
+			
+			
+			//clone num
+			clonePrependNum = 1;//#test
+			cloneAppendNum = 1;//#test
+		},
+		
+		//roop用のcloneを作成
+		makeClone: function () {
+			//prepend
+			for (i = 0, j = $item.length - 1; i < clonePrependNum; i++) {
+				$list.prepend($item.clone()[j]);
+				(j <= 0)? j = $item.length - 1 : j--;
+			}
+			
+			//append
+			for (i = 0, j = 0; i < cloneAppendNum; i++) {
+				$list.append($item.clone()[j]);
+				(j >= $item.length - 1)? j = 0 : j++;
+			}
+		},
+		
 		//初期style
 		defaultStyle: function () {
 			$list.css({
@@ -89,19 +142,11 @@ var jqueryLiquidCarousel = function(options){
 			});
 		},
 		
-		//roop用のcloneを作成
-		makeClone: function () {
-			$list.prepend($item.clone()[$item.length - 1]);
-			for (i = 0, j = 0; i < cloneAppendNum; i++) {
-				$list.append($item.clone()[j]);
-				(j >= 3)? j = 0 : j++;
-			}
-		},
-		
 		//[currentNumber]番目の要素にcurrentClassをセット
 		addCurrentClass: function () {
 			$allItem.removeClass(o.currentClass);
-			$item.eq(currentNumber).addClass(o.currentClass);
+			//$item.eq(currentNumber).addClass(o.currentClass);//#todo cloneされてからリフレッシュ必要
+			
 			$controlItem.eq(currentNumber).addClass(o.currentClass);
 		},
 		
@@ -145,9 +190,9 @@ var jqueryLiquidCarousel = function(options){
 				easing: o.animation,
 				complete: function(){
 					if (o.loop) { set.roopReset() }
+					set.addCurrentClass();
+					set.highlightEffect();
 					isMoving = false;
-                    set.addCurrentClass();
-                    set.highlightEffect();
 				},
 				queue: false
 			})
@@ -165,14 +210,19 @@ var jqueryLiquidCarousel = function(options){
 	/*-------------------------------------------
 	run
 	-------------------------------------------*/
-	//onload
+	set.setListWidth();
 	set.currentNumberNormalizing(currentNumber);
+	
 	if (o.loop) {
+		set.setCloneNum();
 		set.makeClone();
+		set.setListWidth();
 	}
+	
 	set.defaultStyle();
 	set.addCurrentClass();
 	set.highlightEffect();
+	
 	
 	//click
 	$controlItem.on('click', function(e){
@@ -208,7 +258,8 @@ var jqueryLiquidCarousel = function(options){
 			);
 		})();
 	}
-}
+	
+}//jqueryLiquidCarousel
 
 
 })(jQuery, this);

@@ -36,16 +36,15 @@ a:active  {}
 
 .box {
 	margin: 0px auto 0px auto;
-	padding: 50px;
+	padding: 10px;
 	width: 1000px;
 	background-color: #fcc;
 }
 
-
 .mod-topContents {
 	width: 100%;
 }
-
+	
 	.mod-topContents-visual-list {
 	}
 	.mod-topContents-visual-list:after {
