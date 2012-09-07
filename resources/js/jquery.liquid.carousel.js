@@ -96,27 +96,27 @@ var jqueryLiquidCarousel = function(options){
 	var set = {
 		//setListWidth
 		setListWidth: function () {
-			listWidth = function () {
-				if (o.loop) {
-					return ($item.length + (clonePrependNum + cloneAppendNum )) * itemWidth;
-				} else {
-					return $item.length * itemWidth;
-				}
+			if (o.loop) {
+				return ($item.length + (clonePrependNum + cloneAppendNum )) * itemWidth;
+			} else {
+				return $item.length * itemWidth;
 			}
 		},
 		
 		//setCloneNum
 		setCloneNum: function () {
 			//test
-			var deficiencyWidth = $element.width() - (listWidth + parseFloat($list.css('margin-left')) );
-			d($element.width());
-			d(listWidth);
-			d(deficiencyWidth);
+			//var deficiencyWidth = $element.width() - (listWidth + parseFloat($list.css('margin-left')) );
+			//var deficiencyWidth = $element.width() - listWidth;
+			var deficiencyWidth = $element.width();
+			var deficiencyItem = Math.ceil(deficiencyWidth / itemWidth);
 			
+			d(deficiencyWidth);
+			d(deficiencyItem);
 			
 			//clone num
-			clonePrependNum = 1;//#test
-			cloneAppendNum = 1;//#test
+			clonePrependNum = deficiencyItem;
+			cloneAppendNum = deficiencyItem;
 		},
 		
 		//roopópÇÃcloneÇçÏê¨
@@ -134,8 +134,8 @@ var jqueryLiquidCarousel = function(options){
 			}
 		},
 		
-		//èâä˙style
-		defaultStyle: function () {
+		//set $list style
+		listStyle: function () {
 			$list.css({
 				width: listWidth + "px",
 				marginLeft: "-" + itemWidth * (currentNumber + clonePrependNum) + "px"
@@ -210,16 +210,16 @@ var jqueryLiquidCarousel = function(options){
 	/*-------------------------------------------
 	run
 	-------------------------------------------*/
-	set.setListWidth();
+	listWidth = set.setListWidth();
 	set.currentNumberNormalizing(currentNumber);
 	
 	if (o.loop) {
 		set.setCloneNum();
 		set.makeClone();
-		set.setListWidth();
+		listWidth = set.setListWidth();
 	}
 	
-	set.defaultStyle();
+	set.listStyle();
 	set.addCurrentClass();
 	set.highlightEffect();
 	
