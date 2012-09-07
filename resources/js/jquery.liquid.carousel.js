@@ -15,7 +15,8 @@ $(window).load(function(){
 	  , prevSelector: '.mod-topContents-prev'
 	  , nextSelector: '.mod-topContents-next'
 	  , loop: true
-	  , speed: 500
+	  , speed: 300
+      , currentHighlight: true
 	  //, autoPlay: true
 	  //, autoInterval: 500
 	});
@@ -62,6 +63,8 @@ var jqueryLiquidCarousel = function(options){
 	var clonePrependNum = (o.loop)? 1 : 0;//#todo
 	var cloneAppendNum = (o.loop)? 1 : 0;//#todo
 	
+	cloneAppendNum = 8;//#test
+	
 	var itemWidth = $item.outerWidth(true);
 	var listWidth = (function () {
 		if (o.loop) {
@@ -89,7 +92,10 @@ var jqueryLiquidCarousel = function(options){
 		//roop用のcloneを作成
 		makeClone: function () {
 			$list.prepend($item.clone()[$item.length - 1]);
-			$list.append($item.clone()[0]);
+			for (i = 0, j = 0; i < cloneAppendNum; i++) {
+				$list.append($item.clone()[j]);
+				(j >= 3)? j = 0 : j++;
+			}
 		},
 		
 		//[currentNumber]番目の要素にcurrentClassをセット
@@ -102,8 +108,8 @@ var jqueryLiquidCarousel = function(options){
 		//currentClass が付いた要素をハイライト
 		highlightEffect: function () {
 			if (o.currentHighlight) {
-				$controlItem.animate({opacity: 0.4}, {duration: 300, queue: false})
-				$controlItem + $("." + o.currentClass).animate({opacity: 1}, {duration: 300, queue: false})
+				$controlItem.animate({opacity: 0.4}, {duration: 300, queue: false});
+				$controlItem + $("." + o.currentClass).animate({opacity: 1}, {duration: 300, queue: false});
 			}
 		},
 		
@@ -140,6 +146,8 @@ var jqueryLiquidCarousel = function(options){
 				complete: function(){
 					if (o.loop) { set.roopReset() }
 					isMoving = false;
+                    set.addCurrentClass();
+                    set.highlightEffect();
 				},
 				queue: false
 			})
@@ -148,8 +156,6 @@ var jqueryLiquidCarousel = function(options){
 		moveCombo: function (moveNum) {
 			if (!isMoving){
 				set.currentNumberNormalizing(moveNum);
-				set.addCurrentClass();
-				set.highlightEffect();
 				set.move();
 			}
 		}
