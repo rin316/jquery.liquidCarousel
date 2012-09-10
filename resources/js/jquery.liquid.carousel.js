@@ -15,7 +15,7 @@ $(window).load(function(){
 	  , controlItemSelector: '.mod-topContents-controller-item'
 	  , prevSelector: '.mod-topContents-prev'
 	  , nextSelector: '.mod-topContents-next'
-	  , x_position: 'right'
+	  , x_position: 'left'
 	  , loop: true
 	  , speed: 300
 	  , currentClass: 'mod-topContents-current'
@@ -111,6 +111,8 @@ Carousel.prototype = {
 		__this.setListStyle();
 		__this.addCurrentClass();
 		__this.highlightEffect();
+		
+		if (__this.o.autoPlay) { __this.autoPlay(); }
 		
 		
 		//click
@@ -218,13 +220,17 @@ Carousel.prototype = {
 
 		//prepend
 		for (i = 0, j = __this.$item.length - 1; i < __this.clonePrependNum; i++) {
-			__this.$list.prepend(__this.$item.clone().addClass(__this.o.cloneClass).removeClass(__this.o.currentClass)[j]);
+			__this.$list.prepend(
+				__this.$item.clone().addClass(__this.o.cloneClass).removeClass(__this.o.currentClass)[j]
+			);
 			(j <= 0)? j = __this.$item.length - 1 : j--;
 		}
 
 		//append
 		for (i = 0, j = 0; i < __this.cloneAppendNum; i++) {
-			__this.$list.append(__this.$item.clone().addClass(__this.o.cloneClass).removeClass(__this.o.currentClass)[j]);
+			__this.$list.append(
+				__this.$item.clone().addClass(__this.o.cloneClass).removeClass(__this.o.currentClass)[j]
+			);
 			(j >= __this.$item.length - 1)? j = 0 : j++;
 		}
 	},
@@ -323,22 +329,20 @@ Carousel.prototype = {
 	 */
 	autoPlay: function () {
 		var __this = this;
-		if (__this.o.autoPlay) {
-			var autoPlay = function(){
-				__this.moveCombo(__this.currentNumber + 1);
-			};
-			var timer = setInterval(autoPlay, __this.o.autoInterval);
+		var autoPlay = function(){
+			__this.moveCombo(__this.currentNumber + 1);
+		};
+		var timer = setInterval(autoPlay, __this.o.autoInterval);
 
-			//マウスオーバーされている間はautoPlayを停止。
-			__this.$allItemAndNavi.hover(
-				function(){
-					clearInterval(timer);
-				},
-				function() {
-					timer = setInterval(autoPlay, __this.o.autoInterval);
-				}
-			);
-		}
+		//マウスオーバーされている間はautoPlayを停止。
+		__this.$allItemAndNavi.hover(
+			function(){
+				clearInterval(timer);
+			},
+			function() {
+				timer = setInterval(autoPlay, __this.o.autoInterval);
+			}
+		);
 	}
 	
 };//Carousel.prototype
