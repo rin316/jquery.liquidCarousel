@@ -7,7 +7,7 @@
 
 //window load
 $(window).load(function(){
-	$('.mod-topContents').carousel({
+	$('.mod-topContents').liquidCarousel({
 		listSelector: '.mod-topContents-visual-list'
 	  , itemSelector: '.mod-topContents-visual-item'
 	  , controlSelector: '.mod-topContents-controller'
@@ -15,7 +15,7 @@ $(window).load(function(){
 	  , controlItemSelector: '.mod-topContents-controller-item'
 	  , prevSelector: '.mod-topContents-prev'
 	  , nextSelector: '.mod-topContents-next'
-	  , x_position: 'center'
+	  , x_position: 'right'
 	  , loop: true
 	  , speed: 300
 	  , currentClass: 'mod-topContents-current'
@@ -145,7 +145,7 @@ Carousel.prototype = {
 	 */
 	listWidth: function () {
 		var __this = this;
-		return __this.$item.length + (__this.clonePrependNum + __this.cloneAppendNum ) * __this.itemWidth;
+		return (__this.$item.length + __this.clonePrependNum + __this.cloneAppendNum ) * __this.itemWidth;
 	},
 
 	/**
@@ -344,14 +344,14 @@ Carousel.prototype = {
 };//Carousel.prototype
 
 /**
- * $.fn.carousel
+ * $.fn.liquidCarousel
  */
-$.fn.carousel = function (options) {
+$.fn.liquidCarousel = function (options) {
 	return this.each(function () {
 		var $this = $(this);
 		$this.data('carousel', new Carousel($this, options));
 	});
-};//$.fn.carousel
+};//$.fn.liquidCarousel
 
 
 
