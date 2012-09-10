@@ -34,7 +34,6 @@ $(window).load(function(){
 	  , speed: 300
       , currentHighlight: true
       , currentNumber: 1
-	  
 	  //, autoPlay: true
 	  //, autoInterval: 1000
 	});
@@ -94,13 +93,22 @@ var jqueryLiquidCarousel = function(options){
 	object > set 
 	-------------------------------------------*/
 	var set = {
-		//setListWidth
-		setListWidth: function () {
-			if (o.loop) {
-				return ($item.length + (clonePrependNum + cloneAppendNum )) * itemWidth;
-			} else {
-				return $item.length * itemWidth;
-			}
+		//return $list Width
+		listWidth: function () {
+			return ($item.length + (clonePrependNum + cloneAppendNum )) * itemWidth;
+		},
+		
+		//return $list marginLeft
+		listMarginLeft: function () {
+			return "-" + itemWidth * (currentNumber + clonePrependNum);
+		},
+		
+		//set $list style
+		setListStyle: function () {
+			$list.css({
+				width: set.listWidth() + "px",
+				marginLeft: set.listMarginLeft() + "px"
+			});
 		},
 		
 		//setCloneNum
@@ -108,11 +116,8 @@ var jqueryLiquidCarousel = function(options){
 			//test
 			//var deficiencyWidth = $element.width() - (listWidth + parseFloat($list.css('margin-left')) );
 			//var deficiencyWidth = $element.width() - listWidth;
-			var deficiencyWidth = $element.width();
-			var deficiencyItem = Math.ceil(deficiencyWidth / itemWidth);
-			
-			d(deficiencyWidth);
-			d(deficiencyItem);
+			//var deficiencyWidth = $element.width();
+			var deficiencyItem = Math.ceil($element.width() / itemWidth);
 			
 			//clone num
 			clonePrependNum = deficiencyItem;
@@ -121,6 +126,7 @@ var jqueryLiquidCarousel = function(options){
 		
 		//roop用のcloneを作成
 		makeClone: function () {
+			var i, j;
 			//prepend
 			for (i = 0, j = $item.length - 1; i < clonePrependNum; i++) {
 				$list.prepend($item.clone()[j]);
@@ -132,14 +138,6 @@ var jqueryLiquidCarousel = function(options){
 				$list.append($item.clone()[j]);
 				(j >= $item.length - 1)? j = 0 : j++;
 			}
-		},
-		
-		//set $list style
-		listStyle: function () {
-			$list.css({
-				width: listWidth + "px",
-				marginLeft: "-" + itemWidth * (currentNumber + clonePrependNum) + "px"
-			});
 		},
 		
 		//[currentNumber]番目の要素にcurrentClassをセット
@@ -158,68 +156,90 @@ var jqueryLiquidCarousel = function(options){
 			}
 		},
 		
-		//currentNumberがアイテムの最大値より大きければ最小値を、最小値より小さければ最大値をセット。
+		//move前に実行される。currentNumberがアイテムの最大値より大きければ最小値を、最小値より小さければ最大値をセット。
 		currentNumberNormalizing: function (moveNum) {
-			if (o.loop) {
-				if (moveNum > $item.length){ moveNum = 0; }
-				if (moveNum < -1){ moveNum = $item.length - 1; }
-			} else {
-				if (moveNum > $item.length - 1){ moveNum = 0; }
-				if (moveNum < 0){ moveNum = $item.length - 1; }
+			if (!isMoving){
+				if (o.loop) {
+					if (moveNum > $item.length){ moveNum = 0; }
+					if (moveNum < -1){ moveNum = $item.length - 1; }
+				} else {
+					if (moveNum > $item.length - 1){ moveNum = 0; }
+					if (moveNum < 0){ moveNum = $item.length - 1; }
+				}
+				currentNumber = moveNum;
 			}
-			currentNumber = moveNum;
 		},
 		
-		//currentNumberNormalizing よりも最大値・最小値が1少ない値で最大値より大きければ最小値を、最小値より小さければ最大値をセットし位置をリセット。
+		//move後に実行される。currentNumberNormalizing よりも最大値・最小値が1少ない値で最大値より大きければ最小値を、最小値より小さければ最大値をセットし位置をリセット。
 		roopReset: function () {
-			var moveNum = 0;
-			
-			if (currentNumber < 0) { currentNumber = $item.length - 1; }
-			if (currentNumber > $item.length - 1) { currentNumber = 0; }
-			$list.css('marginLeft', "-" + itemWidth * (currentNumber + clonePrependNum) + "px");
-			
+			if (currentNumber < 0 || currentNumber > $item.length - 1) {
+				if (currentNumber < 0) { currentNumber = $item.length - 1; }
+				if (currentNumber > $item.length - 1) { currentNumber = 0; }
+				set.setListStyle();
+			}
 		},
 		
 		//[currentNumber] * itemWidth分だけ$listを左にずらす
 		move: function () {
-			isMoving = true;
-			$list.animate({
-				marginLeft: "-" + itemWidth * (currentNumber + clonePrependNum) + "px"
-			}, {
-				duration: o.speed,
-				easing: o.animation,
-				complete: function(){
-					if (o.loop) { set.roopReset() }
-					set.addCurrentClass();
-					set.highlightEffect();
-					isMoving = false;
-				},
-				queue: false
-			})
+			if (!isMoving){
+				isMoving = true;
+				$list.animate({
+					marginLeft: set.listMarginLeft() + "px"
+				}, {
+					duration: o.speed,
+					easing: o.animation,
+					complete: function(){
+						if (o.loop) {
+							set.roopReset();
+						}
+						set.addCurrentClass();
+						set.highlightEffect();
+						isMoving = false;
+					},
+					queue: false
+				})
+			}
 		},
 		
 		moveCombo: function (moveNum) {
-			if (!isMoving){
-				set.currentNumberNormalizing(moveNum);
-				set.move();
+			set.currentNumberNormalizing(moveNum);
+			set.move();
+		},
+		
+		autoPlay: (function () {
+			if (o.autoPlay) {
+				var autoPlay = function(){
+					set.moveCombo(currentNumber + 1);
+				};
+				var timer = setInterval(autoPlay, o.autoInterval);
+
+				//マウスオーバーされている間はautoPlayを停止。
+				$allItemAndNavi.hover(
+					function(){
+						clearInterval(timer);
+					},
+					function() {
+						timer = setInterval(autoPlay, o.autoInterval);
+					}
+				);
 			}
-		}
+		})()
+		
+		
 	}
 	
 	
 	/*-------------------------------------------
 	run
 	-------------------------------------------*/
-	listWidth = set.setListWidth();
 	set.currentNumberNormalizing(currentNumber);
 	
 	if (o.loop) {
 		set.setCloneNum();
 		set.makeClone();
-		listWidth = set.setListWidth();
 	}
 	
-	set.listStyle();
+	set.setListStyle();
 	set.addCurrentClass();
 	set.highlightEffect();
 	
@@ -240,24 +260,8 @@ var jqueryLiquidCarousel = function(options){
 		e.preventDefault();
 	});
 	
-	if (o.autoPlay) {
-		(function () {
-			var autoPlay = function(){
-				set.moveCombo(currentNumber + 1);
-			};
-			var timer = setInterval(autoPlay, o.autoInterval);
-			
-			//マウスオーバーされている間はautoPlayを停止。
-			$allItemAndNavi.hover(
-				function(){
-					clearInterval(timer);
-				},
-				function() {
-					timer = setInterval(autoPlay, o.autoInterval);
-				}
-			);
-		})();
-	}
+	
+	
 	
 }//jqueryLiquidCarousel
 
