@@ -19,8 +19,8 @@ $(window).load(function(){
 	  , loop: true
 	  , speed: 300
 	  , currentClass: 'mod-topContents-current'
-      , currentHighlight: true
-      , currentNumber: 1
+	  , currentHighlight: true
+	  , currentNumber: 1
 	  //, autoPlay: true
 	  //, autoInterval: 1000
 	});
