@@ -236,29 +236,6 @@ Carousel.prototype = {
 	},
 
 	/**
-	 * addCurrentClass
-	 * [currentNumber]番目の要素にcurrentClassをセット
-	 */
-	addCurrentClass: function () {
-		var __this = this;
-		__this.$allItem.removeClass(__this.o.currentClass);
-		__this.$item.eq(__this.currentNumber).addClass(__this.o.currentClass);
-		__this.$controlItem.eq(__this.currentNumber).addClass(__this.o.currentClass);
-	},
-
-	/**
-	 * highlightEffect
-	 * currentClass が付いた要素をハイライト
-	 */
-	highlightEffect: function () {
-		var __this = this;
-		if (__this.o.currentHighlight) {
-			__this.$controlItem.animate({opacity: 0.4}, {duration: 300, queue: false});
-			__this.$controlItem + $("." + __this.o.currentClass).animate({opacity: 1}, {duration: 300, queue: false});
-		}
-	},
-
-	/**
 	 * currentNumberNormalizing
 	 * currentNumberが$itemの最大値より大きければ最小値にリセット、最小値より小さければ最大値にリセット
 	 */
@@ -317,6 +294,29 @@ Carousel.prototype = {
 		var __this = this;
 		__this.currentNumberNormalizing(moveNum);
 		__this.move();
+	},
+
+	/**
+	 * addCurrentClass
+	 * [currentNumber]番目の要素にcurrentClassをセット
+	 */
+	addCurrentClass: function () {
+		var __this = this;
+		__this.$allItem.removeClass(__this.o.currentClass);
+		__this.$item.eq(__this.currentNumber).addClass(__this.o.currentClass);
+		__this.$controlItem.eq(__this.currentNumber).addClass(__this.o.currentClass);
+	},
+
+	/**
+	 * highlightEffect
+	 * currentClass が付いた要素をハイライト
+	 */
+	highlightEffect: function () {
+		var __this = this;
+		if (__this.o.currentHighlight) {
+			__this.$controlItem.animate({opacity: 0.4}, {duration: 300, queue: false});
+			__this.$controlItem + $("." + __this.o.currentClass).animate({opacity: 1}, {duration: 300, queue: false});
+		}
 	},
 
 	/**
