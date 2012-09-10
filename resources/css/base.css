@@ -43,6 +43,7 @@ a:active  {}
 
 .mod-topContents {
 	width: 100%;
+	overflow: hidden;
 }
 	
 	.mod-topContents-visual-list {
@@ -61,6 +62,9 @@ a:active  {}
 			height: 30px;
 			background-color: #eee;
 			text-align: center;
+		}
+		.mod-topContents-visual-item.mod-topContents-current {
+			background-color: #fcc;
 		}
 		
 	.mod-topContents-button {

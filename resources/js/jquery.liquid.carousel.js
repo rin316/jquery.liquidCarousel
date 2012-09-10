@@ -30,6 +30,7 @@ $(window).load(function(){
 	  , controlItem: '.mod-topContents-controller-item'
 	  , prevSelector: '.mod-topContents-prev'
 	  , nextSelector: '.mod-topContents-next'
+	  , x_position: 'left'
 	  , loop: true
 	  , speed: 300
       , currentHighlight: true
@@ -51,9 +52,10 @@ var jqueryLiquidCarousel = function(options){
 		controlList: "ul",
 		controlItem: "li",
 		currentNumber: 1,
+		x_position: "left",
 		speed: 500,
 		animation: "swing",
-		currentClass: "carouselCurrent",
+		currentClass: "mod-topContents-current",
 		currentHighlight: false,
 		autoPlay: false,
 		autoInterval: 5000,
@@ -81,12 +83,16 @@ var jqueryLiquidCarousel = function(options){
 	var clonePrependNum = 0;//init
 	var cloneAppendNum = 0;//init
 	
+	var elementWidth = $element.outerWidth(true);
 	var itemWidth = $item.outerWidth(true);
 	var listWidth = 0;//init
+	var listMarginLeft = 0;//init
+	
+	var x_position = o.x_position;
+	var x_positionNum = 0;//init
 	
 	var currentNumber = o.currentNumber - 1;
 	var isMoving = false;
-	
 	
 	
 	/*-------------------------------------------
@@ -95,12 +101,37 @@ var jqueryLiquidCarousel = function(options){
 	var set = {
 		//return $list Width
 		listWidth: function () {
-			return ($item.length + (clonePrependNum + cloneAppendNum )) * itemWidth;
+			return listWidth = ($item.length + (clonePrependNum + cloneAppendNum )) * itemWidth;
 		},
 		
 		//return $list marginLeft
 		listMarginLeft: function () {
-			return "-" + itemWidth * (currentNumber + clonePrependNum);
+			return listMarginLeft = - ( (itemWidth * (currentNumber + clonePrependNum)) - set.listX_position() );
+		},
+		
+		//return $list x_position
+		listX_position: function () {
+			if (!isNaN(x_position)) {
+				return x_positionNum = x_position;
+			} else {
+				switch (x_position){
+					case 'left':
+						return x_positionNum = 0;
+						break;
+						
+					case 'center':
+						return x_positionNum = (elementWidth / 2) - (itemWidth / 2);
+						break;
+						
+					case 'right':
+						return x_positionNum = elementWidth - itemWidth;
+						break;
+						
+					default:
+						return x_positionNum = 0;
+						break;
+				}
+			}
 		},
 		
 		//set $list style
@@ -113,15 +144,8 @@ var jqueryLiquidCarousel = function(options){
 		
 		//setCloneNum
 		setCloneNum: function () {
-			//test
-			//var deficiencyWidth = $element.width() - (listWidth + parseFloat($list.css('margin-left')) );
-			//var deficiencyWidth = $element.width() - listWidth;
-			//var deficiencyWidth = $element.width();
-			var deficiencyItem = Math.ceil($element.width() / itemWidth);
-			
-			//clone num
-			clonePrependNum = deficiencyItem;
-			cloneAppendNum = deficiencyItem;
+			var deficiencyItem = Math.ceil(elementWidth / itemWidth);
+			clonePrependNum = cloneAppendNum = deficiencyItem;
 		},
 		
 		//roop用のcloneを作成
@@ -143,7 +167,7 @@ var jqueryLiquidCarousel = function(options){
 		//[currentNumber]番目の要素にcurrentClassをセット
 		addCurrentClass: function () {
 			$allItem.removeClass(o.currentClass);
-			//$item.eq(currentNumber).addClass(o.currentClass);//#todo cloneされてからリフレッシュ必要
+			$item.eq(currentNumber).addClass(o.currentClass);//#todo cloneされてからリフレッシュ必要?
 			
 			$controlItem.eq(currentNumber).addClass(o.currentClass);
 		},
@@ -259,9 +283,6 @@ var jqueryLiquidCarousel = function(options){
 		set.moveCombo(currentNumber + 1);
 		e.preventDefault();
 	});
-	
-	
-	
 	
 }//jqueryLiquidCarousel
 
