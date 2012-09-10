@@ -10,7 +10,7 @@
 /**
  * addJsOnClass
  */
-addJsOnClass = function () {
+var addJsOnClass = function () {
 	var ON_CLASS = 'js-on';
 	$('html').addClass(ON_CLASS);
 };
