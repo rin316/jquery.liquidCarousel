@@ -353,11 +353,4 @@ $.fn.liquidCarousel = function (options) {
 };//$.fn.liquidCarousel
 
 
-
-
-
-
-
-
-
 })(jQuery, this);
