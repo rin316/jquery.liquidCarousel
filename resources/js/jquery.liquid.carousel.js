@@ -57,6 +57,7 @@ var jqueryLiquidCarousel = function(options){
 		animation: "swing",
 		currentClass: "mod-topContents-current",
 		currentHighlight: false,
+		cloneClass: "mod-topContents-clone",
 		autoPlay: false,
 		autoInterval: 5000,
 		loop: false,
@@ -151,15 +152,18 @@ var jqueryLiquidCarousel = function(options){
 		//roop用のcloneを作成
 		makeClone: function () {
 			var i, j;
+			//既に作成された要素があれば削除
+			$(".mod-topContents-clone").remove();
+			
 			//prepend
 			for (i = 0, j = $item.length - 1; i < clonePrependNum; i++) {
-				$list.prepend($item.clone()[j]);
+				$list.prepend($item.clone().addClass(o.cloneClass)[j]);
 				(j <= 0)? j = $item.length - 1 : j--;
 			}
 			
 			//append
 			for (i = 0, j = 0; i < cloneAppendNum; i++) {
-				$list.append($item.clone()[j]);
+				$list.append($item.clone().addClass(o.cloneClass)[j]);
 				(j >= $item.length - 1)? j = 0 : j++;
 			}
 		},
@@ -167,8 +171,7 @@ var jqueryLiquidCarousel = function(options){
 		//[currentNumber]番目の要素にcurrentClassをセット
 		addCurrentClass: function () {
 			$allItem.removeClass(o.currentClass);
-			$item.eq(currentNumber).addClass(o.currentClass);//#todo cloneされてからリフレッシュ必要?
-			
+			$item.eq(currentNumber).addClass(o.currentClass);
 			$controlItem.eq(currentNumber).addClass(o.currentClass);
 		},
 		
@@ -194,12 +197,11 @@ var jqueryLiquidCarousel = function(options){
 			}
 		},
 		
-		//move後に実行される。currentNumberNormalizing よりも最大値・最小値が1少ない値で最大値より大きければ最小値を、最小値より小さければ最大値をセットし位置をリセット。
+		//move後に実行される。currentNumberNormalizing よりも最大値・最小値が1少ない値で最大値より大きければ最小値を、最小値より小さければ最大値をセット。
 		roopReset: function () {
 			if (currentNumber < 0 || currentNumber > $item.length - 1) {
 				if (currentNumber < 0) { currentNumber = $item.length - 1; }
 				if (currentNumber > $item.length - 1) { currentNumber = 0; }
-				set.setListStyle();
 			}
 		},
 		
@@ -215,6 +217,7 @@ var jqueryLiquidCarousel = function(options){
 					complete: function(){
 						if (o.loop) {
 							set.roopReset();
+							set.setListStyle();
 						}
 						set.addCurrentClass();
 						set.highlightEffect();
@@ -282,6 +285,15 @@ var jqueryLiquidCarousel = function(options){
 	$nextNavi.on('click', function(e){
 		set.moveCombo(currentNumber + 1);
 		e.preventDefault();
+	});
+	
+	
+	//resize
+	$(window).on('resize', function () {
+		elementWidth = $element.outerWidth(true);
+		set.setCloneNum();
+		set.makeClone();
+		set.setListStyle();
 	});
 	
 }//jqueryLiquidCarousel
