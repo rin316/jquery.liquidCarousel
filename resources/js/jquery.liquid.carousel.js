@@ -145,8 +145,7 @@ var jqueryLiquidCarousel = function(options){
 		
 		//setCloneNum
 		setCloneNum: function () {
-			var deficiencyItem = Math.ceil(elementWidth / itemWidth);
-			clonePrependNum = cloneAppendNum = deficiencyItem;
+			clonePrependNum = cloneAppendNum = Math.ceil(elementWidth / itemWidth);
 		},
 		
 		//roop—p‚Ìclone‚ğì¬
