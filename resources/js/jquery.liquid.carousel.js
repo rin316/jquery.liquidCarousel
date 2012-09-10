@@ -30,7 +30,7 @@ $(window).load(function(){
 	  , controlItem: '.mod-topContents-controller-item'
 	  , prevSelector: '.mod-topContents-prev'
 	  , nextSelector: '.mod-topContents-next'
-	  , x_position: 'left'
+	  , x_position: 'center'
 	  , loop: true
 	  , speed: 300
       , currentHighlight: true
@@ -157,13 +157,13 @@ var jqueryLiquidCarousel = function(options){
 			
 			//prepend
 			for (i = 0, j = $item.length - 1; i < clonePrependNum; i++) {
-				$list.prepend($item.clone().addClass(o.cloneClass)[j]);
+				$list.prepend($item.clone().addClass(o.cloneClass).removeClass(o.currentClass)[j]);
 				(j <= 0)? j = $item.length - 1 : j--;
 			}
 			
 			//append
 			for (i = 0, j = 0; i < cloneAppendNum; i++) {
-				$list.append($item.clone().addClass(o.cloneClass)[j]);
+				$list.append($item.clone().addClass(o.cloneClass).removeClass(o.currentClass)[j]);
 				(j >= $item.length - 1)? j = 0 : j++;
 			}
 		},
