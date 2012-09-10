@@ -86,7 +86,7 @@ Carousel = function ($element, options) {
 	
 	this.init();
 	
-	return this;//#todo 必要？
+	return this;
 };//Carousel
 
 
@@ -141,7 +141,7 @@ Carousel.prototype = {
 	
 	/**
 	 * listWidth
-	 * return $list Width
+	 * $listにセットするwidthを返す
 	 */
 	listWidth: function () {
 		var __this = this;
@@ -150,7 +150,7 @@ Carousel.prototype = {
 
 	/**
 	 * listMarginLeft
-	 * return $list marginLeft
+	 * $listにセットするmarginLeftを返す
 	 */
 	listMarginLeft: function () {
 		var __this = this;
@@ -159,7 +159,8 @@ Carousel.prototype = {
 
 	/**
 	 * listX_position
-	 * return $list x_position
+	 * カレントの初期位置
+	 * __this.listMarginLeftで使用
 	 */
 	listX_position: function () {
 		var __this = this;
@@ -188,7 +189,6 @@ Carousel.prototype = {
 
 	/**
 	 * set $list style
-	 * setListStyle
 	 */
 	setListStyle: function () {
 		var __this = this;
@@ -200,6 +200,7 @@ Carousel.prototype = {
 
 	/**
 	 * setCloneNum
+	 * __this.makeCloneで使用する、要素作成数をセット
 	 */
 	setCloneNum: function () {
 		var __this = this;
@@ -213,7 +214,7 @@ Carousel.prototype = {
 	makeClone: function () {
 		var __this = this, i, j;
 		//既に作成された要素があれば削除
-		__this.$list.find($(".mod-topContents-clone")).remove();//#toto classをoに変更
+		__this.$list.find($('.' + __this.o.cloneClass)).remove();
 
 		//prepend
 		for (i = 0, j = __this.$item.length - 1; i < __this.clonePrependNum; i++) {
