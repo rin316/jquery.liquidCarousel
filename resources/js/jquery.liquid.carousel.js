@@ -5,20 +5,6 @@
 ;(function ($, window, undefined) {
 
 
-//debug
-var d = function (element) {
-	$('input').on('click', function (e) {
-		console.log(element);
-		
-		if (element instanceof jQuery) {
-			$('.box2 h1').html(element.clone());
-		} else {
-			$('.box2 h1').text(element);
-		}
-	});
-}
-
-
 //window load
 $(window).load(function(){
 	jqueryLiquidCarousel({
