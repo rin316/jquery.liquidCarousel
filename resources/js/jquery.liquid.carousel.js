@@ -5,6 +5,30 @@
 ;(function ($, window, undefined) {
 
 
+//window load
+$(window).load(function(){
+	$('.mod-topContents').carousel({
+		listSelector: '.mod-topContents-visual-list'
+	  , itemSelector: '.mod-topContents-visual-item'
+	  , controlSelector: '.mod-topContents-controller'
+	  , controlListSelector: '.mod-topContents-controller-list'
+	  , controlItemSelector: '.mod-topContents-controller-item'
+	  , prevSelector: '.mod-topContents-prev'
+	  , nextSelector: '.mod-topContents-next'
+	  , x_position: 'center'
+	  , loop: true
+	  , speed: 300
+	  , currentClass: 'mod-topContents-current'
+      , currentHighlight: true
+      , currentNumber: 1
+	  //, autoPlay: true
+	  //, autoInterval: 1000
+	});
+});
+
+
+
+
 var Carousel
 	, DEFAULT_OPTIONS
 	;
@@ -13,18 +37,18 @@ var Carousel
  * DEFAULT_OPTIONS
  */
 DEFAULT_OPTIONS = {
-	itemListSelector: "ul",
-	itemSelector: "li",
-	controlSelector: ".controlArea",
-	controlList: "ul",
-	controlItem: "li",
+	listSelector: ".carousel-item",
+	itemSelector: ".carousel-list",
+	controlSelector: ".carousel-control",
+	controlListSelector: "carousel--control-list",
+	controlItemSelector: "carousel--control-item",
 	currentNumber: 1,
 	x_position: "left",
 	speed: 500,
 	animation: "swing",
-	currentClass: "mod-topContents-current",
+	currentClass: "carousel-current",
 	currentHighlight: false,
-	cloneClass: "mod-topContents-clone",
+	cloneClass: "carousel-clone",
 	autoPlay: false,
 	autoInterval: 5000,
 	loop: false,
@@ -40,11 +64,11 @@ Carousel = function ($element, options) {
 	this.o = $.extend({}, DEFAULT_OPTIONS, options);
 	
 	this.$element =         $element;
-	this.$list =            this.$element.find($(this.o.itemListSelector));
+	this.$list =            this.$element.find($(this.o.listSelector));
 	this.$item =            this.$element.find($(this.o.itemSelector));
 	this.$control =         this.$element.find($(this.o.controlSelector));
-	this.$controlList =     this.$element.find($(this.o.controlList));
-	this.$controlItem =     this.$element.find($(this.o.controlItem));
+	this.$controlList =     this.$element.find($(this.o.controlListSelector));
+	this.$controlItem =     this.$element.find($(this.o.controlItemSelector));
 	this.$prevNavi =        this.$element.find($(this.o.prevSelector));
 	this.$nextNavi =        this.$element.find($(this.o.nextSelector));
 	this.$allItems =        this.$controlList.add(this.$list);
@@ -54,7 +78,6 @@ Carousel = function ($element, options) {
 	this.elementWidth = this.$element.outerWidth(true);
 	this.itemWidth = this.$item.outerWidth(true);
 	this.x_position = this.o.x_position;
-	this.x_positionNum = 0;//init
 	
 	this.clonePrependNum = 0;//init
 	this.cloneAppendNum = 0;//init
@@ -141,23 +164,23 @@ Carousel.prototype = {
 	listX_position: function () {
 		var __this = this;
 		if (!isNaN(__this.x_position)) {
-			return __this.x_positionNum = __this.x_position;
+			return __this.x_position;
 		} else {
 			switch (__this.x_position){
 				case 'left':
-					return __this.x_positionNum = 0;
+					return 0;
 					break;
 
 				case 'center':
-					return __this.x_positionNum = (__this.elementWidth / 2) - (__this.itemWidth / 2);
+					return (__this.elementWidth / 2) - (__this.itemWidth / 2);
 					break;
 
 				case 'right':
-					return __this.x_positionNum = __this.elementWidth - __this.itemWidth;
+					return __this.elementWidth - __this.itemWidth;
 					break;
 
 				default:
-					return __this.x_positionNum = 0;
+					return 0;
 					break;
 			}
 		}
@@ -332,27 +355,6 @@ $.fn.carousel = function (options) {
 
 
 
-
-
-//window load
-$(window).load(function(){
-	$('.mod-topContents').carousel({
-		itemListSelector: '.mod-topContents-visual-list'
-	  , itemSelector: '.mod-topContents-visual-item'
-	  , controlSelector: '.mod-topContents-controller'
-	  , controlList: '.mod-topContents-controller-list'
-	  , controlItem: '.mod-topContents-controller-item'
-	  , prevSelector: '.mod-topContents-prev'
-	  , nextSelector: '.mod-topContents-next'
-	  , x_position: 'center'
-	  , loop: true
-	  , speed: 300
-      , currentHighlight: true
-      , currentNumber: 1
-	  //, autoPlay: true
-	  //, autoInterval: 1000
-	});
-});
 
 
 
