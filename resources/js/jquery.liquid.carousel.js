@@ -284,4 +284,50 @@ var jqueryLiquidCarousel = function(options){
 }//jqueryLiquidCarousel
 
 
+
+
+
+
+var Carousel
+		, DEFAULT_OPTIONS
+		;
+
+/**
+	* Carousel
+	*/
+Carousel = function ($element, options) {
+	this.options = $.extend({}, DEFAULT_OPTIONS, options);
+	this.$element = $element;
+	this.init();
+};//Carousel
+
+
+/**
+	* Carousel.prototype
+	*/
+Carousel.prototype = {
+
+	/**
+		* init
+		*/
+	init: function () {
+	}
+
+};//Carousel.prototype
+
+/**
+	* $.fn.carousel
+	*/
+$.fn.carousel = function (options) {
+	return this.each(function () {
+		var $this = $(this);
+		$this.data('carousel', new Carousel($this, options));
+	});
+};//$.fn.carousel
+
+
+
+
+
 })(jQuery, this);
+
