@@ -190,7 +190,7 @@ Carousel.prototype = {
 	},
 
 	/**
-	 * set $list style
+	 * set $list width, marginLeft
 	 */
 	setListStyle: function () {
 		var __this = this;
@@ -202,7 +202,7 @@ Carousel.prototype = {
 
 	/**
 	 * setCloneNum
-	 * __this.makeCloneで使用する、要素作成数をセット
+	 * __this.makeCloneで使用する、作成要素数をセット
 	 */
 	setCloneNum: function () {
 		var __this = this;
@@ -211,7 +211,7 @@ Carousel.prototype = {
 
 	/**
 	 * makeClone
-	 * roop用のcloneを作成
+	 * roop用のcloneを左右に作成
 	 */
 	makeClone: function () {
 		var __this = this, i, j;
@@ -260,31 +260,26 @@ Carousel.prototype = {
 
 	/**
 	 * currentNumberNormalizing
-	 * move前に実行される。currentNumberがアイテムの最大値より大きければ最小値を、最小値より小さければ最大値をセット。
+	 * currentNumberが$itemの最大値より大きければ最小値にリセット、最小値より小さければ最大値にリセット
 	 */
-	currentNumberNormalizing: function (moveNum) {
+	currentNumberNormalizing: function (moveNum, moved) {
 		var __this = this;
 		if (!__this.isMoving){
 			if (__this.o.loop) {
-				if (moveNum > __this.$item.length){ moveNum = 0; }
-				if (moveNum < -1){ moveNum = __this.$item.length - 1; }
+				//move後
+				if (moved == 'moved') {
+					if (moveNum < 0                      ){ moveNum = __this.$item.length - 1; }
+					if (moveNum > __this.$item.length - 1){ moveNum = 0; }
+				//move前
+				} else {
+					if (moveNum < -1                     ){ moveNum = __this.$item.length - 1; }
+					if (moveNum > __this.$item.length    ){ moveNum = 0; }
+				}
 			} else {
-				if (moveNum > __this.$item.length - 1){ moveNum = 0; }
-				if (moveNum < 0){ moveNum = __this.$item.length - 1; }
+				if (    moveNum < 0                      ){ moveNum = __this.$item.length - 1; }
+				if (    moveNum > __this.$item.length - 1){ moveNum = 0; }
 			}
 			__this.currentNumber = moveNum;
-		}
-	},
-	
-	/**
-	 * roopReset
-	 * move後に実行される。currentNumberNormalizing よりも最大値・最小値が1少ない値で最大値より大きければ最小値を、最小値より小さければ最大値をセット。
-	 */
-	roopReset: function () {
-		var __this = this;
-		if (__this.currentNumber < 0 || __this.currentNumber > __this.$item.length - 1) {
-			if (__this.currentNumber < 0) { __this.currentNumber = __this.$item.length - 1; }
-			if (__this.currentNumber > __this.$item.length - 1) { __this.currentNumber = 0; }
 		}
 	},
 
@@ -302,13 +297,13 @@ Carousel.prototype = {
 				duration: __this.o.speed,
 				easing: __this.o.animation,
 				complete: function(){
+					__this.isMoving = false;
 					if (__this.o.loop) {
-						__this.roopReset();
+						__this.currentNumberNormalizing(__this.currentNumber, 'moved');
 						__this.setListStyle();
 					}
 					__this.addCurrentClass();
 					__this.highlightEffect();
-					__this.isMoving = false;
 				},
 				queue: false
 			})
