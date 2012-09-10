@@ -117,17 +117,17 @@ Carousel.prototype = {
 		
 		//click
 		__this.$controlItem.on('click', function(e){
-			__this.moveCombo(__this.$controlItem.index(this));
+			__this.moveBind(__this.$controlItem.index(this));
 			e.preventDefault();
 		});
 
 		__this.$prevNavi.on('click', function(e){
-			__this.moveCombo(__this.currentNumber - 1);
+			__this.moveBind(__this.currentNumber - 1);
 			e.preventDefault();
 		});
 
 		__this.$nextNavi.on('click', function(e){
-			__this.moveCombo(__this.currentNumber + 1);
+			__this.moveBind(__this.currentNumber + 1);
 			e.preventDefault();
 		});
 		
@@ -288,9 +288,9 @@ Carousel.prototype = {
 	},
 	
 	/**
-	 * moveCombo
+	 * moveBind
 	 */
-	moveCombo: function (moveNum) {
+	moveBind: function (moveNum) {
 		var __this = this;
 		__this.currentNumberNormalizing(moveNum);
 		__this.move();
@@ -325,7 +325,7 @@ Carousel.prototype = {
 	autoPlay: function () {
 		var __this = this;
 		var autoPlay = function(){
-			__this.moveCombo(__this.currentNumber + 1);
+			__this.moveBind(__this.currentNumber + 1);
 		};
 		var timer = setInterval(autoPlay, __this.o.autoInterval);
 
