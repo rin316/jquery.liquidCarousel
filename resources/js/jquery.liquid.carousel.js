@@ -153,7 +153,7 @@ var jqueryLiquidCarousel = function(options){
 		makeClone: function () {
 			var i, j;
 			//Šù‚Éì¬‚³‚ê‚½—v‘f‚ª‚ ‚ê‚Îíœ
-			$(".mod-topContents-clone").remove();
+			$list.find($(".mod-topContents-clone")).remove();
 			
 			//prepend
 			for (i = 0, j = $item.length - 1; i < clonePrependNum; i++) {
