@@ -55,8 +55,8 @@ Carousel = function ($element, options) {
 	this.itemWidth = this.$item.outerWidth(true);
 	this.x_position = this.o.x_position;
 	
-	this.clonePrependNum = 0;//init
-	this.cloneAppendNum = 0;//init
+	this.clonePrependNum = 0;
+	this.cloneAppendNum = 0;
 	this.currentNumber = this.o.currentNumber - 1;
 	this.isMoving = false;
 	
