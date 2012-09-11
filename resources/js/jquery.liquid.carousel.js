@@ -15,7 +15,6 @@ var Carousel
 DEFAULT_OPTIONS = {
 	listSelector: ".carousel-item",
 	itemSelector: ".carousel-list",
-	controlSelector: ".carousel-control",
 	controlListSelector: "carousel--control-list",
 	controlItemSelector: "carousel--control-item",
 	currentNumber: 1,
@@ -42,14 +41,13 @@ Carousel = function ($element, options) {
 	this.$element =         $element;
 	this.$list =            this.$element.find($(this.o.listSelector));
 	this.$item =            this.$element.find($(this.o.itemSelector));
-	this.$control =         this.$element.find($(this.o.controlSelector));
 	this.$controlList =     this.$element.find($(this.o.controlListSelector));
 	this.$controlItem =     this.$element.find($(this.o.controlItemSelector));
 	this.$prevNavi =        this.$element.find($(this.o.prevSelector));
 	this.$nextNavi =        this.$element.find($(this.o.nextSelector));
 	this.$allItems =        this.$controlList.add(this.$list);
 	this.$allItem  =        this.$controlItem.add(this.$item);
-	this.$allItemAndNavi  = this.$allItem.add(this.$prevNavi).add(this.$nextNavi);
+	this.$allItemsAndNavi = this.$allItems.add(this.$prevNavi).add(this.$nextNavi);
 	
 	this.elementWidth = this.$element.outerWidth(true);
 	this.itemWidth = this.$item.outerWidth(true);
@@ -166,6 +164,7 @@ Carousel.prototype = {
 	},
 
 	/**
+	 * setListStyle
 	 * set $list width, marginLeft
 	 */
 	setListStyle: function () {
@@ -217,7 +216,7 @@ Carousel.prototype = {
 	 */
 	currentNumberNormalizing: function (moveNum, moved) {
 		var __this = this;
-		if (!__this.isMoving){
+		if (!__this.isMoving) {
 			if (__this.o.loop) {
 				//move後
 				if (moved == 'moved') {
@@ -235,14 +234,14 @@ Carousel.prototype = {
 			__this.currentNumber = moveNum;
 		}
 	},
-
+	
 	/**
 	 * move
-	 * [currentNumber] * itemWidth分だけ$listを左にずらす
+	 * [currentNumber] * itemWidth分だけ$listをずらす
 	 */
 	move: function () {
 		var __this = this;
-		if (!__this.isMoving){
+		if (!__this.isMoving) {
 			__this.isMoving = true;
 			__this.$list.animate({
 				marginLeft: __this.listMarginLeft() + "px"
@@ -306,7 +305,7 @@ Carousel.prototype = {
 		var timer = setInterval(autoPlay, __this.o.autoInterval);
 
 		//マウスオーバーされている間はautoPlayを停止。
-		__this.$allItemAndNavi.hover(
+		__this.$allItemsAndNavi.hover(
 			function(){
 				clearInterval(timer);
 			},
