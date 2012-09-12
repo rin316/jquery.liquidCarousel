@@ -1,6 +1,12 @@
 /*!
  * jquery.liquid.carousel.js
- * @requires jquery.js
+ *
+ * Copyright (c) 2012 Skill Partners Inc. All Rights Reserved.
+ *
+ * @varsion: 1.0.1
+ * @require: jquery.js, jquery.effects.core.js
+ * @create : 2012-09-11 [hayashi@skillpartners.co.jp]
+ * @modify : 2012-09-12 [hayashi@skillpartners.co.jp] - autoPlayStartDelay ãŒ40ä»¥ä¸‹ã ã£ãŸå ´åˆã€40ã«ãªã‚‹ã‚ˆã†å¤‰æ›´
  */
 ;(function ($, window, undefined) {
 
@@ -13,19 +19,22 @@ var Carousel
  * DEFAULT_OPTIONS
  */
 DEFAULT_OPTIONS = {
-	listSelector: ".carousel-item",
-	itemSelector: ".carousel-list",
-	controlListSelector: "carousel--control-list",
-	controlItemSelector: "carousel--control-item",
-	currentNumber: 1,
-	x_position: "left",
+	listSelector: '.carousel-item',
+	itemSelector: '.carousel-list',
+	controlListSelector: 'carousel-control-list',
+	controlItemSelector: 'carousel-control-item',
+	x_position: 'left',
+	x_position_fix: 0,
+	animation: 'swing',
 	speed: 500,
-	animation: "swing",
-	currentClass: "carousel-current",
-	currentHighlight: false,
-	cloneClass: "carousel-clone",
 	autoPlay: false,
-	autoInterval: 5000,
+	autoPlayInterval: 5000,
+	autoPlayStartDelay: 0,
+	autoPlayHoverStop: false,
+	cloneClass: 'carousel-clone',
+	currentClass: 'carousel-current',
+	currentHighlight: false,
+	currentNumber: 1,
 	loop: false,
 	prevSelector: false,
 	nextSelector: false
@@ -52,6 +61,7 @@ Carousel = function ($element, options) {
 	this.elementWidth = this.$element.outerWidth(true);
 	this.itemWidth = this.$item.outerWidth(true);
 	this.x_position = this.o.x_position;
+	this.x_position_fix = this.o.x_position_fix;
 	
 	this.clonePrependNum = 0;
 	this.cloneAppendNum = 0;
@@ -108,16 +118,31 @@ Carousel.prototype = {
 		
 		//resize
 		$(window).on('resize', function () {
-			__this.elementWidth = __this.$element.outerWidth(true);
-			__this.setCloneNum();
-			__this.makeClone();
-			__this.setListStyle();
+			var _timer = null
+			  , _INTERVAL = 250
+			  ;
+			
+			if (_timer) {
+				clearTimeout(_timer);
+				_timer = null;
+			}
+			
+			_timer = setTimeout(function () {
+				__this.elementWidth = __this.$element.outerWidth(true);
+				if (__this.o.loop) {
+					__this.setCloneNum();
+					__this.makeClone();
+				}
+				__this.setListStyle();
+				
+				_timer = null;
+			}, _INTERVAL);
 		});
 	},
 	
 	/**
 	 * listWidth
-	 * $list‚ÉƒZƒbƒg‚·‚éwidth‚ğ•Ô‚·
+	 * $listã«ã‚»ãƒƒãƒˆã™ã‚‹widthã‚’è¿”ã™
 	 */
 	listWidth: function () {
 		var __this = this;
@@ -126,7 +151,7 @@ Carousel.prototype = {
 
 	/**
 	 * listMarginLeft
-	 * $list‚ÉƒZƒbƒg‚·‚émarginLeft‚ğ•Ô‚·
+	 * $listã«ã‚»ãƒƒãƒˆã™ã‚‹marginLeftã‚’è¿”ã™
 	 */
 	listMarginLeft: function () {
 		var __this = this;
@@ -135,25 +160,29 @@ Carousel.prototype = {
 
 	/**
 	 * listX_position
-	 * ƒJƒŒƒ“ƒg‚Ì‰ŠúˆÊ’u
-	 * __this.listMarginLeft‚Åg—p
+	 * ã‚«ãƒ¬ãƒ³ãƒˆã®åˆæœŸä½ç½®
+	 * __this.listMarginLeftã§ä½¿ç”¨
 	 */
 	listX_position: function () {
 		var __this = this;
+		//numberã§ã‚ã‚Œã°numberã‚’ãã®ã¾ã¾è¿”ã™
 		if (!isNaN(__this.x_position)) {
-			return __this.x_position;
+			return __this.x_position + __this.x_position_fix;
+		//functionã§ã‚ã‚Œã°å®Ÿè¡Œã—ãŸå€¤ã‚’è¿”ã™
+		} else if ($.isFunction(__this.x_position)) {
+			return __this.x_position() + __this.x_position_fix;
 		} else {
 			switch (__this.x_position){
 				case 'left':
-					return 0;
+					return 0 + __this.x_position_fix;
 					break;
 
 				case 'center':
-					return (__this.elementWidth / 2) - (__this.itemWidth / 2);
+					return (__this.elementWidth / 2) - (__this.itemWidth / 2) + __this.x_position_fix;
 					break;
 
 				case 'right':
-					return __this.elementWidth - __this.itemWidth;
+					return (__this.elementWidth - __this.itemWidth) + __this.x_position_fix;
 					break;
 
 				default:
@@ -170,14 +199,14 @@ Carousel.prototype = {
 	setListStyle: function () {
 		var __this = this;
 		__this.$list.css({
-			width: __this.listWidth() + "px",
-			marginLeft: __this.listMarginLeft() + "px"
+			width: __this.listWidth() + 'px',
+			marginLeft: __this.listMarginLeft() + 'px'
 		});
 	},
 
 	/**
 	 * setCloneNum
-	 * __this.makeClone‚Åg—p‚·‚éAì¬—v‘f”‚ğƒZƒbƒg
+	 * __this.makeCloneã§ä½¿ç”¨ã™ã‚‹ã€ä½œæˆè¦ç´ æ•°ã‚’ã‚»ãƒƒãƒˆ
 	 */
 	setCloneNum: function () {
 		var __this = this;
@@ -186,11 +215,11 @@ Carousel.prototype = {
 
 	/**
 	 * makeClone
-	 * roop—p‚Ìclone‚ğ¶‰E‚Éì¬
+	 * roopç”¨ã®cloneã‚’å·¦å³ã«ä½œæˆ
 	 */
 	makeClone: function () {
 		var __this = this, i, j;
-		//Šù‚Éì¬‚³‚ê‚½—v‘f‚ª‚ ‚ê‚Îíœ
+		//æ—¢ã«ä½œæˆã•ã‚ŒãŸè¦ç´ ãŒã‚ã‚Œã°å‰Šé™¤
 		__this.$list.find($('.' + __this.o.cloneClass)).remove();
 
 		//prepend
@@ -212,17 +241,17 @@ Carousel.prototype = {
 
 	/**
 	 * currentNumberNormalizing
-	 * currentNumber‚ª$item‚ÌÅ‘å’l‚æ‚è‘å‚«‚¯‚ê‚ÎÅ¬’l‚ÉƒŠƒZƒbƒgAÅ¬’l‚æ‚è¬‚³‚¯‚ê‚ÎÅ‘å’l‚ÉƒŠƒZƒbƒg
+	 * currentNumberãŒ$itemã®æœ€å¤§å€¤ã‚ˆã‚Šå¤§ãã‘ã‚Œã°æœ€å°å€¤ã«ãƒªã‚»ãƒƒãƒˆã€æœ€å°å€¤ã‚ˆã‚Šå°ã•ã‘ã‚Œã°æœ€å¤§å€¤ã«ãƒªã‚»ãƒƒãƒˆ
 	 */
 	currentNumberNormalizing: function (moveNum, moved) {
 		var __this = this;
 		if (!__this.isMoving) {
 			if (__this.o.loop) {
-				//moveŒã
+				//moveå¾Œ
 				if (moved == 'moved') {
 					if (moveNum < 0                      ){ moveNum = __this.$item.length - 1; }
 					if (moveNum > __this.$item.length - 1){ moveNum = 0; }
-				//move‘O
+				//moveå‰
 				} else {
 					if (moveNum < -1                     ){ moveNum = __this.$item.length - 1; }
 					if (moveNum > __this.$item.length    ){ moveNum = 0; }
@@ -237,14 +266,14 @@ Carousel.prototype = {
 	
 	/**
 	 * move
-	 * [currentNumber] * itemWidth•ª‚¾‚¯$list‚ğ‚¸‚ç‚·
+	 * [currentNumber] * itemWidthåˆ†ã ã‘$listã‚’ãšã‚‰ã™
 	 */
 	move: function () {
 		var __this = this;
 		if (!__this.isMoving) {
 			__this.isMoving = true;
 			__this.$list.animate({
-				marginLeft: __this.listMarginLeft() + "px"
+				marginLeft: __this.listMarginLeft() + 'px'
 			}, {
 				duration: __this.o.speed,
 				easing: __this.o.animation,
@@ -273,7 +302,7 @@ Carousel.prototype = {
 
 	/**
 	 * addCurrentClass
-	 * [currentNumber]”Ô–Ú‚Ì—v‘f‚ÉcurrentClass‚ğƒZƒbƒg
+	 * [currentNumber]ç•ªç›®ã®è¦ç´ ã«currentClassã‚’ã‚»ãƒƒãƒˆ
 	 */
 	addCurrentClass: function () {
 		var __this = this;
@@ -284,13 +313,13 @@ Carousel.prototype = {
 
 	/**
 	 * highlightEffect
-	 * currentClass ‚ª•t‚¢‚½—v‘f‚ğƒnƒCƒ‰ƒCƒg
+	 * currentClass ãŒä»˜ã„ãŸè¦ç´ ã‚’ãƒã‚¤ãƒ©ã‚¤ãƒˆ
 	 */
 	highlightEffect: function () {
 		var __this = this;
 		if (__this.o.currentHighlight) {
 			__this.$controlItem.animate({opacity: 0.4}, {duration: 300, queue: false});
-			__this.$controlItem + $("." + __this.o.currentClass).animate({opacity: 1}, {duration: 300, queue: false});
+			__this.$controlItem + $('.' + __this.o.currentClass).animate({opacity: 1}, {duration: 300, queue: false});
 		}
 	},
 
@@ -298,21 +327,27 @@ Carousel.prototype = {
 	 * autoPlay
 	 */
 	autoPlay: function () {
-		var __this = this;
-		var autoPlay = function(){
+		var __this = this, timer, autoPlay, autoPlayInterval;
+		autoPlayInterval = (__this.o.autoPlayInterval >= 40) ? __this.o.autoPlayInterval : 40;
+		
+		autoPlay = function(){
 			__this.moveBind(__this.currentNumber + 1);
 		};
-		var timer = setInterval(autoPlay, __this.o.autoInterval);
-
-		//ƒ}ƒEƒXƒI[ƒo[‚³‚ê‚Ä‚¢‚éŠÔ‚ÍautoPlay‚ğ’â~B
-		__this.$allItemsAndNavi.hover(
-			function(){
-				clearInterval(timer);
-			},
-			function() {
-				timer = setInterval(autoPlay, __this.o.autoInterval);
-			}
-		);
+		setTimeout(function () {
+			timer = setInterval(autoPlay, autoPlayInterval);
+		}, __this.o.autoPlayStartDelay);
+		
+		//ãƒã‚¦ã‚¹ã‚ªãƒ¼ãƒãƒ¼ã•ã‚Œã¦ã„ã‚‹é–“ã¯autoPlayã‚’åœæ­¢ã€‚
+		if (__this.o.autoPlayHoverStop) {
+			__this.$allItemsAndNavi.hover(
+				function(){
+					clearInterval(timer);
+				},
+				function() {
+					timer = setInterval(autoPlay, autoPlayInterval);
+				}
+			);
+		}
 	}
 	
 };//Carousel.prototype

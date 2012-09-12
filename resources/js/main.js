@@ -10,11 +10,10 @@
 /**
  * addJsOnClass
  */
-var addJsOnClass = function () {
+var addJsOnClass = (function () {
 	var ON_CLASS = 'js-on';
 	$('html').addClass(ON_CLASS);
-};
-addJsOnClass();
+})();
 
 
 //window load
@@ -32,8 +31,9 @@ $(window).load(function(){
 	  , currentClass: 'mod-topContents-current'
 	  , currentHighlight: true
 	  , currentNumber: 1
-	  //, autoPlay: true
-	  //, autoInterval: 1000
+	  , autoPlay: true
+	  , autoPlayInterval: 5000
+	  , autoPlayStartDelay: 2000
 	});
 });
 
