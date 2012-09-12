@@ -1,12 +1,10 @@
 /*!
  * jquery.liquid.carousel.js
  *
- * Copyright (c) 2012 Skill Partners Inc. All Rights Reserved.
- *
  * @varsion: 1.0.1
  * @require: jquery.js, jquery.effects.core.js
- * @create : 2012-09-11 [hayashi@skillpartners.co.jp]
- * @modify : 2012-09-12 [hayashi@skillpartners.co.jp] - autoPlayStartDelay が40以下だった場合、40になるよう変更
+ * @create : 2012-09-11 [rin316(Yuta Hayashi)]
+ * @modify : 2012-09-12 autoPlayStartDelay が40以下だった場合、40になるよう変更
  */
 ;(function ($, window, undefined) {
 
