@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>jquery.liquid.carousel.js</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<style>
+.js_table {
+	border: solid #ccc;
+	border-width: 1px 0px 0px 1px;
+}
+.js_table th,
+.js_table td {
+	text-align: left;
+	padding: 8px;
+	border: solid #ccc;
+	border-width: 0px 1px 1px 0px;
+}
+</style>
+</head>
+<body>
+<h1>jquery.liquid.carousel.js</h1>
+<h2>設定</h2>
+<dt><a href="../resources/js/main.js">/resources/js/main.js</a></dt>
+
+<section>
+<h3>基本使用方法 main.js に下記を記載する</h3>
+<pre style="padding: 10px;background-color: #eee; font-size: 15px;"><code>$(window).load(function(){
+	$('対象のclassやid').liquidCarousel();
+});
+</code></pre>
+</section>
+
+<section>
+<h3>ゆっくりと連続して動く設定</h3>
+<pre style="padding: 10px;background-color: #eee; font-size: 15px;"><code>$(window).load(function(){
+	$('.mod-mainVisual').liquidCarousel({
+	    listSelector: '.mod-mainVisual-list'
+	  , itemSelector: '.mod-mainVisual-item'
+	  , x_position: 'center'
+	  , x_position_fix: -111
+	  , loop: true
+	  , animation: 'linear'
+	  , speed: 20000
+	  , autoPlay: true
+	  , autoPlayInterval: 0
+	  , autoPlayStartDelay: 1000
+	});
+});
+</code></pre>
+</section>
+
+<section>
+<h3>いち画像単位で動いて5秒止まる設定</h3>
+<pre style="padding: 10px;background-color: #eee; font-size: 15px;"><code>$(window).load(function(){
+	$('.mod-mainVisual').liquidCarousel({
+	    listSelector: '.mod-mainVisual-list'
+	  , itemSelector: '.mod-mainVisual-item'
+	  , x_position: 'center'
+	  , x_position_fix: -111
+	  , loop: true
+	  , animation: 'easeInOutQuad'
+	  , speed: 500
+	  , autoPlay: true
+	  , autoPlayInterval: 5000
+	  , autoPlayStartDelay: 1000
+	});
+});
+</code></pre>
+</section>
+
+<section>
+<h3>設定値</h3>
+<table border="0" cellspacing="0" class="js_table">
+<tbody>
+<tr>
+<th>listSelector</th>
+<td>対象内のアイテムがあるセレクタ (e.g. ul.carousel-list)</td>
+</tr>
+<tr>
+<th>itemSelector</th>
+<td>listSelectorの中にあるアイテムのセレクタ (e.g. li.carousel-item)</td>
+</tr>
+<tr>
+<th>controlListSelector</th>
+<td>「○●○○○」のようなコントロールリストのセレクタ</td>
+</tr>
+<tr>
+<th>controlItemSelector</th>
+<td>controlListSelectorの中にあるアイテムのセレクタ</td>
+</tr>
+<tr>
+<th>x_position</th>
+<td>1つ目のアイテムの位置(e.g. left, center, right, 10, 100)</td>
+</tr>
+<tr>
+<th>x_position_fix</th>
+<td>x_position微調整用。x_positionをcenterにしx_position_fixを100 にすれば、真ん中から右に100pxずれて表示できる</td>
+</tr>
+<tr>
+<th>animation</th>
+<td>アニメーションエフェクト(e.g. linear, easeInOutQuad)</td>
+</tr>
+<tr>
+<th>speed</th>
+<td>いちアイテムが動き終わるまでの時間(e.g. 1000, 20000)</td>
+</tr>
+<tr>
+<th>autoPlay</th>
+<td>trueにすると一定時間で自動でアイテムが動く。初期値はfalse。</td>
+</tr>
+<tr>
+<th>autoPlayInterval</th>
+<td>autoPlayで自動でアイテムが動くまでの間隔(e.g. 0,5000)</td>
+</tr>
+<tr>
+<th>autoPlayStartDelay</th>
+<td>ページが表示されてからautoPlayが始まるまでの時間</td>
+</tr>
+<tr>
+<th>autoPlayHoverStop</th>
+<td>autoPlay中、アイテムにマウスオーバした時に動きを止めるか。trueで止める。初期値はfalse。</td>
+</tr>
+<tr>
+<th>cloneClass</th>
+<td>loopが有効の時、左右に作られる要素のclass</td>
+</tr>
+<tr>
+<th>currentClass</th>
+<td>カレントアイテムのclass</td>
+</tr>
+<tr>
+<th>currentHighlight</th>
+<td>controlItemで指定された要素をカレントの時にハイライトするか。初期設定はfalse</td>
+</tr>
+<tr>
+<th>currentNumber</th>
+<td>最初に表示されるアイテム要素の番号。初期設定は1</td>
+</tr>
+<tr>
+<th>loop</th>
+<td>trueにすると右に無限にループする。初期設定はfalse</td>
+</tr>
+<tr>
+<th>prevSelector</th>
+<td>「前へ」ボタンのセレクタ。初期設定はfalse</td>
+</tr>
+<tr>
+<th>nextSelector</th>
+<td>「次へ」ボタンのセレクタ。初期設定はfalse</td>
+</tr>
+</tbody>
+</table>
+</section>
+</body>
+</html>
