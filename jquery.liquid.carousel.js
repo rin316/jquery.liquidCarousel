@@ -25,7 +25,7 @@ DEFAULT_OPTIONS = {
 	x_position_fix: 0,
 	animation: 'swing',
 	speed: 500,
-	autoPlay: false,
+	autoPlay: true,
 	autoPlayInterval: 5000,
 	autoPlayStartDelay: 0,
 	autoPlayHoverStop: false,
