@@ -34,6 +34,7 @@ $(window).load(function(){
 	  , autoPlay: true
 	  , autoPlayInterval: 5000
 	  , autoPlayStartDelay: 2000
+	  , autoPlayHoverStop: true
 	});
 });
 
