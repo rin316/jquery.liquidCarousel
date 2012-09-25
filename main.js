@@ -30,7 +30,7 @@ $(window).load(function(){
 	,   speed: 300
 	,   currentClass: 'mod-topContents-current'
 	,   currentHighlight: true
-	,   currentNumber: 1
+	,   index: 1
 	,   autoPlay: false
 	,   autoPlayInterval: 5000
 	,   autoPlayStartDelay: 2000

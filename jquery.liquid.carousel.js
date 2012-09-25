@@ -32,7 +32,7 @@ DEFAULT_OPTIONS = {
 ,   cloneClass: 'carousel-clone'
 ,   currentClass: 'carousel-current'
 ,   currentHighlight: false
-,   currentNumber: 1
+,   index: 1
 ,   loop: false
 ,   prevSelector: false
 ,   nextSelector: false
@@ -65,7 +65,7 @@ Carousel = function ($element, options) {
 	
 	__this.clonePrependNum = 0;
 	__this.cloneAppendNum = 0;
-	__this.currentNumber = __this.o.currentNumber - 1;
+	__this.index = __this.o.index - 1;
 	__this.isMoving = false;
 	
 	__this.init();
@@ -85,7 +85,7 @@ Carousel.prototype = {
 	init: function () {
 		var __this = this;
 		
-		__this.currentNumberNormalizing(__this.currentNumber);
+		__this.indexNormalizing(__this.index);
 
 		if (__this.o.loop) {
 			__this.setCloneNum();
@@ -106,12 +106,12 @@ Carousel.prototype = {
 		});
 
 		__this.$prevNavi.on('click', function(e){
-			__this.moveBind(__this.currentNumber - 1);
+			__this.moveBind(__this.index - 1);
 			e.preventDefault();
 		});
 
 		__this.$nextNavi.on('click', function(e){
-			__this.moveBind(__this.currentNumber + 1);
+			__this.moveBind(__this.index + 1);
 			e.preventDefault();
 		});
 		
@@ -155,7 +155,7 @@ Carousel.prototype = {
 	 */
 	listMarginLeft: function () {
 		var __this = this;
-		return  - ( (__this.itemWidth * (__this.currentNumber + __this.clonePrependNum)) - __this.listX_position() );
+		return  - ( (__this.itemWidth * (__this.index + __this.clonePrependNum)) - __this.listX_position() );
 	},
 
 	/**
@@ -240,10 +240,10 @@ Carousel.prototype = {
 	},
 
 	/**
-	 * currentNumberNormalizing
-	 * currentNumberが$itemの最大値より大きければ最小値にリセット、最小値より小さければ最大値にリセット
+	 * indexNormalizing
+	 * indexが$itemの最大値より大きければ最小値にリセット、最小値より小さければ最大値にリセット
 	 */
-	currentNumberNormalizing: function (moveNum, moved) {
+	indexNormalizing: function (moveNum, moved) {
 		var __this = this;
 		if (!__this.isMoving) {
 			if (__this.o.loop) {
@@ -260,13 +260,13 @@ Carousel.prototype = {
 				if (    moveNum < 0                      ){ moveNum = __this.$item.length - 1; }
 				if (    moveNum > __this.$item.length - 1){ moveNum = 0; }
 			}
-			__this.currentNumber = moveNum;
+			__this.index = moveNum;
 		}
 	},
 	
 	/**
 	 * move
-	 * [currentNumber] * itemWidth分だけ$listをずらす
+	 * [index] * itemWidth分だけ$listをずらす
 	 */
 	move: function () {
 		var __this = this;
@@ -280,7 +280,7 @@ Carousel.prototype = {
 				complete: function(){
 					__this.isMoving = false;
 					if (__this.o.loop) {
-						__this.currentNumberNormalizing(__this.currentNumber, 'moved');
+						__this.indexNormalizing(__this.index, 'moved');
 						__this.setListStyle();
 					}
 					__this.addCurrentClass();
@@ -296,19 +296,19 @@ Carousel.prototype = {
 	 */
 	moveBind: function (moveNum) {
 		var __this = this;
-		__this.currentNumberNormalizing(moveNum);
+		__this.indexNormalizing(moveNum);
 		__this.move();
 	},
 
 	/**
 	 * addCurrentClass
-	 * [currentNumber]番目の要素にcurrentClassをセット
+	 * [index]番目の要素にcurrentClassをセット
 	 */
 	addCurrentClass: function () {
 		var __this = this;
 		__this.$allItem.removeClass(__this.o.currentClass);
-		__this.$item.eq(__this.currentNumber).addClass(__this.o.currentClass);
-		__this.$controlItem.eq(__this.currentNumber).addClass(__this.o.currentClass);
+		__this.$item.eq(__this.index).addClass(__this.o.currentClass);
+		__this.$controlItem.eq(__this.index).addClass(__this.o.currentClass);
 	},
 
 	/**
@@ -331,7 +331,7 @@ Carousel.prototype = {
 		autoPlayInterval = (__this.o.autoPlayInterval >= 40) ? __this.o.autoPlayInterval : 40;
 		
 		autoPlay = function(){
-			__this.moveBind(__this.currentNumber + 1);
+			__this.moveBind(__this.index + 1);
 		};
 		setTimeout(function () {
 			timer = setInterval(autoPlay, autoPlayInterval);
