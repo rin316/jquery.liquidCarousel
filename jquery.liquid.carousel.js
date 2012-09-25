@@ -161,40 +161,40 @@ Carousel.prototype = {
 	,
 	
 	/**
-	 * listWidth
+	 * calcListWidth
 	 * $listにセットするwidthを返す
 	 */
-	listWidth: function () {
+	calcListWidth: function () {
 		var __this = this;
 		return (__this.$item.length + __this.clonePrependNum + __this.cloneAppendNum ) * __this.itemWidth;
 	}
 	,
 
 	/**
-	 * listMarginLeft
+	 * calcListMarginLeft
 	 * $listにセットするmarginLeftを返す
 	 */
-	listMarginLeft: function () {
+	calcListMarginLeft: function () {
 		var __this = this;
-		return  - ( (__this.itemWidth * (__this.index + __this.clonePrependNum)) - __this.pos_x() );
+		return  - ( (__this.itemWidth * (__this.index + __this.clonePrependNum)) - __this.calcPos_x() );
 	}
 	,
 	
 	/**
-	 * pos_x
+	 * calcPos_x
 	 * カレントの初期位置
 	 * __this.listMarginLeftで使用
 	 */
-	pos_x: function () {
+	calcPos_x: function () {
 		var __this = this;
 		//numberであればnumberをそのまま返す
-		if (!isNaN(__this.o.pos_x)) {
-			return __this.o.pos_x + __this.o.pos_x_fix;
+		if (!isNaN(__this.o.calcPos_x)) {
+			return __this.o.calcPos_x + __this.o.pos_x_fix;
 		//functionであれば実行した値を返す
-		} else if ($.isFunction(__this.o.pos_x)) {
-			return __this.o.pos_x() + __this.o.pos_x_fix;
+		} else if ($.isFunction(__this.o.calcPos_x)) {
+			return __this.o.calcPos_x() + __this.o.pos_x_fix;
 		} else {
-			switch (__this.o.pos_x){
+			switch (__this.o.calcPos_x){
 				case 'left':
 					return 0 + __this.o.pos_x_fix;
 					break;
@@ -222,8 +222,8 @@ Carousel.prototype = {
 	setListStyle: function () {
 		var __this = this;
 		__this.$list.css({
-			width: __this.listWidth() + 'px',
-			marginLeft: __this.listMarginLeft() + 'px'
+			width: __this.calcListWidth() + 'px',
+			marginLeft: __this.calcListMarginLeft() + 'px'
 		});
 	}
 	,
@@ -280,7 +280,7 @@ Carousel.prototype = {
 		if (!__this.isMoving) {
 			__this.isMoving = true;
 			__this.$list.animate({
-				marginLeft: __this.listMarginLeft() + 'px'
+				marginLeft: __this.calcListMarginLeft() + 'px'
 			}, {
 				duration: __this.o.speed,
 				easing: __this.o.easing,
