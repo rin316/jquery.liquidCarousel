@@ -88,7 +88,6 @@ Carousel.prototype = {
 		__this.indexReset(__this.index);
 		
 		if (__this.o.loop) {
-			__this.setCloneNum();
 			__this.makeClone();
 		}
 
@@ -130,7 +129,6 @@ Carousel.prototype = {
 			_timer = setTimeout(function () {
 				__this.elementWidth = __this.$element.outerWidth(true);
 				if (__this.o.loop) {
-					__this.setCloneNum();
 					__this.makeClone();
 				}
 				__this.setListStyle();
@@ -236,6 +234,10 @@ Carousel.prototype = {
 	 */
 	makeClone: function () {
 		var __this = this, i, j;
+		
+		//作成要素数
+		__this.clonePrependNum = __this.cloneAppendNum = Math.ceil(__this.elementWidth / __this.itemWidth);
+		
 		//既に作成された要素があれば削除
 		__this.$list.find($('.' + __this.o.cloneClass)).remove();
 
@@ -254,16 +256,6 @@ Carousel.prototype = {
 			);
 			(j >= __this.$item.length - 1)? j = 0 : j++;
 		}
-	}
-	,
-	
-	/**
-	 * setCloneNum
-	 * __this.makeCloneで使用する、作成要素数をセット
-	 */
-	setCloneNum: function () {
-		var __this = this;
-		__this.clonePrependNum = __this.cloneAppendNum = Math.ceil(__this.elementWidth / __this.itemWidth);
 	}
 	,
 	
