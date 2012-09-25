@@ -272,9 +272,9 @@ Carousel.prototype = {
 	/**
 	 * moveBind
 	 */
-	moveBind: function (moveNum) {
+	moveBind: function (index) {
 		var __this = this;
-		__this.indexReset(moveNum);
+		__this.indexReset(index);
 		__this.addCurrentClass();
 		__this.highlightEffect();
 		__this.move();
