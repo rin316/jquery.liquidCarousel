@@ -62,7 +62,7 @@ Carousel = function ($element, options) {
 	
 	__this.elementWidth = __this.$element.outerWidth(true);
 	__this.itemWidth = __this.$item.outerWidth(true);
-	__this.xg_position = __this.o.x_position;
+	__this.x_position = __this.o.x_position;
 	__this.x_position_fix = __this.o.x_position_fix;
 	
 	__this.clonePrependNum = 0;
