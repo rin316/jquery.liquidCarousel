@@ -19,23 +19,26 @@ var Carousel
 DEFAULT_OPTIONS = {
 	listSelector: '.carousel-item'
 ,   itemSelector: '.carousel-list'
-,   controlListSelector: 'carousel-control-list'
-,   controlItemSelector: 'carousel-control-item'
+,   paginationListSelector: 'carousel-control-list'
+,   paginationItemSelector: 'carousel-control-item'
+,   prevSelector: '.mod-topContents-prev'
+,   nextSelector: '.mod-topContents-next'
+
 ,   x_position: 'left'
 ,   x_position_fix: 0
 ,   easing: 'swing'
 ,   speed: 500
+
 ,   autoPlay: true
 ,   autoPlayInterval: 5000
 ,   autoPlayStartDelay: 0
 ,   autoPlayHoverStop: false
+
 ,   cloneClass: 'carousel-clone'
 ,   currentClass: 'carousel-current'
 ,   currentHighlight: false
 ,   index: 1
 ,   loop: false
-,   prevSelector: false
-,   nextSelector: false
 };
 
 
@@ -47,20 +50,20 @@ Carousel = function ($element, options) {
 	
 	__this.o = $.extend({}, DEFAULT_OPTIONS, options);
 	
-	__this.$element =         $element;
-	__this.$list =            __this.$element.find($(__this.o.listSelector));
-	__this.$item =            __this.$element.find($(__this.o.itemSelector));
-	__this.$controlList =     __this.$element.find($(__this.o.controlListSelector));
-	__this.$controlItem =     __this.$element.find($(__this.o.controlItemSelector));
-	__this.$prevNavi =        __this.$element.find($(__this.o.prevSelector));
-	__this.$nextNavi =        __this.$element.find($(__this.o.nextSelector));
-	__this.$allItems =        __this.$controlList.add(__this.$list);
-	__this.$allItem  =        __this.$controlItem.add(__this.$item);
-	__this.$allItemsAndNavi = __this.$allItems.add(__this.$prevNavi).add(__this.$nextNavi);
+	__this.$element =        $element;
+	__this.$list =           __this.$element.find($(__this.o.listSelector));
+	__this.$item =           __this.$element.find($(__this.o.itemSelector));
+	__this.$paginationList = __this.$element.find($(__this.o.paginationListSelector));
+	__this.$paginationItem = __this.$element.find($(__this.o.paginationItemSelector));
+	__this.$prevNavi =       __this.$element.find($(__this.o.prevSelector));
+	__this.$nextNavi =       __this.$element.find($(__this.o.nextSelector));
+	__this.$allList =        __this.$paginationList.add(__this.$list);
+	__this.$allItem  =       __this.$paginationItem.add(__this.$item);
+	__this.$allListAndNavi = __this.$allList.add(__this.$prevNavi).add(__this.$nextNavi);
 	
 	__this.elementWidth = __this.$element.outerWidth(true);
 	__this.itemWidth = __this.$item.outerWidth(true);
-	__this.x_position = __this.o.x_position;
+	__this.xg_position = __this.o.x_position;
 	__this.x_position_fix = __this.o.x_position_fix;
 	
 	__this.clonePrependNum = 0;
@@ -100,8 +103,8 @@ Carousel.prototype = {
 		
 		
 		//click
-		__this.$controlItem.on('click', function(e){
-			__this.moveBind(__this.$controlItem.index(this));
+		__this.$paginationItem.on('click', function(e){
+			__this.moveBind(__this.$paginationItem.index(this));
 			e.preventDefault();
 		});
 
@@ -318,7 +321,7 @@ Carousel.prototype = {
 		var __this = this;
 		__this.$allItem.removeClass(__this.o.currentClass);
 		__this.$item.eq(__this.index).addClass(__this.o.currentClass);
-		__this.$controlItem.eq(__this.index).addClass(__this.o.currentClass);
+		__this.$paginationItem.eq(__this.index).addClass(__this.o.currentClass);
 	}
 	,
 
@@ -329,8 +332,8 @@ Carousel.prototype = {
 	highlightEffect: function () {
 		var __this = this;
 		if (__this.o.currentHighlight) {
-			__this.$controlItem.animate({opacity: 0.4}, {duration: 300, queue: false});
-			__this.$controlItem + $('.' + __this.o.currentClass).animate({opacity: 1}, {duration: 300, queue: false});
+			__this.$paginationItem.animate({opacity: 0.4}, {duration: 300, queue: false});
+			__this.$paginationItem + $('.' + __this.o.currentClass).animate({opacity: 1}, {duration: 300, queue: false});
 		}
 	}
 	,
@@ -351,7 +354,7 @@ Carousel.prototype = {
 		
 		//マウスオーバーされている間はautoPlayを停止。
 		if (__this.o.autoPlayHoverStop) {
-			__this.$allItemsAndNavi.hover(
+			__this.$allListAndNavi.hover(
 				function(){
 					clearInterval(timer);
 				},

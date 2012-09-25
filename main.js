@@ -21,8 +21,8 @@ $(window).load(function(){
 	$('.mod-topContents').liquidCarousel({
 		listSelector: '.mod-topContents-visual-list'
 	,   itemSelector: '.mod-topContents-visual-item'
-	,   controlListSelector: '.mod-topContents-controller-list'
-	,   controlItemSelector: '.mod-topContents-controller-item'
+	,   paginationListSelector: '.mod-topContents-controller-list'
+	,   paginationItemSelector: '.mod-topContents-controller-item'
 	,   prevSelector: '.mod-topContents-prev'
 	,   nextSelector: '.mod-topContents-next'
 	,   x_position: 'center'
