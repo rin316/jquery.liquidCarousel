@@ -24,8 +24,8 @@ DEFAULT_OPTIONS = {
 ,   prevSelector: '.carousel-prev'
 ,   nextSelector: '.carousel-next'
 
-,   x_position: 'left'
-,   x_position_fix: 0
+,   pos_x: 'left'
+,   pos_x_fix: 0
 ,   index: 1
 ,   cloneClass: 'carousel-clone'
 ,   currentClass: 'carousel-current'
@@ -62,8 +62,8 @@ Carousel = function ($element, options) {
 	
 	__this.elementWidth = __this.$element.outerWidth(true);
 	__this.itemWidth = __this.$item.outerWidth(true);
-	__this.x_position = __this.o.x_position;
-	__this.x_position_fix = __this.o.x_position_fix;
+	__this.pos_x = __this.o.pos_x;
+	__this.pos_x_fix = __this.o.pos_x_fix;
 	
 	__this.clonePrependNum = 0;
 	__this.cloneAppendNum = 0;
@@ -197,23 +197,23 @@ Carousel.prototype = {
 	listX_position: function () {
 		var __this = this;
 		//numberであればnumberをそのまま返す
-		if (!isNaN(__this.x_position)) {
-			return __this.x_position + __this.x_position_fix;
+		if (!isNaN(__this.pos_x)) {
+			return __this.pos_x + __this.pos_x_fix;
 		//functionであれば実行した値を返す
-		} else if ($.isFunction(__this.x_position)) {
-			return __this.x_position() + __this.x_position_fix;
+		} else if ($.isFunction(__this.pos_x)) {
+			return __this.pos_x() + __this.pos_x_fix;
 		} else {
-			switch (__this.x_position){
+			switch (__this.pos_x){
 				case 'left':
-					return 0 + __this.x_position_fix;
+					return 0 + __this.pos_x_fix;
 					break;
 
 				case 'center':
-					return (__this.elementWidth / 2) - (__this.itemWidth / 2) + __this.x_position_fix;
+					return (__this.elementWidth / 2) - (__this.itemWidth / 2) + __this.pos_x_fix;
 					break;
 
 				case 'right':
-					return (__this.elementWidth - __this.itemWidth) + __this.x_position_fix;
+					return (__this.elementWidth - __this.itemWidth) + __this.pos_x_fix;
 					break;
 
 				default:

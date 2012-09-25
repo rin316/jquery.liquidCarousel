@@ -26,7 +26,7 @@ $(window).load(function(){
 	,   prevSelector: '.mod-topContents-prev'
 	,   nextSelector: '.mod-topContents-next'
 	
-	,   x_position: 'center'
+	,   pos_x: 'center'
 	,   index: 1
 	,   currentClass: 'mod-topContents-current'
 	,   speed: 300
