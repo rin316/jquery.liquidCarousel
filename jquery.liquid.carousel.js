@@ -147,24 +147,19 @@ Carousel.prototype = {
 	 * indexReset
 	 * indexが$itemの最大値より大きければ最小値にリセット、最小値より小さければ最大値にリセット
 	 */
-	indexReset: function (moveNum, moved) {
+	indexReset: function (index, moved) {
 		var __this = this;
+		
 		if (!__this.isMoving) {
-			if (__this.o.loop) {
-				//move後
-				if (moved == 'moved') {
-					if (moveNum < 0                      ){ moveNum = __this.$item.length - 1; }
-					if (moveNum > __this.$item.length - 1){ moveNum = 0; }
-				//move前
-				} else {
-					if (moveNum < -1                     ){ moveNum = __this.$item.length - 1; }
-					if (moveNum > __this.$item.length    ){ moveNum = 0; }
-				}
+			//loopが有効 && moveする前なら
+			if (__this.o.loop && moved !== 'moved') {
+				if (index < -1                     ){ index = __this.$item.length - 1; }
+				if (index > __this.$item.length    ){ index = 0; }
 			} else {
-				if (    moveNum < 0                      ){ moveNum = __this.$item.length - 1; }
-				if (    moveNum > __this.$item.length - 1){ moveNum = 0; }
+				if (    index < 0                      ){ index = __this.$item.length - 1; }
+				if (    index > __this.$item.length - 1){ index = 0; }
 			}
-			__this.index = moveNum;
+			__this.index = index;
 		}
 	}
 	,

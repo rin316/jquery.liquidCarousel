@@ -33,7 +33,7 @@ $(window).load(function(){
 	,   autoPlayInterval: 5000
 	,   autoPlayStartDelay: 2000
 	
-	,   loop: false
+	,   loop: true
 	,   currentHighlight: true
 	,   autoPlay: false
 	,   autoPlayHoverStop: true
