@@ -17,25 +17,25 @@ var Carousel
  * DEFAULT_OPTIONS
  */
 DEFAULT_OPTIONS = {
-	listSelector: '.carousel-item',
-	itemSelector: '.carousel-list',
-	controlListSelector: 'carousel-control-list',
-	controlItemSelector: 'carousel-control-item',
-	x_position: 'left',
-	x_position_fix: 0,
-	easing: 'swing',
-	speed: 500,
-	autoPlay: true,
-	autoPlayInterval: 5000,
-	autoPlayStartDelay: 0,
-	autoPlayHoverStop: false,
-	cloneClass: 'carousel-clone',
-	currentClass: 'carousel-current',
-	currentHighlight: false,
-	currentNumber: 1,
-	loop: false,
-	prevSelector: false,
-	nextSelector: false
+	listSelector: '.carousel-item'
+,   itemSelector: '.carousel-list'
+,   controlListSelector: 'carousel-control-list'
+,   controlItemSelector: 'carousel-control-item'
+,   x_position: 'left'
+,   x_position_fix: 0
+,   easing: 'swing'
+,   speed: 500
+,   autoPlay: true
+,   autoPlayInterval: 5000
+,   autoPlayStartDelay: 0
+,   autoPlayHoverStop: false
+,   cloneClass: 'carousel-clone'
+,   currentClass: 'carousel-current'
+,   currentHighlight: false
+,   currentNumber: 1
+,   loop: false
+,   prevSelector: false
+,   nextSelector: false
 };
 
 
