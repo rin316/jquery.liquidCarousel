@@ -43,32 +43,34 @@ DEFAULT_OPTIONS = {
  * Carousel
  */
 Carousel = function ($element, options) {
-	this.o = $.extend({}, DEFAULT_OPTIONS, options);
+	var __this = this;
 	
-	this.$element =         $element;
-	this.$list =            this.$element.find($(this.o.listSelector));
-	this.$item =            this.$element.find($(this.o.itemSelector));
-	this.$controlList =     this.$element.find($(this.o.controlListSelector));
-	this.$controlItem =     this.$element.find($(this.o.controlItemSelector));
-	this.$prevNavi =        this.$element.find($(this.o.prevSelector));
-	this.$nextNavi =        this.$element.find($(this.o.nextSelector));
-	this.$allItems =        this.$controlList.add(this.$list);
-	this.$allItem  =        this.$controlItem.add(this.$item);
-	this.$allItemsAndNavi = this.$allItems.add(this.$prevNavi).add(this.$nextNavi);
+	__this.o = $.extend({}, DEFAULT_OPTIONS, options);
 	
-	this.elementWidth = this.$element.outerWidth(true);
-	this.itemWidth = this.$item.outerWidth(true);
-	this.x_position = this.o.x_position;
-	this.x_position_fix = this.o.x_position_fix;
+	__this.$element =         $element;
+	__this.$list =            __this.$element.find($(__this.o.listSelector));
+	__this.$item =            __this.$element.find($(__this.o.itemSelector));
+	__this.$controlList =     __this.$element.find($(__this.o.controlListSelector));
+	__this.$controlItem =     __this.$element.find($(__this.o.controlItemSelector));
+	__this.$prevNavi =        __this.$element.find($(__this.o.prevSelector));
+	__this.$nextNavi =        __this.$element.find($(__this.o.nextSelector));
+	__this.$allItems =        __this.$controlList.add(__this.$list);
+	__this.$allItem  =        __this.$controlItem.add(__this.$item);
+	__this.$allItemsAndNavi = __this.$allItems.add(__this.$prevNavi).add(__this.$nextNavi);
 	
-	this.clonePrependNum = 0;
-	this.cloneAppendNum = 0;
-	this.currentNumber = this.o.currentNumber - 1;
-	this.isMoving = false;
+	__this.elementWidth = __this.$element.outerWidth(true);
+	__this.itemWidth = __this.$item.outerWidth(true);
+	__this.x_position = __this.o.x_position;
+	__this.x_position_fix = __this.o.x_position_fix;
 	
-	this.init();
+	__this.clonePrependNum = 0;
+	__this.cloneAppendNum = 0;
+	__this.currentNumber = __this.o.currentNumber - 1;
+	__this.isMoving = false;
 	
-	return this;
+	__this.init();
+	
+	return __this;
 };//Carousel
 
 
