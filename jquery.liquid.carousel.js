@@ -23,7 +23,7 @@ DEFAULT_OPTIONS = {
 	controlItemSelector: 'carousel-control-item',
 	x_position: 'left',
 	x_position_fix: 0,
-	animation: 'swing',
+	easing: 'swing',
 	speed: 500,
 	autoPlay: true,
 	autoPlayInterval: 5000,
@@ -274,7 +274,7 @@ Carousel.prototype = {
 				marginLeft: __this.listMarginLeft() + 'px'
 			}, {
 				duration: __this.o.speed,
-				easing: __this.o.animation,
+				easing: __this.o.easing,
 				complete: function(){
 					__this.isMoving = false;
 					if (__this.o.loop) {

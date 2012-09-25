@@ -26,12 +26,12 @@ $(window).load(function(){
 	  , prevSelector: '.mod-topContents-prev'
 	  , nextSelector: '.mod-topContents-next'
 	  , x_position: 'center'
-	  , loop: true
+	  , loop: false
 	  , speed: 300
 	  , currentClass: 'mod-topContents-current'
 	  , currentHighlight: true
 	  , currentNumber: 1
-	  , autoPlay: true
+	  , autoPlay: false
 	  , autoPlayInterval: 5000
 	  , autoPlayStartDelay: 2000
 	  , autoPlayHoverStop: true
