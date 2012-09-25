@@ -188,13 +188,13 @@ Carousel.prototype = {
 	calcPos_x: function () {
 		var __this = this;
 		//numberであればnumberをそのまま返す
-		if (!isNaN(__this.o.calcPos_x)) {
-			return __this.o.calcPos_x + __this.o.pos_x_fix;
+		if (!isNaN(__this.o.pos_x)) {
+			return __this.o.pos_x + __this.o.pos_x_fix;
 		//functionであれば実行した値を返す
-		} else if ($.isFunction(__this.o.calcPos_x)) {
-			return __this.o.calcPos_x() + __this.o.pos_x_fix;
+		} else if ($.isFunction(__this.o.pos_x)) {
+			return __this.o.pos_x() + __this.o.pos_x_fix;
 		} else {
-			switch (__this.o.calcPos_x){
+			switch (__this.o.pos_x){
 				case 'left':
 					return 0 + __this.o.pos_x_fix;
 					break;
