@@ -19,26 +19,25 @@ var Carousel
 DEFAULT_OPTIONS = {
 	listSelector: '.carousel-item'
 ,   itemSelector: '.carousel-list'
-,   paginationListSelector: 'carousel-control-list'
-,   paginationItemSelector: 'carousel-control-item'
-,   prevSelector: '.mod-topContents-prev'
-,   nextSelector: '.mod-topContents-next'
+,   paginationListSelector: 'carousel-pagination-list'
+,   paginationItemSelector: 'carousel-pagination-item'
+,   prevSelector: '.carousel-prev'
+,   nextSelector: '.carousel-next'
 
 ,   x_position: 'left'
 ,   x_position_fix: 0
-,   easing: 'swing'
-,   speed: 500
-
-,   autoPlay: true
-,   autoPlayInterval: 5000
-,   autoPlayStartDelay: 0
-,   autoPlayHoverStop: false
-
+,   index: 1
 ,   cloneClass: 'carousel-clone'
 ,   currentClass: 'carousel-current'
-,   currentHighlight: false
-,   index: 1
+,   easing: 'swing'
+,   speed: 500
+,   autoPlayInterval: 5000
+,   autoPlayStartDelay: 0
+
 ,   loop: false
+,   currentHighlight: false
+,   autoPlay: true
+,   autoPlayHoverStop: false
 };
 
 

@@ -25,15 +25,17 @@ $(window).load(function(){
 	,   paginationItemSelector: '.mod-topContents-controller-item'
 	,   prevSelector: '.mod-topContents-prev'
 	,   nextSelector: '.mod-topContents-next'
+	
 	,   x_position: 'center'
-	,   loop: false
-	,   speed: 300
-	,   currentClass: 'mod-topContents-current'
-	,   currentHighlight: true
 	,   index: 1
-	,   autoPlay: false
+	,   currentClass: 'mod-topContents-current'
+	,   speed: 300
 	,   autoPlayInterval: 5000
 	,   autoPlayStartDelay: 2000
+	
+	,   loop: false
+	,   currentHighlight: true
+	,   autoPlay: false
 	,   autoPlayHoverStop: true
 	});
 });
