@@ -275,6 +275,8 @@ Carousel.prototype = {
 	moveBind: function (moveNum) {
 		var __this = this;
 		__this.indexReset(moveNum);
+		__this.addCurrentClass();
+		__this.highlightEffect();
 		__this.move();
 	}
 	,
@@ -313,9 +315,22 @@ Carousel.prototype = {
 	 */
 	addCurrentClass: function () {
 		var __this = this;
-		__this.$allItem.removeClass(__this.o.currentClass);
-		__this.$item.eq(__this.index).addClass(__this.o.currentClass);
-		__this.$paginationItem.eq(__this.index).addClass(__this.o.currentClass);
+		
+		//currentClass削除
+		__this.$allList.children().removeClass(__this.o.currentClass);
+		
+		//$itemをcurrent
+		__this.$list.children().eq(__this.clonePrependNum  + __this.index).addClass(__this.o.currentClass);
+		
+		//$itemの最大値より大きい場合は、0番目の$paginationItemをcurrent
+		if (__this.index > __this.$item.length - 1) {
+			__this.$paginationItem.eq(0).addClass(__this.o.currentClass);
+		//$itemの最大値より小さい場合は、最後の$paginationItemをcurrent
+		} else if (__this.index < 0) {
+			__this.$paginationItem.eq(__this.$item.length - 1).addClass(__this.o.currentClass);
+		} else {
+			__this.$paginationItem.eq(__this.index).addClass(__this.o.currentClass);
+		}
 	}
 	,
 
