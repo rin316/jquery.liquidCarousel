@@ -86,7 +86,7 @@ Carousel.prototype = {
 		var __this = this;
 		
 		__this.indexReset(__this.index);
-
+		
 		if (__this.o.loop) {
 			__this.setCloneNum();
 			__this.makeClone();
@@ -138,7 +138,34 @@ Carousel.prototype = {
 				_timer = null;
 			}, _INTERVAL);
 		});
-	},
+	}
+	,
+	
+	/**
+	 * indexReset
+	 * indexが$itemの最大値より大きければ最小値にリセット、最小値より小さければ最大値にリセット
+	 */
+	indexReset: function (moveNum, moved) {
+		var __this = this;
+		if (!__this.isMoving) {
+			if (__this.o.loop) {
+				//move後
+				if (moved == 'moved') {
+					if (moveNum < 0                      ){ moveNum = __this.$item.length - 1; }
+					if (moveNum > __this.$item.length - 1){ moveNum = 0; }
+				//move前
+				} else {
+					if (moveNum < -1                     ){ moveNum = __this.$item.length - 1; }
+					if (moveNum > __this.$item.length    ){ moveNum = 0; }
+				}
+			} else {
+				if (    moveNum < 0                      ){ moveNum = __this.$item.length - 1; }
+				if (    moveNum > __this.$item.length - 1){ moveNum = 0; }
+			}
+			__this.index = moveNum;
+		}
+	}
+	,
 	
 	/**
 	 * listWidth
@@ -147,7 +174,8 @@ Carousel.prototype = {
 	listWidth: function () {
 		var __this = this;
 		return (__this.$item.length + __this.clonePrependNum + __this.cloneAppendNum ) * __this.itemWidth;
-	},
+	}
+	,
 
 	/**
 	 * listMarginLeft
@@ -156,8 +184,9 @@ Carousel.prototype = {
 	listMarginLeft: function () {
 		var __this = this;
 		return  - ( (__this.itemWidth * (__this.index + __this.clonePrependNum)) - __this.listX_position() );
-	},
-
+	}
+	,
+	
 	/**
 	 * listX_position
 	 * カレントの初期位置
@@ -190,8 +219,9 @@ Carousel.prototype = {
 					break;
 			}
 		}
-	},
-
+	}
+	,
+	
 	/**
 	 * setListStyle
 	 * set $list width, marginLeft
@@ -202,16 +232,8 @@ Carousel.prototype = {
 			width: __this.listWidth() + 'px',
 			marginLeft: __this.listMarginLeft() + 'px'
 		});
-	},
-
-	/**
-	 * setCloneNum
-	 * __this.makeCloneで使用する、作成要素数をセット
-	 */
-	setCloneNum: function () {
-		var __this = this;
-		__this.clonePrependNum = __this.cloneAppendNum = Math.ceil(__this.elementWidth / __this.itemWidth);
-	},
+	}
+	,
 
 	/**
 	 * makeClone
@@ -237,32 +259,28 @@ Carousel.prototype = {
 			);
 			(j >= __this.$item.length - 1)? j = 0 : j++;
 		}
-	},
-
+	}
+	,
+	
 	/**
-	 * indexReset
-	 * indexが$itemの最大値より大きければ最小値にリセット、最小値より小さければ最大値にリセット
+	 * setCloneNum
+	 * __this.makeCloneで使用する、作成要素数をセット
 	 */
-	indexReset: function (moveNum, moved) {
+	setCloneNum: function () {
 		var __this = this;
-		if (!__this.isMoving) {
-			if (__this.o.loop) {
-				//move後
-				if (moved == 'moved') {
-					if (moveNum < 0                      ){ moveNum = __this.$item.length - 1; }
-					if (moveNum > __this.$item.length - 1){ moveNum = 0; }
-				//move前
-				} else {
-					if (moveNum < -1                     ){ moveNum = __this.$item.length - 1; }
-					if (moveNum > __this.$item.length    ){ moveNum = 0; }
-				}
-			} else {
-				if (    moveNum < 0                      ){ moveNum = __this.$item.length - 1; }
-				if (    moveNum > __this.$item.length - 1){ moveNum = 0; }
-			}
-			__this.index = moveNum;
-		}
-	},
+		__this.clonePrependNum = __this.cloneAppendNum = Math.ceil(__this.elementWidth / __this.itemWidth);
+	}
+	,
+	
+	/**
+	 * moveBind
+	 */
+	moveBind: function (moveNum) {
+		var __this = this;
+		__this.indexReset(moveNum);
+		__this.move();
+	}
+	,
 	
 	/**
 	 * move
@@ -289,16 +307,8 @@ Carousel.prototype = {
 				queue: false
 			})
 		}
-	},
-	
-	/**
-	 * moveBind
-	 */
-	moveBind: function (moveNum) {
-		var __this = this;
-		__this.indexReset(moveNum);
-		__this.move();
-	},
+	}
+	,
 
 	/**
 	 * addCurrentClass
@@ -309,7 +319,8 @@ Carousel.prototype = {
 		__this.$allItem.removeClass(__this.o.currentClass);
 		__this.$item.eq(__this.index).addClass(__this.o.currentClass);
 		__this.$controlItem.eq(__this.index).addClass(__this.o.currentClass);
-	},
+	}
+	,
 
 	/**
 	 * highlightEffect
@@ -321,8 +332,9 @@ Carousel.prototype = {
 			__this.$controlItem.animate({opacity: 0.4}, {duration: 300, queue: false});
 			__this.$controlItem + $('.' + __this.o.currentClass).animate({opacity: 1}, {duration: 300, queue: false});
 		}
-	},
-
+	}
+	,
+	
 	/**
 	 * autoPlay
 	 */
