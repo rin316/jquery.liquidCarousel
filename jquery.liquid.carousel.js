@@ -23,7 +23,6 @@ DEFAULT_OPTIONS = {
 ,   paginationItemSelector: 'carousel-pagination-item'
 ,   prevSelector: '.carousel-prev'
 ,   nextSelector: '.carousel-next'
-
 ,   pos_x: 'left'
 ,   pos_x_fix: 0
 ,   index: 1
@@ -33,7 +32,6 @@ DEFAULT_OPTIONS = {
 ,   speed: 500
 ,   autoPlayInterval: 5000
 ,   autoPlayStartDelay: 0
-
 ,   loop: false
 ,   currentHighlight: false
 ,   autoPlay: true
@@ -90,7 +88,7 @@ Carousel.prototype = {
 		if (__this.o.loop) {
 			__this.makeClone();
 		}
-
+		
 		__this.setListStyle();
 		__this.addCurrentClass();
 		__this.highlightEffect();
@@ -103,12 +101,12 @@ Carousel.prototype = {
 			__this.moveBind(__this.$paginationItem.index(this));
 			e.preventDefault();
 		});
-
+		
 		__this.$prevNavi.on('click', function(e){
 			__this.moveBind(__this.index - 1);
 			e.preventDefault();
 		});
-
+		
 		__this.$nextNavi.on('click', function(e){
 			__this.moveBind(__this.index + 1);
 			e.preventDefault();
@@ -169,7 +167,7 @@ Carousel.prototype = {
 		return (__this.$item.length + __this.clonePrependNum + __this.cloneAppendNum ) * __this.itemWidth;
 	}
 	,
-
+	
 	/**
 	 * calcListMarginLeft
 	 * $listにセットするmarginLeftを返す
@@ -198,15 +196,15 @@ Carousel.prototype = {
 				case 'left':
 					return 0 + __this.o.pos_x_fix;
 					break;
-
+					
 				case 'center':
 					return (__this.elementWidth / 2) - (__this.itemWidth / 2) + __this.o.pos_x_fix;
 					break;
-
+					
 				case 'right':
 					return (__this.elementWidth - __this.itemWidth) + __this.o.pos_x_fix;
 					break;
-
+					
 				default:
 					return 0;
 					break;
@@ -227,7 +225,7 @@ Carousel.prototype = {
 		});
 	}
 	,
-
+	
 	/**
 	 * makeClone
 	 * roop用のcloneを左右に作成
@@ -240,7 +238,7 @@ Carousel.prototype = {
 		
 		//既に作成された要素があれば削除
 		__this.$list.find($('.' + __this.o.cloneClass)).remove();
-
+		
 		//prepend
 		for (i = 0, j = __this.$item.length - 1; i < __this.clonePrependNum; i++) {
 			__this.$list.prepend(
@@ -248,7 +246,7 @@ Carousel.prototype = {
 			);
 			(j <= 0)? j = __this.$item.length - 1 : j--;
 		}
-
+		
 		//append
 		for (i = 0, j = 0; i < __this.cloneAppendNum; i++) {
 			__this.$list.append(
@@ -298,7 +296,7 @@ Carousel.prototype = {
 		}
 	}
 	,
-
+	
 	/**
 	 * addCurrentClass
 	 * [index]番目の要素にcurrentClassをセット
@@ -323,7 +321,7 @@ Carousel.prototype = {
 		}
 	}
 	,
-
+	
 	/**
 	 * highlightEffect
 	 * currentClass が付いた要素をハイライト
