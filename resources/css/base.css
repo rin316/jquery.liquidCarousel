@@ -41,18 +41,35 @@ a:active  {}
 	background-color: #fcc;
 }
 
-.mod-topContents {
+.carousel {
 	width: 100%;
 	overflow: hidden;
+	position: relative;
 }
 	
-	.mod-topContents-visual-list {
+	/*--carousel2--*/
+	.carousel2 .listWrapper {
+		height: 100px;
+		overflow: hidden;
 	}
-	.mod-topContents-visual-list:after {
-		content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
+	.carousel2 .list {
+		position: absolute;
+		top: 0px;
+		left: 0px;
 	}
 	
-		.mod-topContents-visual-item {
+	.list {
+	}
+	.list:after {
+		content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
+	}
+		/*--carousel2--*/
+		.carousel2 .item {
+			float: none;
+			display: block;
+		}
+		
+		.item {
 			float: left;
 			display: inline;
 			margin: 10px;
@@ -63,52 +80,52 @@ a:active  {}
 			background-color: #eee;
 			text-align: center;
 		}
-		.mod-topContents-visual-item.mod-topContents-current {
+		.item.current {
 			background-color: #fcc;
 		}
 		
-	.mod-topContents-button {
+	.button {
 	}
-	.mod-topContents-button:after {
+	.button:after {
 		content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
 	}
-		.mod-topContents-prev,
-		.mod-topContents-next {
+		.prev,
+		.next {
 			display: inline;
 			float: left;
 			margin: 10px;
 		}
-			.mod-topContents-prev a,
-			.mod-topContents-next a {
+			.prev a,
+			.next a {
 				display: block;
 				padding: 20px;
 				width: 100px;
 				background-color: #ccf;
 			}
 			
-		.mod-topContents-prev {
+		.prev {
 		}
-			.mod-topContents-prev a {
+			.prev a {
 			}
 		
-		.mod-topContents-next {
+		.next {
 		}
-			.mod-topContents-next a {
+			.next a {
 			}
 			
-	.mod-topContents-controller {
+	.pagination {
 	}
-		.mod-topContents-controller-list {
+		.paginationList {
 		}
-		.mod-topContents-controller-list:after {
+		.paginationList:after {
 			content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
 		}
-			.mod-topContents-controller-item {
+			.paginationItem {
 				float: left;
 				display: inline;
 				margin: 10px;
 			}
-				.mod-topContents-controller-item a {
+				.paginationItem a {
 					display: block;
 					padding: 10px;
 					background-color: #cfc;

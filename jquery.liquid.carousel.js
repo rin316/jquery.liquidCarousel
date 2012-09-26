@@ -35,6 +35,7 @@ DEFAULT_OPTIONS = {
 ,   autoPlayInterval: 5000 //{number} milli second
 ,   autoPlayStartDelay: 0 //{number} milli second
 ,   loop: false //{boolean}
+,   vertical: false //{boolean}
 ,   currentHighlight: false //{boolean}
 ,   autoPlay: true //{boolean}
 ,   autoPlayHoverStop: false //{boolean}
@@ -60,8 +61,10 @@ Carousel = function ($element, options) {
 	self.$allItem  =       self.$paginationItem.add(self.$item);
 	self.$allListAndNavi = self.$allList.add(self.$prevNavi).add(self.$nextNavi);
 	
-	self.elementWidth = self.$element.outerWidth(true);
-	self.itemWidth = self.$item.outerWidth(true);
+	self.elementSize =      (self.o.vertical) ? self.$element.outerHeight(true) : self.$element.outerWidth(true);
+	self.itemSize =         (self.o.vertical) ? self.$item.outerHeight(true)    : self.$item.outerWidth(true);
+	self.sizeProp =   (self.o.vertical) ? 'height' : 'width';
+	self.marginProp = (self.o.vertical) ? 'marginTop' : 'marginLeft';
 	
 	self.clonePrependNum = 0;
 	self.cloneAppendNum = 0;
@@ -135,7 +138,7 @@ Carousel.prototype = {
 			}
 			
 			_timer = setTimeout(function () {
-				self.elementWidth = self.$element.outerWidth(true);
+				self.elementSize = self.$element.outerWidth(true);
 				if (self.o.loop) {
 					self.makeClone();
 				}
@@ -181,7 +184,7 @@ Carousel.prototype = {
 		var self = this, i, j;
 		
 		//作成要素数
-		self.clonePrependNum = self.cloneAppendNum = Math.ceil(self.elementWidth / self.itemWidth);
+		self.clonePrependNum = self.cloneAppendNum = Math.ceil(self.elementSize / self.itemSize);
 		
 		//既に作成された要素があれば削除
 		self.$list.find($('.' + self.o.cloneClass)).remove();
@@ -211,34 +214,36 @@ Carousel.prototype = {
 	 */
 	setListStyle: function () {
 		var self = this;
-		self.$list.css({
-			width: self.calcListWidth() + 'px',
-			marginLeft: self.calcListMarginLeft() + 'px'
-		});
+		
+		var prop = {};
+		prop[self.marginProp] = self.calcListMargin() + 'px';//marginTop, marginLeft
+		prop[self.sizeProp]   = self.calcListSize() + 'px';//height, width
+		self.$list.css(prop);
+		console.log(prop);
 	}
 	,
 	
 	/**
-	 * calcListWidth
+	 * calcListSize
 	 * $listのwidthを返す
 	 * @return {number}
 	 * @see setListStyle
 	 */
-	calcListWidth: function () {
+	calcListSize: function () {
 		var self = this;
-		return (self.$item.length + self.clonePrependNum + self.cloneAppendNum ) * self.itemWidth;
+		return (self.$item.length + self.clonePrependNum + self.cloneAppendNum ) * self.itemSize;
 	}
 	,
 	
 	/**
-	 * calcListMarginLeft
+	 * calcListMargin
 	 * $listのmarginLeftを返す
 	 * @return {number}
 	 * @see setListStyle, move
 	 */
-	calcListMarginLeft: function () {
+	calcListMargin: function () {
 		var self = this;
-		return  - ( (self.itemWidth * (self.index + self.clonePrependNum)) - self.calcPos_x() );
+		return  - ( (self.itemSize * (self.index + self.clonePrependNum)) - self.calcPos_x() );
 	}
 	,
 	
@@ -246,7 +251,7 @@ Carousel.prototype = {
 	 * calcPos_x
 	 * カレントアイテムの初期位置
 	 * @return {number}
-	 * @see calcListMarginLeft
+	 * @see calcListMargin
 	 */
 	calcPos_x: function () {
 		var self = this;
@@ -263,11 +268,11 @@ Carousel.prototype = {
 					break;
 					
 				case 'center':
-					return (self.elementWidth / 2) - (self.itemWidth / 2) + self.o.pos_x_fix;
+					return (self.elementSize / 2) - (self.itemSize / 2) + self.o.pos_x_fix;
 					break;
 					
 				case 'right':
-					return (self.elementWidth - self.itemWidth) + self.o.pos_x_fix;
+					return (self.elementSize - self.itemSize) + self.o.pos_x_fix;
 					break;
 					
 				default:
@@ -301,16 +306,20 @@ Carousel.prototype = {
 	
 	/**
 	 * move
-	 * (index * itemWidth)分だけ$listを移動する
+	 * (index * itemSize)分だけ$listを移動する
 	 * @see moveBind
 	 */
 	move: function () {
-		var self = this;
+		var self = this
+		,   prop = {}
+		;
+		
+		prop[self.marginProp] = self.calcListMargin() + 'px';//marginTop, marginLeft
+		
 		if (!self.isMoving) {
 			self.isMoving = true;
-			self.$list.animate({
-				marginLeft: self.calcListMarginLeft() + 'px'
-			}, {
+			self.$list.animate(
+				prop,{
 				duration: self.o.speed,
 				easing: self.o.easing,
 				complete: function(){
