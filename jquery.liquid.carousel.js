@@ -25,19 +25,19 @@ DEFAULT_OPTIONS = {
 ,   paginationItemSelector: 'carousel-pagination-item'
 ,   prevSelector: '.carousel-prev'
 ,   nextSelector: '.carousel-next'
-,   pos_x: 'left'
-,   pos_x_fix: 0
-,   start: 1
+,   pos_x: 'left' //{number, string, function} current item position
+,   pos_x_fix: 0 //{number} px
+,   start: 1 //{number} index no
 ,   cloneClass: 'carousel-clone'
 ,   currentClass: 'carousel-current'
-,   easing: 'swing'
-,   speed: 500
-,   autoPlayInterval: 5000
-,   autoPlayStartDelay: 0
-,   loop: false
-,   currentHighlight: false
-,   autoPlay: true
-,   autoPlayHoverStop: false
+,   easing: 'swing' //{string} easing effect
+,   speed: 500 //{number} milli second
+,   autoPlayInterval: 5000 //{number} milli second
+,   autoPlayStartDelay: 0 //{number} milli second
+,   loop: false //{boolean}
+,   currentHighlight: false //{boolean}
+,   autoPlay: true //{boolean}
+,   autoPlayHoverStop: false //{boolean}
 };
 
 
