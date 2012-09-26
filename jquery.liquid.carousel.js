@@ -27,7 +27,7 @@ DEFAULT_OPTIONS = {
 ,   nextSelector: '.carousel-next'
 ,   pos_x: 'left'
 ,   pos_x_fix: 0
-,   index: 1
+,   start: 1
 ,   cloneClass: 'carousel-clone'
 ,   currentClass: 'carousel-current'
 ,   easing: 'swing'
@@ -65,7 +65,7 @@ Carousel = function ($element, options) {
 	
 	self.clonePrependNum = 0;
 	self.cloneAppendNum = 0;
-	self.index = self.o.index - 1;
+	self.index = self.o.start - 1;
 	self.isMoving = false;
 	
 	self.init();
