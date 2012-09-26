@@ -25,14 +25,12 @@ $(window).load(function(){
 	,   paginationItemSelector: '.mod-topContents-controller-item'
 	,   prevSelector: '.mod-topContents-prev'
 	,   nextSelector: '.mod-topContents-next'
-	
 	,   pos_x: 'center'
 	,   index: 1
 	,   currentClass: 'mod-topContents-current'
 	,   speed: 300
 	,   autoPlayInterval: 5000
 	,   autoPlayStartDelay: 2000
-	
 	,   loop: true
 	,   currentHighlight: true
 	,   autoPlay: false

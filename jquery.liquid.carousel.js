@@ -173,6 +173,52 @@ Carousel.prototype = {
 	,
 	
 	/**
+	 * makeClone
+	 * roop用のcloneを$itemの左右に追加
+	 * @see, init
+	 */
+	makeClone: function () {
+		var __this = this, i, j;
+		
+		//作成要素数
+		__this.clonePrependNum = __this.cloneAppendNum = Math.ceil(__this.elementWidth / __this.itemWidth);
+		
+		//既に作成された要素があれば削除
+		__this.$list.find($('.' + __this.o.cloneClass)).remove();
+		
+		//prepend
+		for (i = 0, j = __this.$item.length - 1; i < __this.clonePrependNum; i++) {
+			__this.$list.prepend(
+				__this.$item.clone().addClass(__this.o.cloneClass).removeClass(__this.o.currentClass)[j]
+			);
+			(j <= 0)? j = __this.$item.length - 1 : j--;
+		}
+		
+		//append
+		for (i = 0, j = 0; i < __this.cloneAppendNum; i++) {
+			__this.$list.append(
+				__this.$item.clone().addClass(__this.o.cloneClass).removeClass(__this.o.currentClass)[j]
+			);
+			(j >= __this.$item.length - 1)? j = 0 : j++;
+		}
+	}
+	,
+	
+	/**
+	 * setListStyle
+	 * $listにwidth, marginLeftをセット
+	 * @see init, move
+	 */
+	setListStyle: function () {
+		var __this = this;
+		__this.$list.css({
+			width: __this.calcListWidth() + 'px',
+			marginLeft: __this.calcListMarginLeft() + 'px'
+		});
+	}
+	,
+	
+	/**
 	 * calcListWidth
 	 * $listのwidthを返す
 	 * @return {number}
@@ -228,52 +274,6 @@ Carousel.prototype = {
 					return 0;
 					break;
 			}
-		}
-	}
-	,
-	
-	/**
-	 * setListStyle
-	 * $listにwidth, marginLeftをセット
-	 * @see init, move
-	 */
-	setListStyle: function () {
-		var __this = this;
-		__this.$list.css({
-			width: __this.calcListWidth() + 'px',
-			marginLeft: __this.calcListMarginLeft() + 'px'
-		});
-	}
-	,
-	
-	/**
-	 * makeClone
-	 * roop用のcloneを$itemの左右に追加
-	 * @see, init
-	 */
-	makeClone: function () {
-		var __this = this, i, j;
-		
-		//作成要素数
-		__this.clonePrependNum = __this.cloneAppendNum = Math.ceil(__this.elementWidth / __this.itemWidth);
-		
-		//既に作成された要素があれば削除
-		__this.$list.find($('.' + __this.o.cloneClass)).remove();
-		
-		//prepend
-		for (i = 0, j = __this.$item.length - 1; i < __this.clonePrependNum; i++) {
-			__this.$list.prepend(
-				__this.$item.clone().addClass(__this.o.cloneClass).removeClass(__this.o.currentClass)[j]
-			);
-			(j <= 0)? j = __this.$item.length - 1 : j--;
-		}
-		
-		//append
-		for (i = 0, j = 0; i < __this.cloneAppendNum; i++) {
-			__this.$list.append(
-				__this.$item.clone().addClass(__this.o.cloneClass).removeClass(__this.o.currentClass)[j]
-			);
-			(j >= __this.$item.length - 1)? j = 0 : j++;
 		}
 	}
 	,
