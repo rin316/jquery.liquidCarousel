@@ -1,10 +1,12 @@
 /*!
  * jquery.liquid.carousel.js
  *
- * @varsion: 1.0.1
- * @require: jquery.js, jquery.effects.core.js
- * @create : 2012-09-11 [rin316(Yuta Hayashi)]
- * @modify : 2012-09-12 autoPlayStartDelay が40以下だった場合、40になるよう変更
+ * @varsion   1.2
+ * @author    rin316 [Yuta Hayashi]
+ * @require   jquery.js, jquery.effects.core.js
+ * @create    2012-09-11
+ * @modify    2012-09-26
+ * @link      https://github.com/rin316/jquery.liquid.carousel
  */
 ;(function ($, window, undefined) {
 
@@ -83,20 +85,26 @@ Carousel.prototype = {
 	init: function () {
 		var __this = this;
 		
+		//indexを更新
 		__this.indexUpdate(__this.index);
 		
-		if (__this.o.loop) {
-			__this.makeClone();
-		}
+		//左右にクローン作成
+		if (__this.o.loop) { __this.makeClone(); }
 		
+		//$listのmargin, widthを設定
 		__this.setListStyle();
-		__this.addCurrentClass();
-		__this.highlightEffect();
 		
+		//current表示
+		__this.addCurrentClass();
+		if (__this.o.currentHighlight) { __this.highlightEffect(); }
+		
+		//autoplay
 		if (__this.o.autoPlay) { __this.autoPlay(); }
 		
 		
-		//click
+		/*
+		 * Click Event
+		 */
 		__this.$paginationItem.on('click', function(e){
 			__this.moveBind(__this.$paginationItem.index(this));
 			e.preventDefault();
@@ -113,7 +121,9 @@ Carousel.prototype = {
 		});
 		
 		
-		//resize
+		/*
+		 * Resize Event
+		 */
 		$(window).on('resize', function () {
 			var _timer = null
 			  , _INTERVAL = 250
@@ -139,7 +149,11 @@ Carousel.prototype = {
 	
 	/**
 	 * indexUpdate
-	 * __this.indexを引数で送られたindexに更新する。$itemの最大値より大きければ最小値にリセット、最小値より小さければ最大値にリセット
+	 * 引数で送られたindexを使って__this.indexを更新する。
+	 * $itemの最大値より大きければ最小値にリセット、最小値より小さければ最大値にリセット
+	 * @param {number} index __this.indexの値をこの値に書き換える。0から始まる
+	 * @param {string} moved 'moved'を指定するとリセットの幅が狭まる。移動後の位置リセットに使用
+	 * @see init, move
 	 */
 	indexUpdate: function (index, moved) {
 		var __this = this;
@@ -160,7 +174,9 @@ Carousel.prototype = {
 	
 	/**
 	 * calcListWidth
-	 * $listにセットするwidthを返す
+	 * $listのwidthを返す
+	 * @return {number}
+	 * @see setListStyle
 	 */
 	calcListWidth: function () {
 		var __this = this;
@@ -170,7 +186,9 @@ Carousel.prototype = {
 	
 	/**
 	 * calcListMarginLeft
-	 * $listにセットするmarginLeftを返す
+	 * $listのmarginLeftを返す
+	 * @return {number}
+	 * @see setListStyle, move
 	 */
 	calcListMarginLeft: function () {
 		var __this = this;
@@ -180,8 +198,9 @@ Carousel.prototype = {
 	
 	/**
 	 * calcPos_x
-	 * カレントの初期位置
-	 * __this.listMarginLeftで使用
+	 * カレントアイテムの初期位置
+	 * @return {number}
+	 * @see calcListMarginLeft
 	 */
 	calcPos_x: function () {
 		var __this = this;
@@ -215,7 +234,8 @@ Carousel.prototype = {
 	
 	/**
 	 * setListStyle
-	 * set $list width, marginLeft
+	 * $listにwidth, marginLeftをセット
+	 * @see init, move
 	 */
 	setListStyle: function () {
 		var __this = this;
@@ -228,7 +248,8 @@ Carousel.prototype = {
 	
 	/**
 	 * makeClone
-	 * roop用のcloneを左右に作成
+	 * roop用のcloneを$itemの左右に追加
+	 * @see, init
 	 */
 	makeClone: function () {
 		var __this = this, i, j;
@@ -259,21 +280,29 @@ Carousel.prototype = {
 	
 	/**
 	 * moveBind
+	 * カルーセル移動, カレント表示を1つにバインド
+	 * @param {number} index __this.indexの値をこの値に書き換える。0から始まる
+	 * @see init, autoPlay
 	 */
 	moveBind: function (index) {
 		var __this = this;
+		
 		//index番号を更新
 		__this.indexUpdate(index);
-		//移動前にカレント表示
+		
+		//移動前にcurrent表示
 		__this.addCurrentClass();
-		__this.highlightEffect();
+		if (__this.o.currentHighlight) { __this.highlightEffect(); }
+		
+		//移動
 		__this.move();
 	}
 	,
 	
 	/**
 	 * move
-	 * [index] * itemWidth分だけ$listをずらす
+	 * (index * itemWidth)分だけ$listを移動する
+	 * @see moveBind
 	 */
 	move: function () {
 		var __this = this;
@@ -287,11 +316,15 @@ Carousel.prototype = {
 				complete: function(){
 					__this.isMoving = false;
 					if (__this.o.loop) {
+						//indexを更新
 						__this.indexUpdate(__this.index, 'moved');
+						//位置をリセット
 						__this.setListStyle();
 					}
+					
+					//移動後にcurrent表示
 					__this.addCurrentClass();
-					__this.highlightEffect();
+					if (__this.o.currentHighlight) { __this.highlightEffect(); }
 				},
 				queue: false
 			})
@@ -301,7 +334,8 @@ Carousel.prototype = {
 	
 	/**
 	 * addCurrentClass
-	 * [index]番目の要素にcurrentClassをセット
+	 * index番目の要素にcurrentClassをセット
+	 * @see init, move
 	 */
 	addCurrentClass: function () {
 		var __this = this;
@@ -326,19 +360,20 @@ Carousel.prototype = {
 	
 	/**
 	 * highlightEffect
-	 * currentClass が付いた要素をハイライト
+	 * currentClass が付いた要素をハイライト表示
+	 * @see init, move
 	 */
 	highlightEffect: function () {
 		var __this = this;
-		if (__this.o.currentHighlight) {
-			__this.$paginationItem.animate({opacity: 0.4}, {duration: 300, queue: false});
-			__this.$paginationItem + $('.' + __this.o.currentClass).animate({opacity: 1}, {duration: 300, queue: false});
-		}
+		__this.$paginationItem.animate({opacity: 0.4}, {duration: 300, queue: false});
+		__this.$paginationItem + $('.' + __this.o.currentClass).animate({opacity: 1}, {duration: 300, queue: false});
 	}
 	,
 	
 	/**
 	 * autoPlay
+	 * 一定間隔でmoveBindを実行しカルーセルを自動で動かす
+	 * @see init
 	 */
 	autoPlay: function () {
 		var __this = this, timer, autoPlay, autoPlayInterval;
@@ -365,6 +400,7 @@ Carousel.prototype = {
 	}
 	
 };//Carousel.prototype
+
 
 /**
  * $.fn.liquidCarousel
