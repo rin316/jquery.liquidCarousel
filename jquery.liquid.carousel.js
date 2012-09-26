@@ -83,7 +83,7 @@ Carousel.prototype = {
 	init: function () {
 		var __this = this;
 		
-		__this.indexReset(__this.index);
+		__this.indexUpdate(__this.index);
 		
 		if (__this.o.loop) {
 			__this.makeClone();
@@ -138,10 +138,10 @@ Carousel.prototype = {
 	,
 	
 	/**
-	 * indexReset
-	 * indexが$itemの最大値より大きければ最小値にリセット、最小値より小さければ最大値にリセット
+	 * indexUpdate
+	 * __this.indexを引数で送られたindexに更新する。$itemの最大値より大きければ最小値にリセット、最小値より小さければ最大値にリセット
 	 */
-	indexReset: function (index, moved) {
+	indexUpdate: function (index, moved) {
 		var __this = this;
 		
 		if (!__this.isMoving) {
@@ -262,7 +262,9 @@ Carousel.prototype = {
 	 */
 	moveBind: function (index) {
 		var __this = this;
-		__this.indexReset(index);
+		//index番号を更新
+		__this.indexUpdate(index);
+		//移動前にカレント表示
 		__this.addCurrentClass();
 		__this.highlightEffect();
 		__this.move();
@@ -285,7 +287,7 @@ Carousel.prototype = {
 				complete: function(){
 					__this.isMoving = false;
 					if (__this.o.loop) {
-						__this.indexReset(__this.index, 'moved');
+						__this.indexUpdate(__this.index, 'moved');
 						__this.setListStyle();
 					}
 					__this.addCurrentClass();
