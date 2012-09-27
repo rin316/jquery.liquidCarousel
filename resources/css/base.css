@@ -17,6 +17,7 @@ html, body {
 	/* メイン背景・文字色 */
 	background-color: #FFFFFF;
 	color: #333333;
+	font-family: 'Source Code Pro', sans-serif;
 }
 
 body {
@@ -34,110 +35,120 @@ a:hover   { text-decoration: none; }
 a:active  {}
 
 hr {
-	margin: 0;
-	border: solid #ccc;
+	margin: 20px 0;
+	border: solid #D264B7;
 	border-width: 0px 0px 1px;
 }
 
-.box {
+
+#centerLine {
+	position: fixed;
+	top: 0;
+	left: 50%;
+	z-index: 0;
+	width: 1px;
+	height: 100%;
+	background: #D264B7;
+	overflow: visible;
+	white-space: nowrap;
+}
+
+.header {
 	margin: 0px auto 0px auto;
 	padding: 10px;
-	width: 1000px;
-	background-color: #fcc;
+	font-size: 25px;
 }
 
 .carousel {
 	width: 100%;
 	overflow: hidden;
 	position: relative;
+	z-index: 1;
 }
 	
-	/*--carousel2--*/
-	.carousel2 .listWrapper {
+	/*--vertical--*/
+	.vertical .carousel-listWrapper {
 		height: 100px;
 		overflow: hidden;
 	}
-	.carousel2 .list {
-	}
 	
-	.list {
+	.carousel-list {
 	}
-	.list:after {
+	.carousel-list:after {
 		content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
 	}
-		/*--carousel2--*/
-		.carousel2 .item {
+		/*--vertical--*/
+		.vertical .carousel-item {
 			float: none;
 			display: block;
 		}
 		
-		.item {
+		.carousel-item {
 			float: left;
 			display: inline;
-			margin: 10px;
-			padding: 10px 0px 0px 0px;
-			border: 1px solid #999;
-			width: 40px;
-			height: 30px;
+			margin: 0px;
+			padding: 40px 0px 0px 0px;
+			width: 100px;
+			height: 60px;
 			background-color: #eee;
 			text-align: center;
 		}
-		.item.current {
-			background-color: #fcc;
+		.carousel-item.carousel-current {
+			background-color: #D264B7 !important;
 		}
 		
-	.button {
+	.carousel-button {
 	}
-	.button:after {
+	.carousel-button:after {
 		content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
 	}
-		/*--carousel2--*/
-		.carousel2 .prev,
-		.carousel2 .next {
+		/*--vertical--*/
+		.vertical .carousel-prev,
+		.vertical .carousel-next {
 			display: block;
 			float: none;
 		}
-		.prev,
-		.next {
+		.carousel-prev,
+		.carousel-next {
 			display: inline;
 			float: left;
 			margin: 10px;
 			width: 100px;
 		}
-			.prev a,
-			.next a {
+			.carousel-prev a,
+			.carousel-next a {
 				display: block;
 				padding: 20px;
-				background-color: #ccf;
+				background-color: #B7D264;
 				border-radius: 5px;
 			}
 			
-		.prev {
+		.carousel-prev {
 		}
-			.prev a {
+			.carousel-prev a {
 			}
 		
-		.next {
+		.carousel-next {
 		}
-			.next a {
+			.carousel-next a {
 			}
 			
-	.pagination {
+	.carousel-pagination {
 	}
-		.paginationList {
+		.carousel-paginationList {
 		}
-		.paginationList:after {
+		.carousel-paginationList:after {
 			content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
 		}
-			.paginationItem {
+			.carousel-paginationItem {
 				float: left;
 				display: inline;
 				margin: 10px;
 			}
-				.paginationItem a {
+				.carousel-paginationItem a {
 					display: block;
 					padding: 10px;
-					background-color: #cfc;
+					background-color: #B7D264;
 				}
 
 

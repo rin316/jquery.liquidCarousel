@@ -4,69 +4,148 @@
 <meta charset="utf-8">
 <title>jquery.liquid.carousel.js</title>
 <link rel="stylesheet" href="./resources/css/import.css">
+<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
 <script src="./resources/js/loader.js"></script>
 </head>
 
 <body>
 <div id="document">
 
-<div class="box">
+<div id="centerLine"></div>
+
+<div class="header">
 	<h1>jquery.liquid.carousel.js</h1>
 </div>
 
-<div class="carousel1 carousel">
-	<ul class="list">
-		<li class="item">1</li>
-		<li class="item">2</li>
-		<li class="item">3</li>
-		<li class="item">4</li>
+<hr>
+
+<div id="sample1-1" class="carousel horizontal">
+	<ul class="carousel-list">
+		<li class="carousel-item">1</li>
+		<li class="carousel-item">2</li>
+		<li class="carousel-item">3</li>
+		<li class="carousel-item">4</li>
 	</ul>
 	
-	<ul class="button">
-		<li class="prev"><a href="#">Prev</a></li>
-		<li class="next"><a href="#">Next</a></li>
-	</ul>
-	
-	<div class="pagination">
-		<ul class="paginationList">
-			<li class="paginationItem"><a href="#">1</a></li>
-			<li class="paginationItem"><a href="#">2</a></li>
-			<li class="paginationItem"><a href="#">3</a></li>
-			<li class="paginationItem"><a href="#">4</a></li>
+	<div class="carousel-pagination">
+		<ul class="carousel-paginationList">
+			<li class="carousel-paginationItem"><a href="#">1</a></li>
+			<li class="carousel-paginationItem"><a href="#">2</a></li>
+			<li class="carousel-paginationItem"><a href="#">3</a></li>
+			<li class="carousel-paginationItem"><a href="#">4</a></li>
 		</ul>
 	</div>
+	
+	<ul class="carousel-button">
+		<li class="carousel-prev"><a href="#">Prev</a></li>
+		<li class="carousel-next"><a href="#">Next</a></li>
+	</ul>
 </div>
 
 <hr>
 
-<div class="carousel2 carousel">
-	<div class="listWrapper">
-		<ul class="list">
-			<li class="item">1</li>
-			<li class="item">2</li>
-			<li class="item">3</li>
-			<li class="item">4</li>
-		</ul>
-	</div>
-	
-	<ul class="button">
-		<li class="prev"><a href="#">Prev</a></li>
-		<li class="next"><a href="#">Next</a></li>
+<div id="sample1-2" class="carousel horizontal">
+	<ul class="carousel-list">
+		<li class="carousel-item">1</li>
+		<li class="carousel-item">2</li>
+		<li class="carousel-item">3</li>
+		<li class="carousel-item">4</li>
 	</ul>
 	
-	<div class="pagination">
-		<ul class="paginationList">
-			<li class="paginationItem"><a href="#">1</a></li>
-			<li class="paginationItem"><a href="#">2</a></li>
-			<li class="paginationItem"><a href="#">3</a></li>
-			<li class="paginationItem"><a href="#">4</a></li>
+	<div class="carousel-pagination">
+		<ul class="carousel-paginationList">
+			<li class="carousel-paginationItem"><a href="#">1</a></li>
+			<li class="carousel-paginationItem"><a href="#">2</a></li>
+			<li class="carousel-paginationItem"><a href="#">3</a></li>
+			<li class="carousel-paginationItem"><a href="#">4</a></li>
 		</ul>
 	</div>
+	
+	<ul class="carousel-button">
+		<li class="carousel-prev"><a href="#">Prev</a></li>
+		<li class="carousel-next"><a href="#">Next</a></li>
+	</ul>
 </div>
 
 <hr>
+
+<div id="sample1-3" class="carousel horizontal">
+	<ul class="carousel-list">
+		<li class="carousel-item">1</li>
+		<li class="carousel-item">2</li>
+		<li class="carousel-item">3</li>
+		<li class="carousel-item">4</li>
+	</ul>
 	
+	<div class="carousel-pagination">
+		<ul class="carousel-paginationList">
+			<li class="carousel-paginationItem"><a href="#">1</a></li>
+			<li class="carousel-paginationItem"><a href="#">2</a></li>
+			<li class="carousel-paginationItem"><a href="#">3</a></li>
+			<li class="carousel-paginationItem"><a href="#">4</a></li>
+		</ul>
+	</div>
 	
+	<ul class="carousel-button">
+		<li class="carousel-prev"><a href="#">Prev</a></li>
+		<li class="carousel-next"><a href="#">Next</a></li>
+	</ul>
+</div>
+
+<hr>
+
+<div id="sample2" class="carousel horizontal">
+	<ul class="carousel-list">
+		<li class="carousel-item">1</li>
+		<li class="carousel-item">2</li>
+		<li class="carousel-item">3</li>
+		<li class="carousel-item">4</li>
+	</ul>
+	
+	<div class="carousel-pagination">
+		<ul class="carousel-paginationList">
+			<li class="carousel-paginationItem"><a href="#">1</a></li>
+			<li class="carousel-paginationItem"><a href="#">2</a></li>
+			<li class="carousel-paginationItem"><a href="#">3</a></li>
+			<li class="carousel-paginationItem"><a href="#">4</a></li>
+		</ul>
+	</div>
+	
+	<ul class="carousel-button">
+		<li class="carousel-prev"><a href="#">Prev</a></li>
+		<li class="carousel-next"><a href="#">Next</a></li>
+	</ul>
+</div>
+
+<hr>
+
+<div id="sample3" class="carousel vertical">
+	<div class="carousel-listWrapper">
+		<ul class="carousel-list">
+			<li class="carousel-item">1</li>
+			<li class="carousel-item">2</li>
+			<li class="carousel-item">3</li>
+			<li class="carousel-item">4</li>
+		</ul>
+	</div>
+	
+	<div class="carousel-pagination">
+		<ul class="carousel-paginationList">
+			<li class="carousel-paginationItem"><a href="#">1</a></li>
+			<li class="carousel-paginationItem"><a href="#">2</a></li>
+			<li class="carousel-paginationItem"><a href="#">3</a></li>
+			<li class="carousel-paginationItem"><a href="#">4</a></li>
+		</ul>
+	</div>
+	
+	<ul class="carousel-button">
+		<li class="carousel-prev"><a href="#">Prev</a></li>
+		<li class="carousel-next"><a href="#">Next</a></li>
+	</ul>
+</div>
+
+<hr>
+
 <!-- /#document --></div>
 </body>
 </html>

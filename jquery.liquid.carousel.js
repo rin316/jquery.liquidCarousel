@@ -19,12 +19,12 @@ var Carousel
  * DEFAULT_OPTIONS
  */
 DEFAULT_OPTIONS = {
-	listSelector: '.carousel-item'
-,   itemSelector: '.carousel-list'
-,   paginationListSelector: 'carousel-pagination-list'
-,   paginationItemSelector: 'carousel-pagination-item'
-,   prevSelector: '.carousel-prev'
-,   nextSelector: '.carousel-next'
+    listSelector:           '.carousel-list'
+,   itemSelector:           '.carousel-item'
+,   paginationListSelector: '.carousel-paginationList'
+,   paginationItemSelector: '.carousel-paginationItem'
+,   prevSelector:           '.carousel-prev'
+,   nextSelector:           '.carousel-next'
 ,   pos_x: 'left' //{number, string, function} current item position
 ,   pos_x_fix: 0 //{number} px
 ,   start: 1 //{number} index no
@@ -34,10 +34,10 @@ DEFAULT_OPTIONS = {
 ,   speed: 500 //{number} milli second
 ,   autoPlayInterval: 5000 //{number} milli second
 ,   autoPlayStartDelay: 0 //{number} milli second
-,   loop: false //{boolean}
+,   loop: true //{boolean}
 ,   vertical: false //{boolean}
-,   currentHighlight: false //{boolean}
-,   autoPlay: true //{boolean}
+,   currentHighlight: true //{boolean}
+,   autoPlay: false //{boolean}
 ,   autoPlayHoverStop: false //{boolean}
 };
 
@@ -219,7 +219,6 @@ Carousel.prototype = {
 		prop[self.marginProp] = self.calcListMargin() + 'px';//marginTop, marginLeft
 		prop[self.sizeProp]   = self.calcListSize() + 'px';//height, width
 		self.$list.css(prop);
-		console.log(prop);
 	}
 	,
 	

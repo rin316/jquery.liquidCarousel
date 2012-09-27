@@ -18,44 +18,62 @@ var addJsOnClass = (function () {
 
 //window load
 $(window).load(function(){
-	$('.carousel1').liquidCarousel({
-		listSelector:           '.list'
-	,   itemSelector:           '.item'
-	,   paginationListSelector: '.paginationList'
-	,   paginationItemSelector: '.paginationItem'
-	,   prevSelector:           '.prev'
-	,   nextSelector:           '.next'
-	,   pos_x: 'left'
-	,   start: 1
-	,   currentClass: 'current'
-	,   speed: 300
-	,   autoPlayInterval: 5000
-	,   autoPlayStartDelay: 2000
-	,   loop: true
-	,   vertical: false
-	,   currentHighlight: true
-	,   autoPlay: false
-	,   autoPlayHoverStop: true
+	
+	/*
+	 * color gradation作成
+	 */
+	$('.carousel-list').each(function () {
+		var item = $(this).children();
+		var itemLength = item.length;
+		
+		var colors = [];
+		for (var i = 0; i < itemLength; i++){
+			var r = 152;
+			var g = 190;
+			var b = 33;
+			//r = Math.round(r * i / itemLength)
+			//g = Math.round(g * i / itemLength)
+			//b = Math.round(b * i / itemLength)
+
+			r = Math.round(r + ((255-r) * (itemLength - i + 1) / itemLength) * 0.6);
+			g = Math.round(g + ((255-g) * (itemLength - i + 1) / itemLength) * 0.6);
+			b = Math.round(b + ((255-b) * (itemLength - i + 1) / itemLength) * 0.6);
+
+			colors[itemLength - i] = 'rgb(' + r + ','+ g + ',' + b + ')';
+			
+			$(item[i]).css('background-color', colors[itemLength - i])
+		}
 	});
 	
-	$('.carousel2').liquidCarousel({
-		listSelector:           '.list'
-	,   itemSelector:           '.item'
-	,   paginationListSelector: '.paginationList'
-	,   paginationItemSelector: '.paginationItem'
-	,   prevSelector:           '.prev'
-	,   nextSelector:           '.next'
-	,   pos_x: 'left'
-	,   start: 1
-	,   currentClass: 'current'
-	,   speed: 300
-	,   autoPlayInterval: 5000
-	,   autoPlayStartDelay: 2000
-	,   loop: false
-	,   vertical: true
-	,   currentHighlight: true
-	,   autoPlay: false
+	
+	/*
+	 * liquidCarousel
+	 */
+	$('#sample1-1').liquidCarousel({
+	});
+	$('#sample1-2').liquidCarousel({
+	    pos_x: 'center'
+	,   autoPlayInterval: 2000
+	,   autoPlayStartDelay: 0
+	,   autoPlay: true
 	,   autoPlayHoverStop: true
+
+	});
+	$('#sample1-3').liquidCarousel({
+	    pos_x: 'right'
+	,   easing: 'linear'
+	,   speed: 4000
+	,   autoPlayInterval: 0
+	,   autoPlayStartDelay: 1000
+	,   autoPlay: true
+	});
+	
+	$('#sample2').liquidCarousel({
+	    loop: false
+	});
+	
+	$('#sample3').liquidCarousel({
+	    vertical: true
 	});
 });
 
