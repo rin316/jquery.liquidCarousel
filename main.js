@@ -55,7 +55,7 @@ $(window).load(function(){
 	    pos_x: 'center'
 	,   autoPlayInterval: 2000
 	,   autoPlayStartDelay: 0
-	,   autoPlay: true
+	//,   autoPlay: true
 	,   autoPlayHoverStop: true
 
 	});
@@ -65,7 +65,7 @@ $(window).load(function(){
 	,   speed: 4000
 	,   autoPlayInterval: 0
 	,   autoPlayStartDelay: 1000
-	,   autoPlay: true
+	//,   autoPlay: true
 	});
 	
 	$('#sample2-1').liquidCarousel({
@@ -75,6 +75,11 @@ $(window).load(function(){
 	$('#sample2-2').liquidCarousel({
 	    loop: false
 	,   unit: 3
+		
+	});
+	
+	$('#sample2-3').liquidCarousel({
+	    unit: 3
 		
 	});
 	

@@ -168,12 +168,17 @@ Carousel.prototype = {
 		var self = this;
 		
 		if (!self.isMoving) {
-			//loopが有効 && moveする前なら
-			if (self.o.loop && moved !== 'moved') {
-				if (index < -1                     ){ index = self.$item.length - 1; }
-				if (index > self.$item.length    ){ index = 0; }
+			//loopが有効 && move前
+			if        (self.o.loop && moved !== 'moved') {
+				if (index < - self.unit                        ){ index = self.$item.length - 1; }
+				if (index > (self.$item.length - 1) + self.unit){ index = 0; }
+			//loopが有効 && move後
+			} else if (self.o.loop && moved === 'moved') {
+				if (index < 0                    ){               index = self.$item.length + index; }
+				if (index > self.$item.length - 1){               index = index - self.$item.length; }
+			//loop無効
 			} else {
-				if (index < 0                      ){ index = self.$item.length - 1; }
+				if (index < 0                    ){ index = self.$item.length - 1; }
 				if (index > self.$item.length - 1){ index = 0; }
 			}
 			self.index = index;
