@@ -68,8 +68,14 @@ $(window).load(function(){
 	,   autoPlay: true
 	});
 	
-	$('#sample2').liquidCarousel({
+	$('#sample2-1').liquidCarousel({
 	    loop: false
+	});
+	
+	$('#sample2-2').liquidCarousel({
+	    loop: false
+	,   unit: 3
+		
 	});
 	
 	$('#sample3').liquidCarousel({

@@ -28,6 +28,7 @@ DEFAULT_OPTIONS = {
 ,   pos_x: 'left' //{number, string, function} current item position
 ,   pos_x_fix: 0 //{number} px
 ,   start: 1 //{number} index no
+,   unit: 1 //{number} move pieces
 ,   cloneClass: 'carousel-clone'
 ,   currentClass: 'carousel-current'
 ,   easing: 'swing' //{string} easing effect
@@ -65,6 +66,11 @@ Carousel = function ($element, options) {
 	self.itemSize =         (self.o.vertical) ? self.$item.outerHeight(true)    : self.$item.outerWidth(true);
 	self.sizeProp =   (self.o.vertical) ? 'height' : 'width';
 	self.marginProp = (self.o.vertical) ? 'marginTop' : 'marginLeft';
+	
+	//TODO
+	//'auto'の場合はunitをwidthから自動計算する
+	//unit: ( $frame.width() + parseFloat($item.css('margin-right')) ) / $item.outerWidth(true)
+	self.unit           = self.o.unit;
 	
 	self.clonePrependNum = 0;
 	self.cloneAppendNum = 0;
@@ -114,12 +120,12 @@ Carousel.prototype = {
 		});
 		
 		self.$prevNavi.on('click', function(e){
-			self.moveBind(self.index - 1);
+			self.moveBind(self.index - self.unit);
 			e.preventDefault();
 		});
 		
 		self.$nextNavi.on('click', function(e){
-			self.moveBind(self.index + 1);
+			self.moveBind(self.index + self.unit);
 			e.preventDefault();
 		});
 		
@@ -167,8 +173,8 @@ Carousel.prototype = {
 				if (index < -1                     ){ index = self.$item.length - 1; }
 				if (index > self.$item.length    ){ index = 0; }
 			} else {
-				if (    index < 0                      ){ index = self.$item.length - 1; }
-				if (    index > self.$item.length - 1){ index = 0; }
+				if (index < 0                      ){ index = self.$item.length - 1; }
+				if (index > self.$item.length - 1){ index = 0; }
 			}
 			self.index = index;
 		}

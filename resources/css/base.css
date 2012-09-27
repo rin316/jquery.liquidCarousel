@@ -66,6 +66,12 @@ hr {
 	z-index: 1;
 }
 	
+	/*--unit--*/
+	.unit .carousel-listWrapper {
+		width: 300px;
+		overflow: hidden;
+	}
+	
 	/*--vertical--*/
 	.vertical .carousel-listWrapper {
 		height: 100px;
