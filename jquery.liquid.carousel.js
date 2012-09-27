@@ -374,26 +374,19 @@ Carousel.prototype = {
 		self.$list.children().eq(self.clonePrependNum  + self.index).addClass(self.o.currentClass);
 		
 		//$itemの最大値より大きい場合は、0番目の$paginationItemをcurrent
-		/*
-		console.log('self.index');
-		console.log(self.index);
-		
-		console.log('self.$item.length');
-		console.log(self.$item.length);
-		
-		console.log('self.unit');
-		console.log(self.unit);
-		
-		console.log('(self.$item.length -1) + (self.unit - 1)');
-		console.log((self.$item.length -1) + (self.unit - 1));
-		console.log('---------');
-		*/
-		
 		if (self.index > self.$item.length -1) {
 			self.$paginationItem.eq(0).addClass(self.o.currentClass);
 		//$itemの最大値より小さい場合は、最後の$paginationItemをcurrent
 		} else if (self.index < 0) {
-			self.$paginationItem.eq(self.$item.length - 1).addClass(self.o.currentClass);
+			//self.$paginationItem.eq(self.$item.length - 1).addClass(self.o.currentClass);
+			//self.$paginationItem.eq(self.$paginationItem.length - 1).addClass(self.o.currentClass);
+			
+			//TODO 最後のunitの値にしたい
+			var hoge = Math.floor(self.index / self.unit);// -1
+			
+			console.log('hoge: '+hoge);
+			self.$paginationItem.eq( hoge ).addClass(self.o.currentClass);
+			
 		} else {
 			self.$paginationItem.eq( Math.floor(self.index / self.unit) ).addClass(self.o.currentClass);
 		}
