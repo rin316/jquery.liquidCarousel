@@ -115,7 +115,7 @@ Carousel.prototype = {
 		 * Click Event
 		 */
 		self.$paginationItem.on('click', function(e){
-			self.moveBind(self.$paginationItem.index(this));
+			self.moveBind(self.$paginationItem.index(this) * self.unit);
 			e.preventDefault();
 		});
 		
@@ -169,19 +169,27 @@ Carousel.prototype = {
 		
 		if (!self.isMoving) {
 			//loopが有効 && move前
-			if        (self.o.loop && moved !== 'moved') {
-				if (index < - self.unit                        ){ index = self.$item.length - 1; }
-				if (index > (self.$item.length - 1) + self.unit){ index = 0; }
+			if (self.o.loop && moved !== 'moved') {
+				if (index < - self.unit                        ) { index = self.$item.length - 1; }
+				if (index > (self.$item.length - 1) + self.unit) { index = 0; }
 			//loopが有効 && move後
 			} else if (self.o.loop && moved === 'moved') {
-				if (index < 0                    ){               index = self.$item.length + index; }
-				if (index > self.$item.length - 1){               index = index - self.$item.length; }
+				if (index < 0                    ) {               index = self.$item.length + index; }
+				if (index > self.$item.length - 1) {               index = index - self.$item.length; }
 			//loop無効
 			} else {
-				if (index < 0                    ){ index = self.$item.length - 1; }
+				if (self.unit > 1) {
+					if (index < 0) {                               index = (Math.ceil( (self.$item.length) / self.unit ) - 1) * self.unit; }
+				} else {
+					if (index < 0) {                               index = self.$item.length - 1; }
+				}
+				
 				if (index > self.$item.length - 1){ index = 0; }
 			}
+			
 			self.index = index;
+			
+			console.log('self.index: ' + self.index);
 		}
 	}
 	,
@@ -366,13 +374,28 @@ Carousel.prototype = {
 		self.$list.children().eq(self.clonePrependNum  + self.index).addClass(self.o.currentClass);
 		
 		//$itemの最大値より大きい場合は、0番目の$paginationItemをcurrent
-		if (self.index > self.$item.length - 1) {
+		/*
+		console.log('self.index');
+		console.log(self.index);
+		
+		console.log('self.$item.length');
+		console.log(self.$item.length);
+		
+		console.log('self.unit');
+		console.log(self.unit);
+		
+		console.log('(self.$item.length -1) + (self.unit - 1)');
+		console.log((self.$item.length -1) + (self.unit - 1));
+		console.log('---------');
+		*/
+		
+		if (self.index > self.$item.length -1) {
 			self.$paginationItem.eq(0).addClass(self.o.currentClass);
 		//$itemの最大値より小さい場合は、最後の$paginationItemをcurrent
 		} else if (self.index < 0) {
 			self.$paginationItem.eq(self.$item.length - 1).addClass(self.o.currentClass);
 		} else {
-			self.$paginationItem.eq(self.index).addClass(self.o.currentClass);
+			self.$paginationItem.eq( Math.floor(self.index / self.unit) ).addClass(self.o.currentClass);
 		}
 	}
 	,
