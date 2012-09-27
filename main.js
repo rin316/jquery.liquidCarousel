@@ -26,7 +26,7 @@ $(window).load(function(){
 	,   prevSelector:           '.prev'
 	,   nextSelector:           '.next'
 	,   pos_x: 'left'
-	,   start: 2
+	,   start: 1
 	,   currentClass: 'current'
 	,   speed: 300
 	,   autoPlayInterval: 5000
@@ -37,8 +37,6 @@ $(window).load(function(){
 	,   autoPlay: false
 	,   autoPlayHoverStop: true
 	});
-	
-	console.log('end 1');
 	
 	$('.carousel2').liquidCarousel({
 		listSelector:           '.list'
@@ -59,7 +57,6 @@ $(window).load(function(){
 	,   autoPlay: false
 	,   autoPlayHoverStop: true
 	});
-	console.log('end 2');
 });
 
 

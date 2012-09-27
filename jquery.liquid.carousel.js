@@ -225,7 +225,7 @@ Carousel.prototype = {
 	
 	/**
 	 * calcListSize
-	 * $listのwidthを返す
+	 * $listのsizeを返す
 	 * @return {number}
 	 * @see setListStyle
 	 */

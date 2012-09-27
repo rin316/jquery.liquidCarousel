@@ -33,6 +33,11 @@ a:visited {}
 a:hover   { text-decoration: none; }
 a:active  {}
 
+hr {
+	margin: 0;
+	border: solid #ccc;
+	border-width: 0px 0px 1px;
+}
 
 .box {
 	margin: 0px auto 0px auto;
@@ -53,9 +58,6 @@ a:active  {}
 		overflow: hidden;
 	}
 	.carousel2 .list {
-		position: absolute;
-		top: 0px;
-		left: 0px;
 	}
 	
 	.list {
@@ -89,18 +91,25 @@ a:active  {}
 	.button:after {
 		content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
 	}
+		/*--carousel2--*/
+		.carousel2 .prev,
+		.carousel2 .next {
+			display: block;
+			float: none;
+		}
 		.prev,
 		.next {
 			display: inline;
 			float: left;
 			margin: 10px;
+			width: 100px;
 		}
 			.prev a,
 			.next a {
 				display: block;
 				padding: 20px;
-				width: 100px;
 				background-color: #ccf;
+				border-radius: 5px;
 			}
 			
 		.prev {
