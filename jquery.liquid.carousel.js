@@ -365,7 +365,9 @@ Carousel.prototype = {
 	 * @see init, move
 	 */
 	addCurrentClass: function () {
-		var self = this;
+		var self = this
+		,   paginationIndex
+		;
 		
 		//currentClass削除
 		self.$allList.children().removeClass(self.o.currentClass);
@@ -375,16 +377,14 @@ Carousel.prototype = {
 		
 		//$itemの最大値より大きい場合は、0番目の$paginationItemをcurrent
 		if (self.index > self.$item.length -1) {
-			self.$paginationItem.eq(0).addClass(self.o.currentClass);
+			paginationIndex = 0;
 		//$itemの最大値より小さい場合は、最後の$paginationItemをcurrent
 		} else if (self.index < 0) {
-			var paginationIndex = Math.floor( (self.$item.length + self.index) / self.unit );
-			self.$paginationItem.eq(paginationIndex).addClass(self.o.currentClass);
-			
-			
+			paginationIndex = Math.floor( (self.$item.length + self.index) / self.unit );
 		} else {
-			self.$paginationItem.eq( Math.floor(self.index / self.unit) ).addClass(self.o.currentClass);
+			paginationIndex = Math.floor(self.index / self.unit);
 		}
+		self.$paginationItem.eq(paginationIndex).addClass(self.o.currentClass);
 	}
 	,
 	
