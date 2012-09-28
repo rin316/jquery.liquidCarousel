@@ -28,7 +28,7 @@ DEFAULT_OPTIONS = {
 ,   pos_x: 'left' //{number, string, function} current item position
 ,   pos_x_fix: 0 //{number} px
 ,   start: 1 //{number} index no
-,   unit: 1 //{number} move pieces
+,   group: 1 //{number} move pieces
 ,   cloneClass: 'carousel-clone'
 ,   currentClass: 'carousel-current'
 ,   easing: 'swing' //{string} easing effect
@@ -68,10 +68,9 @@ Carousel = function ($element, options) {
 	self.marginProp = (self.o.vertical) ? 'marginTop' : 'marginLeft';
 	
 	//TODO
-	//'auto'の場合はunitをwidthから自動計算する
-	//unit: ( $frame.width() + parseFloat($item.css('margin-right')) ) / $item.outerWidth(true)
-	self.unit           = self.o.unit;
-	
+	//'auto'の場合はgroupをwidthから自動計算する
+	//group: ( $wraper.width() + parseFloat($item.css('margin-right')) ) / $item.outerWidth(true)
+	self.group           = self.o.group;
 	self.clonePrependNum = 0;
 	self.cloneAppendNum = 0;
 	self.index = self.o.start - 1;
@@ -115,17 +114,17 @@ Carousel.prototype = {
 		 * Click Event
 		 */
 		self.$paginationItem.on('click', function(e){
-			self.moveBind(self.$paginationItem.index(this) * self.unit);
+			self.moveBind(self.$paginationItem.index(this) * self.group);
 			e.preventDefault();
 		});
 		
 		self.$prevNavi.on('click', function(e){
-			self.moveBind(self.index - self.unit);
+			self.moveBind(self.index - self.group);
 			e.preventDefault();
 		});
 		
 		self.$nextNavi.on('click', function(e){
-			self.moveBind(self.index + self.unit);
+			self.moveBind(self.index + self.group);
 			e.preventDefault();
 		});
 		
@@ -171,16 +170,16 @@ Carousel.prototype = {
 			
 			//loopが有効 && move前
 			if (self.o.loop && moved !== 'moved') {
-				if (index < - self.unit                        ) { index = self.$item.length - 1; }
-				if (index > (self.$item.length - 1) + self.unit) { index = 0; }
+				if (index < - self.group                        ) { index = self.$item.length - 1; }
+				if (index > (self.$item.length - 1) + self.group) { index = 0; }
 			//loopが有効 && move後
 			} else if (self.o.loop && moved === 'moved') {
 				if (index < 0                    ) {               index = self.$item.length + index; }
 				if (index > self.$item.length - 1) {               index = index - self.$item.length; }
 			//loop無効
 			} else {
-				if (self.unit > 1) {
-				    if (index < 0) {                               index = (Math.ceil( (self.$item.length) / self.unit ) - 1) * self.unit; }
+				if (self.group > 1) {
+				    if (index < 0) {                               index = (Math.ceil( (self.$item.length) / self.group ) - 1) * self.group; }
 					
 				} else {
 				    if (index < 0) {                               index = self.$item.length - 1; }
@@ -190,8 +189,6 @@ Carousel.prototype = {
 			}
 			
 			self.index = index;
-			
-			console.log('self.index: ' + self.index);
 		}
 	}
 	,
@@ -382,9 +379,9 @@ Carousel.prototype = {
 			paginationIndex = 0;
 		//$itemの最大値より小さい場合は、最後の$paginationItemをcurrent
 		} else if (self.index < 0) {
-			paginationIndex = Math.floor( (self.$item.length + self.index) / self.unit );
+			paginationIndex = Math.floor( (self.$item.length + self.index) / self.group );
 		} else {
-			paginationIndex = Math.floor(self.index / self.unit);
+			paginationIndex = Math.floor(self.index / self.group);
 		}
 		self.$paginationItem.eq(paginationIndex).addClass(self.o.currentClass);
 	}
