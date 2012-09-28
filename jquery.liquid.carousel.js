@@ -378,14 +378,9 @@ Carousel.prototype = {
 			self.$paginationItem.eq(0).addClass(self.o.currentClass);
 		//$itemの最大値より小さい場合は、最後の$paginationItemをcurrent
 		} else if (self.index < 0) {
-			//self.$paginationItem.eq(self.$item.length - 1).addClass(self.o.currentClass);
-			//self.$paginationItem.eq(self.$paginationItem.length - 1).addClass(self.o.currentClass);
+			var paginationIndex = Math.floor( (self.$item.length + self.index) / self.unit );
+			self.$paginationItem.eq(paginationIndex).addClass(self.o.currentClass);
 			
-			//TODO 最後のunitの値にしたい
-			var hoge = Math.floor(self.index / self.unit);// -1
-			
-			console.log('hoge: '+hoge);
-			self.$paginationItem.eq( hoge ).addClass(self.o.currentClass);
 			
 		} else {
 			self.$paginationItem.eq( Math.floor(self.index / self.unit) ).addClass(self.o.currentClass);
