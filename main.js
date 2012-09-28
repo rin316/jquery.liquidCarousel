@@ -86,6 +86,19 @@ $(window).load(function(){
 	$('#sample3').liquidCarousel({
 	    vertical: true
 	});
+	
+	
+	/*
+	//TODO debug 後から削除
+	var T_Length = 11;
+	var T_index = -3;
+	var T_unit = 3;
+	
+	var hoge = ( (T_Length + T_index) / T_unit );
+	
+	alert('hoge: '+hoge);
+	*/
+	
 });
 
 
