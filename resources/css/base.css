@@ -128,8 +128,8 @@ hr {
 				background-color: #B7D264;
 				border-radius: 5px;
 			}
-            .carousel-prev.disable a,
-            .carousel-next.disable a {
+            .carousel-prev.carousel-disable a,
+            .carousel-next.carousel-disable a {
                 opacity: 0.5;
                 cursor: default;
                 text-decoration: none;

@@ -31,6 +31,7 @@ DEFAULT_OPTIONS = {
 ,   group: 1 //{number} move pieces
 ,   cloneClass: 'carousel-clone'
 ,   currentClass: 'carousel-current'
+,   disableClass: 'carousel-disable'
 ,   easing: 'swing' //{string} easing effect
 ,   speed: 500 //{number} milli second
 ,   autoPlayInterval: 5000 //{number} milli second
@@ -293,7 +294,7 @@ Carousel.prototype = {
 		var self = this;
 
 		//clickした要素のclassが'disable'の場合は抜ける
-		if ($(element).hasClass('disable')) { return false;}
+		if ($(element).hasClass(self.o.disableClass)) { return false;}
 
 		//index番号を更新
 		self.indexUpdate(index);
@@ -419,22 +420,22 @@ Carousel.prototype = {
 
 	/**
 	 * loopingDisabled
-	 * 前のアイテム, 次のアイテムが無い場合に、prev, nextボタンにclass'disable'を付与する
+	 * 前のアイテム, 次のアイテムが無い場合に、prev, nextボタンにclass self.o.disableClassを付与する
 	 * @see init, moveBind
 	 */
 	loopingDisabled: function () {
 		var self = this;
 
 		if (self.index - (self.group - 1) <= 0){
-			self.$prevNavi.addClass('disable')
+			self.$prevNavi.addClass(self.o.disableClass)
 		} else {
-			self.$prevNavi.removeClass('disable')
+			self.$prevNavi.removeClass(self.o.disableClass)
 		}
 
 		if (self.index + (self.group - 1) >= self.$item.length -1){
-			self.$nextNavi.addClass('disable')
+			self.$nextNavi.addClass(self.o.disableClass)
 		} else {
-			self.$nextNavi.removeClass('disable')
+			self.$nextNavi.removeClass(self.o.disableClass)
 		}
 
 	},
