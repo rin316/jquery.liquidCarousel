@@ -36,6 +36,7 @@ DEFAULT_OPTIONS = {
 ,   autoPlayInterval: 5000 //{number} milli second
 ,   autoPlayStartDelay: 0 //{number} milli second
 ,   loop: true //{boolean}
+,   loopingDisabled: false //{boolean}
 ,   vertical: false //{boolean}
 ,   currentHighlight: true //{boolean}
 ,   autoPlay: false //{boolean}
@@ -108,6 +109,9 @@ Carousel.prototype = {
 		
 		//autoplay
 		if (self.o.autoPlay) { self.autoPlay(); }
+
+		//loopingDisabled
+		if (self.o.loopingDisabled) { self.loopingDisabled(); }
 		
 		
 		/*
@@ -119,12 +123,12 @@ Carousel.prototype = {
 		});
 		
 		self.$prevNavi.on('click', function(e){
-			self.moveBind(self.index - self.group);
+			self.moveBind(self.index - self.group ,this);
 			e.preventDefault();
 		});
 		
 		self.$nextNavi.on('click', function(e){
-			self.moveBind(self.index + self.group);
+			self.moveBind(self.index + self.group ,this);
 			e.preventDefault();
 		});
 		
@@ -304,18 +308,25 @@ Carousel.prototype = {
 	 * moveBind
 	 * カルーセル移動, カレント表示を1つにバインド
 	 * @param {number} index self.indexの値をこの値に書き換える。0から始まる
+	 * @param {object} element clickされたelement
 	 * @see init, autoPlay
 	 */
-	moveBind: function (index) {
+	moveBind: function (index, element) {
 		var self = this;
-		
+
+		//clickした要素のclassが'disable'の場合は抜ける
+		if ($(element).hasClass('disable')) { return false;}
+
 		//index番号を更新
 		self.indexUpdate(index);
 		
 		//移動前にcurrent表示
 		self.addCurrentClass();
 		if (self.o.currentHighlight) { self.highlightEffect(); }
-		
+
+		//loopingDisabled
+		if (self.o.loopingDisabled) { self.loopingDisabled(); }
+
 		//移動
 		self.move();
 	}
@@ -426,6 +437,28 @@ Carousel.prototype = {
 				}
 			);
 		}
+	},
+
+	/**
+	 * loopingDisabled
+	 * 前のアイテム, 次のアイテムが無い場合に、prev, nextボタンにclass'disable'を付与する
+	 * @see init, moveBind
+	 */
+	loopingDisabled: function () {
+		var self = this;
+
+		if (self.index - (self.group - 1) <= 0){
+			self.$prevNavi.addClass('disable')
+		} else {
+			self.$prevNavi.removeClass('disable')
+		}
+
+		if (self.index + (self.group - 1) >= self.$item.length -1){
+			self.$nextNavi.addClass('disable')
+		} else {
+			self.$nextNavi.removeClass('disable')
+		}
+
 	}
 	
 };//Carousel.prototype

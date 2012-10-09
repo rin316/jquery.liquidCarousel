@@ -73,14 +73,19 @@ $(window).load(function(){
 	});
 	
 	$('#sample2-2').liquidCarousel({
-	    loop: false
+		speed: 0
+	,   loop: false
+	,   loopingDisabled: true
+	});
+
+	$('#sample2-3').liquidCarousel({
+		loop: false
+	,   loopingDisabled: true
 	,   group: 3
-		
 	});
 	
-	$('#sample2-3').liquidCarousel({
+	$('#sample2-4').liquidCarousel({
 	    group: 3
-		
 	});
 	
 	$('#sample3').liquidCarousel({
