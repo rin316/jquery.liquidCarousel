@@ -41,6 +41,7 @@ DEFAULT_OPTIONS = {
 ,   currentHighlight: true //{boolean}
 ,   autoPlay: false //{boolean}
 ,   autoPlayHoverStop: false //{boolean}
+,   resizeRefresh: true //{boolean}
 };
 
 
@@ -112,8 +113,10 @@ Carousel.prototype = {
 
 		//loopingDisabled
 		if (self.o.loopingDisabled) { self.loopingDisabled(); }
-		
-		
+
+		//resizeRefresh
+		if (self.o.resizeRefresh) { self.resizeRefresh(); }
+
 		/*
 		 * Click Event
 		 */
@@ -130,31 +133,6 @@ Carousel.prototype = {
 		self.$nextNavi.on('click', function(e){
 			self.moveBind(self.index + self.group ,this);
 			e.preventDefault();
-		});
-		
-		
-		/*
-		 * Resize Event
-		 */
-		$(window).on('resize', function () {
-			var _timer = null
-			  , _INTERVAL = 250
-			  ;
-			
-			if (_timer) {
-				clearTimeout(_timer);
-				_timer = null;
-			}
-			
-			_timer = setTimeout(function () {
-				self.elementSize = self.$element.outerWidth(true);
-				if (self.o.loop) {
-					self.makeClone();
-				}
-				self.setListStyle();
-				
-				_timer = null;
-			}, _INTERVAL);
 		});
 	}
 	,
@@ -458,6 +436,37 @@ Carousel.prototype = {
 		} else {
 			self.$nextNavi.removeClass('disable')
 		}
+
+	},
+
+	/**
+	 * resizeRefresh
+	 * ブラウザがリサイズされたら描画をリフレッシュ
+	 * @see init
+	 */
+	resizeRefresh: function () {
+		var self = this;
+
+		$(window).on('resize', function () {
+			var _timer = null
+				, _INTERVAL = 250
+				;
+
+			if (_timer) {
+				clearTimeout(_timer);
+				_timer = null;
+			}
+
+			_timer = setTimeout(function () {
+				self.elementSize = self.$element.outerWidth(true);
+				if (self.o.loop) {
+					self.makeClone();
+				}
+				self.setListStyle();
+
+				_timer = null;
+			}, _INTERVAL);
+		});
 
 	}
 	
