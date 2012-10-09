@@ -126,12 +126,12 @@ Carousel.prototype = {
 		});
 		
 		self.$prevNavi.on('click', function(e){
-			self.moveBind(self.index - self.group ,this);
+			self.moveBind(self.index - self.group, this);
 			e.preventDefault();
 		});
 		
 		self.$nextNavi.on('click', function(e){
-			self.moveBind(self.index + self.group ,this);
+			self.moveBind(self.index + self.group, this);
 			e.preventDefault();
 		});
 	}
