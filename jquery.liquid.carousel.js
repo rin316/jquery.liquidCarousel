@@ -43,6 +43,7 @@ DEFAULT_OPTIONS = {
 ,   autoPlay: false //{boolean}
 ,   autoPlayHoverStop: false //{boolean}
 ,   resizeRefresh: true //{boolean}
+,   resizeTimer: 250 //{false, number}
 };
 
 
@@ -449,26 +450,38 @@ Carousel.prototype = {
 		var self = this;
 
 		$(window).on('resize', function () {
-			var _timer = null
-				, _INTERVAL = 250
-				;
+			//timerを使用しリフレッシュ間隔を制限
+			if (self.o.resizeTimer) {
+				console.log('使用');
+				var _timer = null
+					, _INTERVAL = self.o.resizeTimer
+					;
 
-			if (_timer) {
-				clearTimeout(_timer);
-				_timer = null;
-			}
+				if (_timer) {
+					clearTimeout(_timer);
+					_timer = null;
+				}
 
-			_timer = setTimeout(function () {
+				_timer = setTimeout(function () {
+					self.elementSize = self.$element.outerWidth(true);
+					if (self.o.loop) {
+						self.makeClone();
+					}
+					self.setListStyle();
+
+					_timer = null;
+				}, _INTERVAL);
+			//timerを使用しない
+			} else {
+				console.log('使用しない');
 				self.elementSize = self.$element.outerWidth(true);
 				if (self.o.loop) {
 					self.makeClone();
 				}
 				self.setListStyle();
+			}
 
-				_timer = null;
-			}, _INTERVAL);
 		});
-
 	}
 	
 };//Carousel.prototype
