@@ -452,7 +452,6 @@ Carousel.prototype = {
 		$(window).on('resize', function () {
 			//timerを使用しリフレッシュ間隔を制限
 			if (self.o.resizeTimer) {
-				console.log('使用');
 				var _timer = null
 					, _INTERVAL = self.o.resizeTimer
 					;
@@ -473,7 +472,6 @@ Carousel.prototype = {
 				}, _INTERVAL);
 			//timerを使用しない
 			} else {
-				console.log('使用しない');
 				self.elementSize = self.$element.outerWidth(true);
 				if (self.o.loop) {
 					self.makeClone();
