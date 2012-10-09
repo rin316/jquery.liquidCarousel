@@ -43,7 +43,7 @@ DEFAULT_OPTIONS = {
 ,   autoPlay: false //{boolean}
 ,   autoPlayHoverStop: false //{boolean}
 ,   resizeRefresh: true //{boolean}
-,   resizeTimer: 250 //{false, number}
+,   resizeTimer: 250 //{number}
 };
 
 
