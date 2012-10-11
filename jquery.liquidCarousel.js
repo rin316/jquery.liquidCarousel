@@ -33,6 +33,7 @@ DEFAULT_OPTIONS = {
 ,   currentClass: 'carousel-current'
 ,   disableClass: 'carousel-disable'
 ,   easing: 'swing' //{string} easing effect
+,   animate: 'slide' //{string} slide, fade
 ,   speed: 500 //{number} milli second
 ,   autoPlayInterval: 5000 //{number} milli second
 ,   autoPlayStartDelay: 0 //{number} milli second
@@ -308,24 +309,50 @@ Carousel.prototype = {
 		if (self.o.loopingDisabled) { self.loopingDisabled(); }
 
 		//移動
-		self.move();
+		self.animate();
 	}
 	,
-	
+
+
 	/**
-	 * move
-	 * (index * itemSize)分だけ$listを移動する
-	 * @see moveBind
+	 * animate
+	 * self.o.animateで設定されているアニメーションメソッドを実行する。
+	 * @return {Instance object}
 	 */
-	move: function () {
+	animate: function () {
+		var self = this;
+
+		switch (self.o.animate) {
+			case 'slide':
+				self.animateSlide();
+				break;
+
+			case 'fade':
+				self.animateFade();
+				break;
+
+			default:
+				self.animateSlide();
+				break;
+		}
+	}
+	,
+
+	/**
+	 * animateSlide
+	 * (index * itemSize)分だけ$listを移動する
+	 * @see animate
+	 */
+	animateSlide: function () {
 		var self = this
 		,   prop = {}
 		;
 		
 		prop[self.marginProp] = self.calcListMargin() + 'px';//marginTop, marginLeft
-		
+
 		if (!self.isMoving) {
 			self.isMoving = true;
+			self.$element.trigger('carousel:movestart');
 			self.$list.animate(
 				prop,{
 				duration: self.o.speed,
@@ -342,13 +369,34 @@ Carousel.prototype = {
 					//移動後にcurrent表示
 					self.addCurrentClass();
 					if (self.o.currentHighlight) { self.highlightEffect(); }
+
+					self.$element.trigger('carousel:moveend');
 				},
 				queue: false
 			})
 		}
 	}
 	,
-	
+
+	/**
+	 * animateFade
+	 * フェードアクション
+	 * @see animate
+	 */
+	animateFade: function () {
+		var self = this
+			,   prop = {}
+			;
+
+		prop[self.marginProp] = self.calcListMargin() + 'px';//marginTop, marginLeft
+
+		if (!self.isMoving) {
+			self.isMoving = true;
+			//TODO fade action
+		}
+	}
+	,
+
 	/**
 	 * addCurrentClass
 	 * index番目の要素にcurrentClassをセット
