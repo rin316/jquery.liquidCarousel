@@ -22,7 +22,7 @@ var config = {
 	loadFiles: [
 		'jquery.js',
 		'jquery.effects.core.js',
-		'../../jquery.liquid.carousel.js',
+		'../../jquery.liquidCarousel.js',
 		'../../main.js'
 	]
 //==========================================================================

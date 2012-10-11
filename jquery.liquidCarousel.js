@@ -1,12 +1,12 @@
 /*!
- * jquery.liquid.carousel.js
+ * jquery.liquidCarousel.js
  *
  * @varsion   1.2
  * @author    rin316 [Yuta Hayashi]
  * @require   jquery.js, jquery.effects.core.js
  * @create    2012-09-11
  * @modify    2012-09-26
- * @link      https://github.com/rin316/jquery.liquid.carousel
+ * @link      https://github.com/rin316/jquery.liquidCarousel
  */
 ;(function ($, window, undefined) {
 
@@ -27,7 +27,7 @@ DEFAULT_OPTIONS = {
 ,   nextSelector:           '.carousel-next'
 ,   pos_x: 'left' //{number, string, function} current item position
 ,   pos_x_fix: 0 //{number} px
-,   start: 1 //{number} index no
+,   start: 0 //{number} index no
 ,   group: 1 //{number} move pieces
 ,   cloneClass: 'carousel-clone'
 ,   currentClass: 'carousel-current'
@@ -77,7 +77,7 @@ Carousel = function ($element, options) {
 	self.group           = self.o.group;
 	self.clonePrependNum = 0;
 	self.cloneAppendNum = 0;
-	self.index = self.o.start - 1;
+	self.index = self.o.start;
 	self.isMoving = false;
 	
 	self.init();
