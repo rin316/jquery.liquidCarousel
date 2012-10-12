@@ -80,7 +80,12 @@ Carousel = function ($element, options) {
 	self.cloneAppendNum = 0;
 	self.index = self.o.start;
 	self.isMoving = false;
-	
+
+	if(self.o.animate === 'fade') {
+		self.o.loop = false;
+		self.o.resizeRefresh = false;
+	}
+
 	self.init();
 	
 	return self;
@@ -103,14 +108,21 @@ Carousel.prototype = {
 		
 		//左右にクローン作成
 		if (self.o.loop) { self.makeClone(); }
-		
-		//$listのmargin, widthを設定
-		self.setListStyle();
-		
+
+		//fadeアニメーションの初期化
+		if(self.o.animate === 'fade') {
+			self.$item.hide();
+			self.$item.eq(self.index).show();
+		//fadeアニメーション以外の初期化
+		} else {
+			//$listのmargin, widthを設定
+			self.setListStyle();
+		}
+
 		//current表示
 		self.addCurrentClass();
 		if (self.o.currentHighlight) { self.highlightEffect(); }
-		
+
 		//autoplay
 		if (self.o.autoPlay) { self.autoPlay(); }
 
@@ -149,31 +161,40 @@ Carousel.prototype = {
 	 * @see init, move
 	 */
 	indexUpdate: function (index, moved) {
-		var self = this;
+		var self = this
+		,   indexTo = index;
 		
 		if (!self.isMoving) {
 			
 			//loopが有効 && move前
 			if (self.o.loop && moved !== 'moved') {
-				if (index < - self.group                        ) { index = self.$item.length - 1; }
-				if (index > (self.$item.length - 1) + self.group) { index = 0; }
+				if (index < - self.group                        ) { indexTo = self.$item.length - 1; }
+				if (index > (self.$item.length - 1) + self.group) { indexTo = 0; }
 			//loopが有効 && move後
 			} else if (self.o.loop && moved === 'moved') {
-				if (index < 0                    ) {               index = self.$item.length + index; }
-				if (index > self.$item.length - 1) {               index = index - self.$item.length; }
+				if (index < 0                    ) {               indexTo = self.$item.length + index; }
+				if (index > self.$item.length - 1) {               indexTo = index - self.$item.length; }
 			//loop無効
 			} else {
 				if (self.group > 1) {
-				    if (index < 0) {                               index = (Math.ceil( (self.$item.length) / self.group ) - 1) * self.group; }
-					
+				    if (index < 0) {                               indexTo = (Math.ceil( (self.$item.length) / self.group ) - 1) * self.group; }
 				} else {
-				    if (index < 0) {                               index = self.$item.length - 1; }
+				    if (index < 0) {                               indexTo = self.$item.length - 1; }
 				}
 				
-				if (index > self.$item.length - 1){ index = 0; }
+				if (index > self.$item.length - 1){ indexTo = 0; }
 			}
-			
-			self.index = index;
+			//self.index = indexTo;
+
+			//元のindex番号と同じならfalseを返す 変更があればindex更新
+			if (self.index === indexTo) {
+				return false;
+			} else {
+				self.index = indexTo;
+				return true;
+			}
+		} else {
+			return false;
 		}
 	}
 	,
@@ -298,9 +319,9 @@ Carousel.prototype = {
 		//clickした要素のclassが'disable'の場合は抜ける
 		if ($(element).hasClass(self.o.disableClass)) { return false;}
 
-		//index番号を更新
-		self.indexUpdate(index);
-		
+		//index番号を更新 更新が無ければ抜ける
+		if(! self.indexUpdate(index)) { return false; }
+
 		//移動前にcurrent表示
 		self.addCurrentClass();
 		if (self.o.currentHighlight) { self.highlightEffect(); }
@@ -317,7 +338,6 @@ Carousel.prototype = {
 	/**
 	 * animate
 	 * self.o.animateで設定されているアニメーションメソッドを実行する。
-	 * @return {Instance object}
 	 */
 	animate: function () {
 		var self = this;
@@ -340,7 +360,7 @@ Carousel.prototype = {
 
 	/**
 	 * animateSlide
-	 * (index * itemSize)分だけ$listを移動する
+	 * スライドアニメーション - (index * itemSize)分だけ$listを移動する
 	 * @see animate
 	 */
 	animateSlide: function () {
@@ -380,19 +400,22 @@ Carousel.prototype = {
 
 	/**
 	 * animateFade
-	 * フェードアクション
+	 * フェードアニメーション
 	 * @see animate
 	 */
 	animateFade: function () {
-		var self = this
-			,   prop = {}
-			;
-
-		prop[self.marginProp] = self.calcListMargin() + 'px';//marginTop, marginLeft
+		var self = this;
 
 		if (!self.isMoving) {
+			self.$element.trigger('carousel:movestart');
 			self.isMoving = true;
-			//TODO fade action
+
+			self.$item.fadeOut(self.o.speed);
+			self.$item.eq(self.index).fadeIn(self.o.speed, function () {
+				self.isMoving = false;
+				self.$element.trigger('carousel:moveend');
+			});
+
 		}
 	}
 	,

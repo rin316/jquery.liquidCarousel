@@ -55,17 +55,24 @@ $(window).load(function(){
 	    pos_x: 'center'
 	,   autoPlayInterval: 2000
 	,   autoPlayStartDelay: 0
-	,   autoPlay: true
+//	,   autoPlay: true
 	,   autoPlayHoverStop: true
 
 	});
+
 	$('#sample1-3').liquidCarousel({
 	    pos_x: 'right'
 	,   easing: 'linear'
 	,   speed: 4000
 	,   autoPlayInterval: 0
 	,   autoPlayStartDelay: 1000
-	,   autoPlay: true
+//	,   autoPlay: true
+	});
+
+	$('#fade').liquidCarousel({
+		animate: 'fade'
+	,   speed: 1500
+	,   currentClass: 'nonHighlight'
 	});
 	
 	$('#sample2-1').liquidCarousel({

@@ -80,14 +80,17 @@ hr {
 	
 	.carousel-list {
 	}
+
 	.carousel-list:after {
 		content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
 	}
-		/*--vertical--*/
-		.vertical .carousel-item {
-			float: none;
-			display: block;
-		}
+
+	/*--fade--*/
+	#fade .carousel-list {
+		position: relative;
+		width: 100px;
+		height: 100px;
+	}
 		
 		.carousel-item {
 			float: left;
@@ -101,6 +104,19 @@ hr {
 		}
 		.carousel-item.carousel-current {
 			background-color: #D264B7 !important;
+		}
+
+		/*--vertical--*/
+		.vertical .carousel-item {
+			float: none;
+			display: block;
+		}
+
+		/*--fade--*/
+		#fade .carousel-item {
+			position: absolute;
+			top: 0px;
+			left: 0px;
 		}
 		
 	.carousel-button {
