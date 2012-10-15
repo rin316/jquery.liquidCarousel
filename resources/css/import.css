@@ -14,4 +14,5 @@
 
 
 @import "reset.css";
+@import "../bootstrap/css/bootstrap.min.css";
 @import "base.css";

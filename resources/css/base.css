@@ -1,20 +1,6 @@
 @charset "utf-8";
 
-/*!
- * base.css
- *
- * ページ・テンプレートとなる大枠部分、
- * 背景・ヘッダー・フッター・大枠のカラム分けなどの設定ファイル。
- */
-
-/**
- * structure
- *
- * 基本的なエリア（枠組み）のカラム分けと背景を設定
- */
-
 html, body {
-	/* メイン背景・文字色 */
 	background-color: #FFFFFF;
 	color: #333333;
 	font-family: 'Source Code Pro', sans-serif;
@@ -25,17 +11,24 @@ body {
 
 
 a {
-	color: #001F3F;
+	color: #1f1f99;
 	text-decoration: underline;
 }
 
 a:link    {}
 a:visited {}
-a:hover   { text-decoration: none; }
+a:hover   {
+	color: #1f1f99;
+	text-decoration: none;
+}
 a:active  {}
 
+ul {
+	margin: 0px 0px 10px;
+}
+
 hr {
-	margin: 20px 0;
+	margin: 30px 0;
 	border: solid #D264B7;
 	border-width: 0px 0px 1px;
 }
@@ -53,18 +46,46 @@ hr {
 	white-space: nowrap;
 }
 
-.header {
-	margin: 0px auto 0px auto;
-	padding: 10px;
-	font-size: 25px;
+.container-fluid {
+	margin: 0 auto;
+	width: 900px;
 }
 
+
+/*--header--*/
+.header {
+	position:relative;
+	z-index: 1;
+	text-shadow:
+		-1px -1px 0px #FFF,
+		1px -1px 0px #FFF,
+		1px 1px 0px #FFF,
+		-1px 1px 0px #FFF;
+}
+
+	.header h1 {
+		margin: 15px 0px 20px;
+		font-size: 50px;
+		line-height: 50px;
+	}
+
+
+/*--carousel--*/
 .carousel {
 	width: 100%;
 	overflow: hidden;
 	position: relative;
 	z-index: 1;
 }
+	.carousel h2 {
+		margin: 0 0 20px;
+	}
+
+	.carousel a {
+		color: #333;
+		text-decoration: none;
+	}
+
 	
 	/*--unit--*/
 	.unit .carousel-listWrapper {
@@ -74,11 +95,13 @@ hr {
 	
 	/*--vertical--*/
 	.vertical .carousel-listWrapper {
+		margin: 0 0 20px;
 		height: 100px;
 		overflow: hidden;
 	}
 	
 	.carousel-list {
+		margin-bottom: 20px;
 	}
 
 	.carousel-list:after {
@@ -120,21 +143,23 @@ hr {
 		}
 		
 	.carousel-button {
+		margin-left: -10px;
 	}
 	.carousel-button:after {
 		content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
 	}
 		/*--vertical--*/
-		.vertical .carousel-prev,
-		.vertical .carousel-next {
-			display: block;
-			float: none;
-		}
+		/*.vertical .carousel-prev,*/
+		/*.vertical .carousel-next {*/
+			/*display: block;*/
+			/*float: none;*/
+			/*margin-bottom: 10px;*/
+		/*}*/
 		.carousel-prev,
 		.carousel-next {
 			display: inline;
 			float: left;
-			margin: 10px;
+			margin-left: 10px;
 			width: 100px;
 		}
 			.carousel-prev a,
@@ -165,6 +190,7 @@ hr {
 	.carousel-pagination {
 	}
 		.carousel-paginationList {
+			margin-left: -10px;
 		}
 		.carousel-paginationList:after {
 			content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
@@ -172,13 +198,25 @@ hr {
 			.carousel-paginationItem {
 				float: left;
 				display: inline;
-				margin: 10px;
+				margin-left: 10px;
 			}
 				.carousel-paginationItem a {
 					display: block;
-					padding: 10px;
+					padding: 13px 0;
+					width: 45px;
 					background-color: #B7D264;
+					text-align: center;
 				}
+
+	.carousel-setNum {
+	}
+		.carousel-setNum a {
+			display: block;
+			width: 100%;
+			padding: 13px 0;
+			background-color: #B7D264;
+			text-align: center;
+		}
 
 
 

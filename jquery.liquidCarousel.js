@@ -1,11 +1,11 @@
 /*!
  * jquery.liquidCarousel.js
  *
- * @varsion   1.2
+ * @varsion   1.3
  * @author    rin316 [Yuta Hayashi]
  * @require   jquery.js, jquery.effects.core.js
  * @create    2012-09-11
- * @modify    2012-09-26
+ * @modify    2012-10-15
  * @link      https://github.com/rin316/jquery.liquidCarousel
  */
 ;(function ($, window, undefined) {
@@ -87,7 +87,7 @@ Carousel = function ($element, options) {
 	}
 
 	self.init();
-	
+
 	return self;
 };//Carousel
 
