@@ -34,6 +34,7 @@ hr {
 }
 
 
+
 #centerLine {
 	position: fixed;
 	top: 0;
@@ -102,6 +103,7 @@ hr {
 	
 	.carousel-list {
 		margin-bottom: 20px;
+		position: relative;
 	}
 
 	.carousel-list:after {
@@ -110,9 +112,14 @@ hr {
 
 	/*--fade--*/
 	#fade .carousel-list {
-		position: relative;
 		width: 100px;
 		height: 100px;
+	}
+
+	/*--tab--*/
+	.tab .carousel-list {
+		width: 210px;
+		height: 210px;
 	}
 		
 		.carousel-item {
@@ -125,6 +132,7 @@ hr {
 			background-color: #eee;
 			text-align: center;
 		}
+
 		.carousel-item.carousel-current {
 			background-color: #D264B7 !important;
 		}
@@ -140,6 +148,18 @@ hr {
 			position: absolute;
 			top: 0px;
 			left: 0px;
+		}
+
+		/*--tab--*/
+		.tab .carousel-item {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			padding: 10px;
+			width: 190px;
+			height: 190px;
+			background-color: #B7D264 !important;
+			text-align: left;
 		}
 		
 	.carousel-button {
@@ -191,6 +211,11 @@ hr {
 	}
 		.carousel-paginationList {
 			margin-left: -10px;
+		}
+
+		/*--tab--*/
+		.tab .carousel-paginationList {
+			margin-bottom: 0;
 		}
 		.carousel-paginationList:after {
 			content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;

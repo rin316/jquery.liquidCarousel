@@ -22,8 +22,10 @@ $(window).load(function(){
 	/*
 	 * color gradation作成
 	 */
-	$('.carousel-list').each(function () {
-		var item = $(this).children();
+	$('.carousel').each(function () {
+		var $this = $(this);
+		if ($this.hasClass('tab')) { return false; }
+		var item = $this.find($('.carousel-item'));
 		var itemLength = item.length;
 		
 		var colors = [];
@@ -132,6 +134,12 @@ $(window).load(function(){
 			}, self.o.speed)
 		})
 	})();
+
+	$('#tab1').liquidCarousel({
+		animate: 'fade'
+		,   speed: 0
+		,   currentClass: 'nonHighlight'
+	});
 });
 
 
