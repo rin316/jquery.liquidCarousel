@@ -137,8 +137,9 @@ $(window).load(function(){
 
 	$('#tab1').liquidCarousel({
 		animate: 'fade'
-		,   speed: 0
-		,   currentClass: 'nonHighlight'
+	,   speed: 1000
+	,   listHeightType: 'max'
+	,   currentClass: 'nonHighlight'
 	});
 });
 

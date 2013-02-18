@@ -1,7 +1,7 @@
 /*!
  * jquery.liquidCarousel.js
  *
- * @varsion   1.3
+ * @version   1.3
  * @author    rin316 [Yuta Hayashi]
  * @require   jquery.js, jquery.effects.core.js
  * @create    2012-09-11
@@ -19,32 +19,39 @@ var Carousel
  * DEFAULT_OPTIONS
  */
 DEFAULT_OPTIONS = {
-    listSelector:           '.carousel-list'
-,   itemSelector:           '.carousel-item'
-,   paginationListSelector: '.carousel-paginationList'
-,   paginationItemSelector: '.carousel-paginationItem'
-,   prevSelector:           '.carousel-prev'
-,   nextSelector:           '.carousel-next'
-,   pos_x: 'left' //{number, string, function} current item position
-,   pos_x_fix: 0 //{number} px
-,   start: 0 //{number} index no
-,   group: 1 //{number} move pieces
-,   cloneClass: 'carousel-clone'
-,   currentClass: 'carousel-current'
-,   disableClass: 'carousel-disable'
-,   easing: 'swing' //{string} easing effect
-,   animate: 'slide' //{string} slide, fade
-,   speed: 500 //{number} milli second
-,   autoPlayInterval: 5000 //{number} milli second
-,   autoPlayStartDelay: 0 //{number} milli second
-,   loop: true //{boolean}
-,   loopingDisabled: false //{boolean}
-,   vertical: false //{boolean}
-,   currentHighlight: true //{boolean}
-,   autoPlay: false //{boolean}
-,   autoPlayHoverStop: false //{boolean}
-,   resizeRefresh: true //{boolean}
-,   resizeTimer: 250 //{number}
+//required setting
+    listSelector:           '.carousel-list' //{string} -
+,   itemSelector:           '.carousel-item' //{string} -
+,   paginationListSelector: '.carousel-paginationList' //{string} -
+,   paginationItemSelector: '.carousel-paginationItem' //{string} -
+,   prevSelector:           '.carousel-prev' //{string} -
+,   nextSelector:           '.carousel-next' //{string} -
+
+//option setting
+,   pos_x: 'left' //{number, string, function} currentをleftで左寄せ、centerで中央寄せ、rightで右寄せ
+,   pos_x_fix: 0 //{number} (+px, -px) pos_xの値から左右に位置を調整。centerから少し左にずらしたい時などに使用
+,   start: 0 //{number} - index no - 初期表示するcurrentの番号。
+,   group: 1 //{number} - move pieces 一回に動かすitem数
+,   cloneClass: 'carousel-clone' //{string} - loop:true の時に作られるcloneのclass name
+,   currentClass: 'carousel-current' //{string} - current class name
+,   disableClass: 'carousel-disable' //{string} - loopingDisabled: true の時に、次itemの無い’prev', 'next'に付けられるclass name
+,   easing: 'swing' //{string} (swing, liner, etc...) -  easing effect
+,   animate: 'slide' //{string} (slide, fade) - animation effect
+,   speed: 500 //{number} (milli second) - animation speed
+
+//togglable setting
+,   loop: true //{boolean} - true: roop用のcloneをitemの左右に追加
+,   loopingDisabled: false //{boolean} - true: 次itemの無い’prev', 'next'を無効化しdisableClassを設定する
+,   vertical: false //{boolean} - true: 移動方向を横から縦に変更
+,   listHeightType: 'auto' //{boolean, string} (false, max, auto) //animate:'fade'の時のlist height指定。'fade'以外では常にfalse。false: 設定しない max: 常に一番高いitem height auto: current itemのheightに毎回更新
+,   currentHighlight: true //{boolean} - true: current paginationItemをハイライト
+,   autoPlay: false //{boolean} - true: autoplay
+,   autoPlayHoverStop: false //{boolean} - true: itemにマウスオーバー中はautoplayをストップ
+,   autoPlayInterval: 5000 //{number} (milli second) - autoplayの間隔
+,   autoPlayStartDelay: 0 //{number} (milli second) - ページ表示からautoplay開始までのタイムラグ
+,   fadeDelay: false //{boolean} - true: animate: 'fade'の時に、fadeOutが終わった後に次のitemがfadeInするようになる。 false: fadeOutとfadeInが同時に開始される
+,   resizeRefresh: true //{boolean} - true: ブラウザresize時にlistの幅やloop item数を変更する false: resize eventを無効化
+,   resizeTimer: 250 //{number} - resize eventを間引く
 };
 
 
@@ -84,6 +91,8 @@ Carousel = function ($element, options) {
 	if(self.o.animate === 'fade') {
 		self.o.loop = false;
 		self.o.resizeRefresh = false;
+	} else {
+		self.o.listHeightType = false;
 	}
 
 	self.init();
@@ -109,15 +118,14 @@ Carousel.prototype = {
 		//左右にクローン作成
 		if (self.o.loop) { self.makeClone(); }
 
-		//fadeアニメーションの初期化
+		//fadeアニメーションの初期化: index以外を隠す
 		if(self.o.animate === 'fade') {
 			self.$item.hide();
 			self.$item.eq(self.index).show();
-		//fadeアニメーション以外の初期化
-		} else {
-			//$listのmargin, widthを設定
-			self.setListStyle();
 		}
+
+		//$listの初期化: margin, sizeを設定
+		self.setListStyle();
 
 		//current表示
 		self.addCurrentClass();
@@ -158,7 +166,7 @@ Carousel.prototype = {
 	 * $itemの最大値より大きければ最小値にリセット、最小値より小さければ最大値にリセット
 	 * @param {number} index self.indexの値をこの値に書き換える。0から始まる
 	 * @param {string} moved 'moved'を指定するとリセットの幅が狭まる。移動後の位置リセットに使用
-	 * @see init, move
+	 * @see init, moveBind, move
 	 */
 	indexUpdate: function (index, moved) {
 		var self = this
@@ -202,7 +210,7 @@ Carousel.prototype = {
 	/**
 	 * makeClone
 	 * roop用のcloneを$itemの左右に追加
-	 * @see, init
+	 * @see init
 	 */
 	makeClone: function () {
 		var self = this, i, j;
@@ -237,11 +245,13 @@ Carousel.prototype = {
 	 * @see init, move
 	 */
 	setListStyle: function () {
-		var self = this;
-		
-		var prop = {};
-		prop[self.marginProp] = self.calcListMargin() + 'px';//marginTop, marginLeft
+		var self = this
+		,   prop = {}
+		;
 		prop[self.sizeProp]   = self.calcListSize() + 'px';//height, width
+		if (! self.o.listHeightType){
+			prop[self.marginProp] = self.calcListMargin() + 'px';//marginTop, marginLeft
+		}
 		self.$list.css(prop);
 	}
 	,
@@ -254,7 +264,14 @@ Carousel.prototype = {
 	 */
 	calcListSize: function () {
 		var self = this;
-		return (self.$item.length + self.clonePrependNum + self.cloneAppendNum ) * self.itemSize;
+		if (self.o.listHeightType === 'max') {
+			//return max $itemをループして一番大きいheight. 違うメソッドにする
+		} else if (self.o.listHeightType === 'auto') {
+			//return auto $litem[index] の height. 毎回取得よりも、先に取得して配列化した方が良いかも
+		} else {
+			return (self.$item.length + self.clonePrependNum + self.cloneAppendNum ) * self.itemSize;
+		}
+
 	}
 	,
 	
@@ -407,14 +424,18 @@ Carousel.prototype = {
 		var self = this;
 
 		if (!self.isMoving) {
+			var timer = (self.o.fadeDelay) ? self.o.speed : 0;
 			self.$element.trigger('carousel:movestart');
 			self.isMoving = true;
 
 			self.$item.fadeOut(self.o.speed);
-			self.$item.eq(self.index).fadeIn(self.o.speed, function () {
-				self.isMoving = false;
-				self.$element.trigger('carousel:moveend');
-			});
+			setTimeout(function () {
+				self.$item.eq(self.index).fadeIn(self.o.speed, function () {
+					self.setListStyle();
+					self.isMoving = false;
+					self.$element.trigger('carousel:moveend');
+				});
+			}, timer);
 
 		}
 	}
