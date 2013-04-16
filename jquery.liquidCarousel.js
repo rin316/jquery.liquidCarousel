@@ -18,7 +18,7 @@ var DEFAULT_OPTIONS;
  */
 DEFAULT_OPTIONS = {
 	// selector setting
-     listSelector:           '.ui-carousel-list' // {string}
+	listSelector:           '.ui-carousel-list' // {string}
 	,itemSelector:           '.ui-carousel-item' // {string}
 	,paginationListSelector: '.ui-carousel-paginationList' // {string}
 	,paginationItemSelector: '.ui-carousel-paginationItem' // {string}
