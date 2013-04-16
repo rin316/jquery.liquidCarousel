@@ -1,11 +1,11 @@
 /*!
  * jquery.liquidCarousel.js
  *
- * @version   1.3
+ * @version   1.4
  * @author    rin316 [Yuta Hayashi]
  * @require   jquery.js, jquery.effects.core.js
  * @create    2012-09-11
- * @modify    2012-10-15
+ * @modify    2013-04-16 - autoPlayStopLastItem を追加
  * @link      https://github.com/rin316/jquery.liquidCarousel
  */
 ;(function ($, window, undefined) {
@@ -52,6 +52,7 @@ DEFAULT_OPTIONS = {
 ,   fadeDelay: false //{boolean} - true: animate: 'fade'の時に、fadeOutが終わった後に次のitemがfadeInするようになる。 false: fadeOutとfadeInが同時に開始される
 ,   resizeRefresh: true //{boolean} - true: ブラウザresize時にlistの幅やloop item数を変更する false: resize eventを無効化
 ,   resizeTimer: 250 //{number} - resize eventを間引く
+	,autoPlayStopLastItem: false // {boolean} - true: 最後のアイテムまでいったらautoplayをストップ
 };
 
 
@@ -492,7 +493,11 @@ Carousel.prototype = {
 		autoPlayInterval = (self.o.autoPlayInterval >= 40) ? self.o.autoPlayInterval : 40;
 		
 		autoPlay = function(){
-			self.moveBind(self.index + 1);
+			if (self.o.autoPlayStopLastItem && self.index >= self.$item.length - self.group) {
+				clearInterval(timer);
+			} else {
+				self.moveBind(self.index + 1);
+			}
 		};
 		setTimeout(function () {
 			timer = setInterval(autoPlay, autoPlayInterval);
