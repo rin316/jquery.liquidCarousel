@@ -10,49 +10,47 @@
  */
 ;(function ($, window, undefined) {
 
-
-var Carousel
-	, DEFAULT_OPTIONS
-	;
+var Carousel;
+var DEFAULT_OPTIONS;
 
 /**
  * DEFAULT_OPTIONS
  */
 DEFAULT_OPTIONS = {
-//required setting
-    listSelector:           '.carousel-list' //{string} -
-,   itemSelector:           '.carousel-item' //{string} -
-,   paginationListSelector: '.carousel-paginationList' //{string} -
-,   paginationItemSelector: '.carousel-paginationItem' //{string} -
-,   prevSelector:           '.carousel-prev' //{string} -
-,   nextSelector:           '.carousel-next' //{string} -
-
-//option setting
-,   pos_x: 'left' //{number, string, function} currentをleftで左寄せ、centerで中央寄せ、rightで右寄せ
-,   pos_x_fix: 0 //{number} (+px, -px) pos_xの値から左右に位置を調整。centerから少し左にずらしたい時などに使用
-,   start: 0 //{number} - index no - 初期表示するcurrentの番号。
-,   group: 1 //{number} - move pieces 一回に動かすitem数
-,   cloneClass: 'carousel-clone' //{string} - loop:true の時に作られるcloneのclass name
-,   currentClass: 'carousel-current' //{string} - current class name
-,   disableClass: 'carousel-disable' //{string} - loopingDisabled: true の時に、次itemの無い’prev', 'next'に付けられるclass name
-,   easing: 'swing' //{string} (swing, liner, etc...) -  easing effect
-,   animate: 'slide' //{string} (slide, fade) - animation effect
-,   speed: 500 //{number} (milli second) - animation speed
-
-//togglable setting
-,   loop: true //{boolean} - true: roop用のcloneをitemの左右に追加
-,   loopingDisabled: false //{boolean} - true: 次itemの無い’prev', 'next'を無効化しdisableClassを設定する
-,   vertical: false //{boolean} - true: 移動方向を横から縦に変更
-,   listHeightType: 'auto' //{boolean, string} (false, max, auto) //animate:'fade'の時のlist height指定。'fade'以外では常にfalse。false: 設定しない max: 常に一番高いitem height auto: current itemのheightに毎回更新
-,   currentHighlight: true //{boolean} - true: current paginationItemをハイライト
-,   autoPlay: false //{boolean} - true: autoplay
-,   autoPlayHoverStop: false //{boolean} - true: itemにマウスオーバー中はautoplayをストップ
-,   autoPlayInterval: 5000 //{number} (milli second) - autoplayの間隔
-,   autoPlayStartDelay: 0 //{number} (milli second) - ページ表示からautoplay開始までのタイムラグ
-,   fadeDelay: false //{boolean} - true: animate: 'fade'の時に、fadeOutが終わった後に次のitemがfadeInするようになる。 false: fadeOutとfadeInが同時に開始される
-,   resizeRefresh: true //{boolean} - true: ブラウザresize時にlistの幅やloop item数を変更する false: resize eventを無効化
-,   resizeTimer: 250 //{number} - resize eventを間引く
+	// selector setting
+     listSelector:           '.ui-carousel-list' // {string}
+	,itemSelector:           '.ui-carousel-item' // {string}
+	,paginationListSelector: '.ui-carousel-paginationList' // {string}
+	,paginationItemSelector: '.ui-carousel-paginationItem' // {string}
+	,prevSelector:           '.ui-carousel-prev' // {string}
+	,nextSelector:           '.ui-carousel-next' // {string}
+	// add class name setting
+	,cloneClass:   'ui-carousel-clone' // {string} - loop:true の時に作られるcloneのclass name
+	,currentClass: 'ui-carousel-current' // {string} - current class name
+	,disableClass: 'ui-carousel-disable' // {string} - loopingDisabled: true の時に、次itemの無い’prev', 'next'に付けられるclass name
+	// animation setting
+	,animate:   'slide' // {string} (slide, fade) - animation effect
+	,easing:    'swing' // {string} (swing, liner, easeInOutQuad(@require jquery.effects.core.js), etc...) -  easing effect
+	,speed:     500 // {number} (milli second) - animation speed
+	,vertical:  false // {boolean} - true: 移動方向を横から縦に変更
+	,fadeDelay: false // {boolean} - true: animate: 'fade'の時に、fadeOutが終わった後に次のitemがfadeInするようになる。 false: fadeOutとfadeInが同時に開始される
+	// autoPlay setting
+	,autoPlay:             false // {boolean} - true: autoplay
+	,autoPlayHoverStop:    true // {boolean} - true: itemにマウスオーバー中はautoplayをストップ
 	,autoPlayStopLastItem: false // {boolean} - true: 最後のアイテムまでいったらautoplayをストップ
+	,autoPlayInterval:     5000 // {number} (milli second) - autoplayの間隔
+	,autoPlayStartDelay:   0 // {number} (milli second) - ページ表示からautoplay開始までのタイムラグ
+	// option setting
+	,start:            0 // {number} - index no - 初期表示するcurrentの番号。
+	,group:            1 // {number} - move pieces 一度に動かすitem数
+	,pos_x:            'left' // {number, string, function} current itemをleft: 左寄せ、center: 中央寄せ、right: 右寄せ。px指定も可能
+	,pos_x_fix:        0 // {number} (+px, -px) pos_xの値から左右に位置を調整。centerから少し左にずらしたい時に使用
+	,loop:             true // {boolean} - true: roop用のcloneをitemの左右に追加
+	,loopingDisabled:  false // {boolean} - true: 次itemの無い’prev', 'next'を無効化しdisableClassを設定する
+	,listHeightType:   'auto' // {boolean, string} (false, max, auto) //animate:'fade'の時のlist height指定。'fade'以外では常にfalse。false: 設定しない max: 常に一番高いitem height auto: current itemのheightに毎回更新
+	,currentHighlight: true // {boolean} - true: current paginationItemをハイライト
+	,resizeRefresh:    true // {boolean} - true: ブラウザresize時にlistの幅やloop item数を変更する false: resize eventを無効化
+	,resizeTimer:      250 // {number} - resize eventを間引く間隔
 };
 
 
@@ -61,9 +59,8 @@ DEFAULT_OPTIONS = {
  */
 Carousel = function ($element, options) {
 	var self = this;
-	
+
 	self.o = $.extend({}, DEFAULT_OPTIONS, options);
-	
 	self.$element =        $element;
 	self.$list =           self.$element.find($(self.o.listSelector));
 	self.$item =           self.$element.find($(self.o.itemSelector));
@@ -75,13 +72,12 @@ Carousel = function ($element, options) {
 	self.$allItem  =       self.$paginationItem.add(self.$item);
 	self.$allListAndNavi = self.$allList.add(self.$prevNavi).add(self.$nextNavi);
 	
-	self.elementSize =      (self.o.vertical) ? self.$element.outerHeight(true) : self.$element.outerWidth(true);
-	self.itemSize =         (self.o.vertical) ? self.$item.outerHeight(true)    : self.$item.outerWidth(true);
-	self.sizeProp =   (self.o.vertical) ? 'height' : 'width';
-	self.marginProp = (self.o.vertical) ? 'marginTop' : 'marginLeft';
-	
-	//TODO
-	//'auto'の場合はgroupをwidthから自動計算する
+	self.elementSize =     (self.o.vertical) ? self.$element.outerHeight(true) : self.$element.outerWidth(true);
+	self.itemSize =        (self.o.vertical) ? self.$item.outerHeight(true)    : self.$item.outerWidth(true);
+	self.sizeProp =        (self.o.vertical) ? 'height' : 'width';
+	self.marginProp =      (self.o.vertical) ? 'marginTop' : 'marginLeft';
+
+	//TODO 'auto'の場合はgroupをwidthから自動計算する
 	//group: ( $wraper.width() + parseFloat($item.css('margin-right')) ) / $item.outerWidth(true)
 	self.group           = self.o.group;
 	self.clonePrependNum = 0;
@@ -99,18 +95,17 @@ Carousel = function ($element, options) {
 	self.init();
 
 	return self;
-};//Carousel
+};
 
 
 /**
  * Carousel.prototype
  */
-Carousel.prototype = {
-
+(function (fn) {
 	/**
 	 * init
 	 */
-	init: function () {
+	fn.init = function () {
 		var self = this;
 		
 		//indexを更新
@@ -158,8 +153,7 @@ Carousel.prototype = {
 			self.moveBind(self.index + self.group, this);
 			e.preventDefault();
 		});
-	}
-	,
+	};
 	
 	/**
 	 * indexUpdate
@@ -169,9 +163,9 @@ Carousel.prototype = {
 	 * @param {string} moved 'moved'を指定するとリセットの幅が狭まる。移動後の位置リセットに使用
 	 * @see init, moveBind, move
 	 */
-	indexUpdate: function (index, moved) {
-		var self = this
-		,   indexTo = index;
+	fn.indexUpdate = function (index, moved) {
+		var self = this;
+		var indexTo = index;
 		
 		if (!self.isMoving) {
 			
@@ -205,16 +199,17 @@ Carousel.prototype = {
 		} else {
 			return false;
 		}
-	}
-	,
+	};
 	
 	/**
 	 * makeClone
 	 * roop用のcloneを$itemの左右に追加
 	 * @see init
 	 */
-	makeClone: function () {
-		var self = this, i, j;
+	fn.makeClone = function () {
+		var self = this;
+		var i;
+		var j;
 		
 		//作成要素数
 		self.clonePrependNum = self.cloneAppendNum = Math.ceil(self.elementSize / self.itemSize);
@@ -237,25 +232,22 @@ Carousel.prototype = {
 			);
 			(j >= self.$item.length - 1)? j = 0 : j++;
 		}
-	}
-	,
-	
+	};
+
 	/**
 	 * setListStyle
 	 * $listにwidth, marginLeftをセット
 	 * @see init, move
 	 */
-	setListStyle: function () {
-		var self = this
-		,   prop = {}
-		;
+	fn.setListStyle = function () {
+		var self = this;
+		var prop = {};
 		prop[self.sizeProp]   = self.calcListSize() + 'px';//height, width
 		if (! self.o.listHeightType){
 			prop[self.marginProp] = self.calcListMargin() + 'px';//marginTop, marginLeft
 		}
 		self.$list.css(prop);
-	}
-	,
+	};
 	
 	/**
 	 * calcListSize
@@ -263,7 +255,7 @@ Carousel.prototype = {
 	 * @return {number}
 	 * @see setListStyle
 	 */
-	calcListSize: function () {
+	fn.calcListSize = function () {
 		var self = this;
 		if (self.o.listHeightType === 'max') {
 			//return max $itemをループして一番大きいheight. 違うメソッドにする
@@ -272,9 +264,7 @@ Carousel.prototype = {
 		} else {
 			return (self.$item.length + self.clonePrependNum + self.cloneAppendNum ) * self.itemSize;
 		}
-
-	}
-	,
+	};
 	
 	/**
 	 * calcListMargin
@@ -282,11 +272,10 @@ Carousel.prototype = {
 	 * @return {number}
 	 * @see setListStyle, move
 	 */
-	calcListMargin: function () {
+	fn.calcListMargin = function () {
 		var self = this;
 		return  - ( (self.itemSize * (self.index + self.clonePrependNum)) - self.calcPos_x() );
-	}
-	,
+	};
 	
 	/**
 	 * calcPos_x
@@ -294,8 +283,9 @@ Carousel.prototype = {
 	 * @return {number}
 	 * @see calcListMargin
 	 */
-	calcPos_x: function () {
+	fn.calcPos_x = function () {
 		var self = this;
+
 		//numberであればnumberをそのまま返す
 		if (!isNaN(self.o.pos_x)) {
 			return self.o.pos_x + self.o.pos_x_fix;
@@ -321,8 +311,7 @@ Carousel.prototype = {
 					break;
 			}
 		}
-	}
-	,
+	};
 	
 	/**
 	 * moveBind
@@ -331,7 +320,7 @@ Carousel.prototype = {
 	 * @param {object} element clickされたelement
 	 * @see init, autoPlay
 	 */
-	moveBind: function (index, element) {
+	fn.moveBind = function (index, element) {
 		var self = this;
 
 		//clickした要素のclassが'disable'の場合は抜ける
@@ -349,15 +338,13 @@ Carousel.prototype = {
 
 		//移動
 		self.animate();
-	}
-	,
-
+	};
 
 	/**
 	 * animate
 	 * self.o.animateで設定されているアニメーションメソッドを実行する。
 	 */
-	animate: function () {
+	fn.animate = function () {
 		var self = this;
 
 		switch (self.o.animate) {
@@ -373,18 +360,16 @@ Carousel.prototype = {
 				self.animateSlide();
 				break;
 		}
-	}
-	,
+	};
 
 	/**
 	 * animateSlide
 	 * スライドアニメーション - (index * itemSize)分だけ$listを移動する
 	 * @see animate
 	 */
-	animateSlide: function () {
-		var self = this
-		,   prop = {}
-		;
+	fn.animateSlide = function () {
+		var self = this;
+		var prop = {};
 		
 		prop[self.marginProp] = self.calcListMargin() + 'px';//marginTop, marginLeft
 
@@ -413,15 +398,14 @@ Carousel.prototype = {
 				queue: false
 			})
 		}
-	}
-	,
+	};
 
 	/**
 	 * animateFade
 	 * フェードアニメーション
 	 * @see animate
 	 */
-	animateFade: function () {
+	fn.animateFade = function () {
 		var self = this;
 
 		if (!self.isMoving) {
@@ -437,20 +421,17 @@ Carousel.prototype = {
 					self.$element.trigger('carousel:moveend');
 				});
 			}, timer);
-
 		}
-	}
-	,
+	};
 
 	/**
 	 * addCurrentClass
 	 * index番目の要素にcurrentClassをセット
 	 * @see init, move
 	 */
-	addCurrentClass: function () {
-		var self = this
-		,   paginationIndex
-		;
+	fn.addCurrentClass = function () {
+		var self = this;
+		var paginationIndex;
 		
 		//currentClass削除
 		self.$allList.children().removeClass(self.o.currentClass);
@@ -468,27 +449,25 @@ Carousel.prototype = {
 			paginationIndex = Math.floor(self.index / self.group);
 		}
 		self.$paginationItem.eq(paginationIndex).addClass(self.o.currentClass);
-	}
-	,
+	};
 	
 	/**
 	 * highlightEffect
 	 * currentClass が付いた要素をハイライト表示
 	 * @see init, move
 	 */
-	highlightEffect: function () {
+	fn.highlightEffect = function () {
 		var self = this;
 		self.$paginationItem.animate({opacity: 0.4}, {duration: 300, queue: false});
 		self.$paginationItem + $('.' + self.o.currentClass).animate({opacity: 1}, {duration: 300, queue: false});
 	}
-	,
 	
 	/**
 	 * autoPlay
 	 * 一定間隔でmoveBindを実行しカルーセルを自動で動かす
 	 * @see init
 	 */
-	autoPlay: function () {
+	fn.autoPlay = function () {
 		var self = this, timer, autoPlay, autoPlayInterval;
 		autoPlayInterval = (self.o.autoPlayInterval >= 40) ? self.o.autoPlayInterval : 40;
 		
@@ -514,14 +493,14 @@ Carousel.prototype = {
 				}
 			);
 		}
-	},
+	};
 
 	/**
 	 * loopingDisabled
 	 * 前のアイテム, 次のアイテムが無い場合に、prev, nextボタンにclass self.o.disableClassを付与する
 	 * @see init, moveBind
 	 */
-	loopingDisabled: function () {
+	fn.loopingDisabled = function () {
 		var self = this;
 
 		if (self.index - (self.group - 1) <= 0){
@@ -535,23 +514,21 @@ Carousel.prototype = {
 		} else {
 			self.$nextNavi.removeClass(self.o.disableClass)
 		}
-
-	},
+	};
 
 	/**
 	 * resizeRefresh
 	 * ブラウザがリサイズされたら描画をリフレッシュ
 	 * @see init
 	 */
-	resizeRefresh: function () {
+	fn.resizeRefresh = function () {
 		var self = this;
 
 		$(window).on('resize', function () {
 			//timerを使用しリフレッシュ間隔を制限
 			if (self.o.resizeTimer) {
-				var _timer = null
-					, _INTERVAL = self.o.resizeTimer
-					;
+				var _timer = null;
+				var _INTERVAL = self.o.resizeTimer;
 
 				if (_timer) {
 					clearTimeout(_timer);
@@ -575,11 +552,9 @@ Carousel.prototype = {
 				}
 				self.setListStyle();
 			}
-
 		});
-	}
-	
-};//Carousel.prototype
+	};
+})(Carousel.prototype);
 
 
 /**
@@ -590,7 +565,7 @@ $.fn.liquidCarousel = function (options) {
 		var $this = $(this);
 		$this.data('carousel', new Carousel($this, options));
 	});
-};//$.fn.liquidCarousel
+};
 
 
 })(jQuery, this);

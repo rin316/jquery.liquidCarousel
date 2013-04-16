@@ -101,22 +101,22 @@ hr {
 		overflow: hidden;
 	}
 	
-	.carousel-list {
+	.ui-carousel-list {
 		margin-bottom: 20px;
 		position: relative;
 	}
 
-	.carousel-list:after {
+	.ui-carousel-list:after {
 		content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
 	}
 
 	/*--fade--*/
-	#fade .carousel-list {
+	#fade .ui-carousel-list {
 		width: 100px;
 		height: 100px;
 	}
 		
-		.carousel-item {
+		.ui-carousel-item {
 			float: left;
 			display: inline;
 			margin: 0px;
@@ -127,25 +127,25 @@ hr {
 			text-align: center;
 		}
 
-		.carousel-item.carousel-current {
+		.ui-carousel-item.ui-carousel-current {
 			background-color: #D264B7 !important;
 		}
 
 		/*--vertical--*/
-		.vertical .carousel-item {
+		.vertical .ui-carousel-item {
 			float: none;
 			display: block;
 		}
 
 		/*--fade--*/
-		#fade .carousel-item {
+		#fade .ui-carousel-item {
 			position: absolute;
 			top: 0px;
 			left: 0px;
 		}
 
 		/*--tab--*/
-		.tab .carousel-item {
+		.tab .ui-carousel-item {
 			padding: 10px;
 			width: 190px;
 			height: auto;
@@ -166,57 +166,57 @@ hr {
 			/*float: none;*/
 			/*margin-bottom: 10px;*/
 		/*}*/
-		.carousel-prev,
-		.carousel-next {
+		.ui-carousel-prev,
+		.ui-carousel-next {
 			display: inline;
 			float: left;
 			margin-left: 10px;
 			width: 100px;
 		}
-			.carousel-prev a,
-			.carousel-next a {
+			.ui-carousel-prev a,
+			.ui-carousel-next a {
 				display: block;
 				padding: 20px;
 				background-color: #B7D264;
 				border-radius: 5px;
 			}
-            .carousel-prev.carousel-disable a,
-            .carousel-next.carousel-disable a {
+            .ui-carousel-prev.ui-carousel-disable a,
+            .ui-carousel-next.ui-carousel-disable a {
                 opacity: 0.5;
                 cursor: default;
                 text-decoration: none;
 
             }
 			
-		.carousel-prev {
+		.ui-carousel-prev {
 		}
 			.carousel-prev a {
 			}
 		
-		.carousel-next {
+		.ui-carousel-next {
 		}
 			.carousel-next a {
 			}
 			
-	.carousel-pagination {
+	.ui-carousel-pagination {
 	}
-		.carousel-paginationList {
+		.ui-carousel-paginationList {
 			margin-left: -10px;
 		}
 
 		/*--tab--*/
-		.tab .carousel-paginationList {
+		.tab .ui-carousel-paginationList {
 			margin-bottom: 0;
 		}
-		.carousel-paginationList:after {
+		.ui-carousel-paginationList:after {
 			content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
 		}
-			.carousel-paginationItem {
+			.ui-carousel-paginationItem {
 				float: left;
 				display: inline;
 				margin-left: 10px;
 			}
-				.carousel-paginationItem a {
+				.ui-carousel-paginationItem a {
 					display: block;
 					padding: 13px 0;
 					width: 45px;
@@ -224,9 +224,9 @@ hr {
 					text-align: center;
 				}
 
-	.carousel-setNum {
+	.ui-carousel-setNum {
 	}
-		.carousel-setNum a {
+		.ui-carousel-setNum a {
 			display: block;
 			width: 100%;
 			padding: 13px 0;

@@ -18,16 +18,16 @@ var addJsOnClass = (function () {
 
 //window load
 $(window).load(function(){
-	
+
 	/*
 	 * color gradation作成
 	 */
 	$('.carousel').each(function () {
 		var $this = $(this);
 		if ($this.hasClass('tab')) { return false; }
-		var item = $this.find($('.carousel-item'));
+		var item = $this.find($('.ui-carousel-item'));
 		var itemLength = item.length;
-		
+
 		var colors = [];
 		for (var i = 0; i < itemLength; i++){
 			var r = 152;
@@ -42,7 +42,7 @@ $(window).load(function(){
 			b = Math.round(b + ((255-b) * (itemLength - i + 1) / itemLength) * 0.6);
 
 			colors[itemLength - i] = 'rgb(' + r + ','+ g + ',' + b + ')';
-			
+
 			$(item[i]).css('background-color', colors[itemLength - i])
 		}
 	});
@@ -103,7 +103,7 @@ $(window).load(function(){
 	(function () {
 		var self = $('#sample3').data('carousel')
 		,   control = $('#sample3-control')
-		,   paginationItem = control.find($('.carousel-paginationItem'))
+		,   paginationItem = control.find($('.ui-carousel-paginationItem'))
 		;
 
 		paginationItem.on('click', function(e){
@@ -111,17 +111,17 @@ $(window).load(function(){
 			e.preventDefault();
 		});
 
-		control.find($('.carousel-prev')).on('click', function(e){
+		control.find($('.ui-carousel-prev')).on('click', function(e){
 			self.moveBind(self.index - self.group, this);
 			e.preventDefault();
 		});
 
-		control.find($('.carousel-next')).on('click', function(e){
+		control.find($('.ui-carousel-next')).on('click', function(e){
 			self.moveBind(self.index + self.group, this);
 			e.preventDefault();
 		});
 
-		control.find($('.carousel-setNum')).on('click', function(e){
+		control.find($('.ui-carousel-setNum')).on('click', function(e){
 			self.moveBind(2, this);
 			e.preventDefault();
 		});
