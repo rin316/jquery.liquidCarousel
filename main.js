@@ -99,7 +99,6 @@ $(window).load(function(){
 	$('#sample3').liquidCarousel({
 	    vertical: true
 	});
-
 	(function () {
 		var self = $('#sample3').data('carousel')
 		,   control = $('#sample3-control')
@@ -135,8 +134,38 @@ $(window).load(function(){
 		})
 	})();
 
-	$('#sample1-1').liquidCarousel({
+	$('#sample4').liquidCarousel({
+		pos_x: 'center'
+		,autoPlayInterval: 2000
+		,autoPlayStartDelay: 0
+		,autoPlay: true
+		,autoPlayHoverStop: true
 	});
+	(function () {
+		var self = $('#sample4').data('carousel')
+			,$showCurrentNoArea = $('#sample4-showCurrentNoArea')
+			,$showItemLengthArea = $('#sample4-showItemLengthArea')
+			,ltemLength = self.$item.length;
+			;
+
+		function _init () {
+			$showItemLengthArea.text(ltemLength);
+			_setIndex();
+			_eventify();
+		}
+
+		function _setIndex () {
+			$showCurrentNoArea.text(self.index + 1);
+		};
+
+		function _eventify () {
+			$('#sample4').on('carousel:moveend', function(e){
+				_setIndex();
+			});
+		}
+
+		_init ();
+	})();
 });
 
 
