@@ -141,10 +141,11 @@ $(window).load(function(){
 		,autoPlay: true
 		,autoPlayHoverStop: true
 	});
-	(function () {
-		var self = $('#sample4').data('carousel')
-			,$showCurrentNoArea = $('#sample4-showCurrentNoArea')
-			,$showItemLengthArea = $('#sample4-showItemLengthArea')
+	$('#sample4').each(function () {
+		var $this = $(this)
+			,self = $this.data('carousel')
+			,$showCurrentNoArea = $this.find('#sample4-showCurrentNoArea')
+			,$showItemLengthArea = $this.find('#sample4-showItemLengthArea')
 			,ltemLength = self.$item.length
 			;
 
@@ -153,19 +154,16 @@ $(window).load(function(){
 			_setIndex();
 			_eventify();
 		}
-
 		function _setIndex () {
 			$showCurrentNoArea.text(self.index + 1);
 		}
-
 		function _eventify () {
-			$('#sample4').on('carousel:moveend', function(e){
+			$this.on('carousel:moveend', function(e){
 				_setIndex();
 			});
 		}
-
 		_init ();
-	})();
+	});
 });
 
 
