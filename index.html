@@ -371,7 +371,7 @@ $('#sample2-4').liquidCarousel({
 <hr>
 
 <div id="sample3" class="carousel vertical">
-	<div class="container-fluid"><h2>vertical: true</h2></div>
+	<div class="container-fluid"><h2>#sample3 vertical: true</h2></div>
 	<div class="container-fluid">
 		<div class="carousel-listWrapper">
 			<ul class="ui-carousel-list">
@@ -468,6 +468,47 @@ $('#sample3').liquidCarousel({
 
 <hr>
 
+<div id="sample4-1" class="carousel horizontal">
+	<div class="container-fluid"><h2>番号表示</h2></div>
+	<ul class="ui-carousel-list">
+		<li class="ui-carousel-item">1</li>
+		<li class="ui-carousel-item">2</li>
+		<li class="ui-carousel-item">3</li>
+		<li class="ui-carousel-item">4</li>
+	</ul>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="carousel-pagination">
+					<ul class="ui-carousel-paginationList">
+						<li class="ui-carousel-paginationItem"><a href="#">1</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">2</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">3</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">4</a></li>
+					</ul>
+				</div>
+
+				<ul class="carousel-button">
+					<li class="ui-carousel-prev"><a href="#">Prev</a></li>
+					<li class="ui-carousel-next"><a href="#">Next</a></li>
+				</ul>
+			</div>
+			<div class="span9">
+<pre>
+$('#sample1-1').liquidCarousel({
+    listSelector:           '.ui-carousel-list'
+,   itemSelector:           '.ui-carousel-item'
+,   paginationListSelector: '.ui-carousel-paginationList'
+,   paginationItemSelector: '.ui-carousel-paginationItem'
+,   prevSelector:           '.ui-carousel-prev'
+,   nextSelector:           '.ui-carousel-next'
+});</pre>
+			</div>
+		</div>
+	</div>
+
+</div>
 
 <hr>
 

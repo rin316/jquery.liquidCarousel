@@ -135,6 +135,7 @@ $(window).load(function(){
 		})
 	})();
 
+	$('#sample1-1').liquidCarousel({
 	});
 });
 
