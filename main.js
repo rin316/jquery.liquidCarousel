@@ -145,7 +145,7 @@ $(window).load(function(){
 		var self = $('#sample4').data('carousel')
 			,$showCurrentNoArea = $('#sample4-showCurrentNoArea')
 			,$showItemLengthArea = $('#sample4-showItemLengthArea')
-			,ltemLength = self.$item.length;
+			,ltemLength = self.$item.length
 			;
 
 		function _init () {
