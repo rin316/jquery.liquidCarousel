@@ -156,7 +156,7 @@ $(window).load(function(){
 
 		function _setIndex () {
 			$showCurrentNoArea.text(self.index + 1);
-		};
+		}
 
 		function _eventify () {
 			$('#sample4').on('carousel:moveend', function(e){
