@@ -19,9 +19,9 @@ var DEFAULT_OPTIONS;
 DEFAULT_OPTIONS = {
 	// selector setting
 	listSelector:           '.ui-carousel-list' // {string}
-	,itemSelector:           '.ui-carousel-item' // {string}
+	,itemSelector:           'li' // {string}
 	,paginationListSelector: '.ui-carousel-paginationList' // {string}
-	,paginationItemSelector: '.ui-carousel-paginationItem' // {string}
+	,paginationItemSelector: 'li' // {string}
 	,prevSelector:           '.ui-carousel-prev' // {string}
 	,nextSelector:           '.ui-carousel-next' // {string}
 	// add class name setting
