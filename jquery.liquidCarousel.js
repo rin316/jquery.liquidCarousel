@@ -1,11 +1,11 @@
 /*!
  * jquery.liquidCarousel.js
  *
- * @version   1.4
+ * @version   1.5
  * @author    rin316 [Yuta Hayashi]
  * @require   jquery.js, jquery.effects.core.js
  * @create    2012-09-11
- * @modify    2013-04-16 - autoPlayStopLastItem を追加
+ * @modify    2013-06-25 - itemが1つの時は self.o.loop:false になるよう変更
  * @link      https://github.com/rin316/jquery.liquidCarousel
  */
 ;(function ($, window, undefined) {
@@ -85,7 +85,7 @@ Carousel = function ($element, options) {
 	self.index = self.o.start;
 	self.isMoving = false;
 
-	if(self.o.animate === 'fade') {
+	if(self.o.animate === 'fade' || self.$item.length <= 1) {
 		self.o.loop = false;
 		self.o.resizeRefresh = false;
 	} else {
