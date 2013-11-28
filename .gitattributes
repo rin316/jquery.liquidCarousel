@@ -1,0 +1,8 @@
+# no archive files
+.git* export-ignore
+node_modules/ export-ignore
+.DS_Store export-ignore
+_notes/ export-ignore
+*/_notes/ export-ignore
+*.mno export-ignore
+grunt.js export-ignore

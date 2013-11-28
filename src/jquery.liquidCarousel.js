@@ -1,13 +1,3 @@
-/*!
- * jquery.liquidCarousel.js
- *
- * @version   1.5
- * @author    rin316 [Yuta Hayashi]
- * @require   jquery.js, jquery.effects.core.js
- * @create    2012-09-11
- * @modify    2013-06-25 - itemが1つの時は self.o.loop:false になるよう変更
- * @link      https://github.com/rin316/jquery.liquidCarousel
- */
 ;(function ($, window, undefined) {
 
 var Carousel;
