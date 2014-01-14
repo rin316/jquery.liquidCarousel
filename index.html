@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>jquery.liquidCarousel.js</title>
+<link rel="stylesheet" href="./resources/css/import.css">
+<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+<script src="./resources/js/loader.js"></script>
+</head>
+
+<body>
+<div id="document">
+
+<div id="centerLine"></div>
+
+<div class="header">
+	<div class="container-fluid">
+		<h1>jquery.liquidCarousel.js</h1>
+		<div>
+			<p>[Code]<br />
+				<a href="https://github.com/rin316/jquery.liquidCarousel">https://github.com/rin316/jquery.liquidCarousel</a></p>
+			<p>[Download]<br />
+				<a href="https://github.com/rin316/jquery.liquidCarousel/zipball/gh-pages">https://github.com/rin316/jquery.liquidCarousel/zipball/gh-pages</a></p>
+			<p>[author]<br />
+				<a href="http://5am.jp/">rin316</a> [Yuta Hayashi]</p>
+		</div>
+	</div>
+	<hr>
+</div>
+
+<div id="sample1-1" class="carousel horizontal">
+	<div class="container-fluid"><h2>Basic setting</h2></div>
+	<ul class="ui-carousel-list">
+		<li class="ui-carousel-item">1</li>
+		<li class="ui-carousel-item">2</li>
+		<li class="ui-carousel-item">3</li>
+		<li class="ui-carousel-item">4</li>
+	</ul>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="carousel-pagination">
+					<ul class="ui-carousel-paginationList">
+						<li class="ui-carousel-paginationItem"><a href="#">1</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">2</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">3</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">4</a></li>
+					</ul>
+				</div>
+
+				<ul class="carousel-button">
+					<li class="ui-carousel-prev"><a href="#">Prev</a></li>
+					<li class="ui-carousel-next"><a href="#">Next</a></li>
+				</ul>
+			</div>
+			<div class="span9">
+<pre>
+$('#sample1-1').liquidCarousel({
+    listSelector:           '.ui-carousel-list'
+,   itemSelector:           '.ui-carousel-item'
+,   paginationListSelector: '.ui-carousel-paginationList'
+,   paginationItemSelector: '.ui-carousel-paginationItem'
+,   prevSelector:           '.ui-carousel-prev'
+,   nextSelector:           '.ui-carousel-next'
+});</pre>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<hr>
+
+<div id="sample1-2" class="carousel horizontal">
+	<div class="container-fluid"><h2>autoPlay: true , pos_x: 'center'</h2></div>
+	<ul class="ui-carousel-list">
+		<li class="ui-carousel-item">1</li>
+		<li class="ui-carousel-item">2</li>
+		<li class="ui-carousel-item">3</li>
+		<li class="ui-carousel-item">4</li>
+	</ul>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="carousel-pagination">
+					<ul class="ui-carousel-paginationList">
+						<li class="ui-carousel-paginationItem"><a href="#">1</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">2</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">3</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">4</a></li>
+					</ul>
+				</div>
+
+				<ul class="carousel-button">
+					<li class="ui-carousel-prev"><a href="#">Prev</a></li>
+					<li class="ui-carousel-next"><a href="#">Next</a></li>
+				</ul>
+			</div>
+			<div class="span9">
+<pre>
+$('#sample1-2').liquidCarousel({
+    pos_x: 'center'
+,   autoPlayInterval: 2000
+,   autoPlayStartDelay: 0
+,   autoPlay: true
+,   autoPlayHoverStop: true
+});</pre>
+			</div>
+		</div>
+	</div>
+</div>
+
+<hr>
+
+<div id="sample1-3" class="carousel horizontal">
+	<div class="container-fluid"><h2>easing: 'linear' , pos_x: 'right'</h2></div>
+	<ul class="ui-carousel-list">
+		<li class="ui-carousel-item">1</li>
+		<li class="ui-carousel-item">2</li>
+		<li class="ui-carousel-item">3</li>
+		<li class="ui-carousel-item">4</li>
+	</ul>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="carousel-pagination">
+					<ul class="ui-carousel-paginationList">
+						<li class="ui-carousel-paginationItem"><a href="#">1</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">2</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">3</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">4</a></li>
+					</ul>
+				</div>
+
+				<ul class="carousel-button">
+					<li class="ui-carousel-prev"><a href="#">Prev</a></li>
+					<li class="ui-carousel-next"><a href="#">Next</a></li>
+				</ul>
+			</div>
+			<div class="span9">
+<pre>
+$('#sample1-3').liquidCarousel({
+    pos_x: 'right'
+,   easing: 'linear'
+,   speed: 4000
+,   autoPlayInterval: 0
+,   autoPlayStartDelay: 1000
+,   autoPlay: true
+});</pre>
+			</div>
+		</div>
+	</div>
+</div>
+
+<hr>
+
+<div id="fade" class="carousel horizontal">
+	<div class="container-fluid"><h2>animate: 'fade'</h2></div>
+	<div class="container-fluid">
+		<ul class="ui-carousel-list">
+			<li class="ui-carousel-item">1</li>
+			<li class="ui-carousel-item">2</li>
+			<li class="ui-carousel-item">3</li>
+			<li class="ui-carousel-item">4</li>
+		</ul>
+
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="carousel-pagination">
+					<ul class="ui-carousel-paginationList">
+						<li class="ui-carousel-paginationItem"><a href="#">1</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">2</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">3</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">4</a></li>
+					</ul>
+				</div>
+
+				<ul class="carousel-button">
+					<li class="ui-carousel-prev"><a href="#">Prev</a></li>
+					<li class="ui-carousel-next"><a href="#">Next</a></li>
+				</ul>
+			</div>
+			<div class="span9">
+<pre>
+$('#fade').liquidCarousel({
+    animate: 'fade'
+,   speed: 1500
+,   currentClass: 'nonHighlight'
+});</pre>
+			</div>
+		</div>
+	</div>
+</div>
+
+<hr>
+
+<div id="sample2-1" class="carousel horizontal">
+	<div class="container-fluid"><h2>loop: false</h2></div>
+	<div class="container-fluid">
+		<ul class="ui-carousel-list">
+			<li class="ui-carousel-item">1</li>
+			<li class="ui-carousel-item">2</li>
+			<li class="ui-carousel-item">3</li>
+			<li class="ui-carousel-item">4</li>
+		</ul>
+
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="carousel-pagination">
+					<ul class="ui-carousel-paginationList">
+						<li class="ui-carousel-paginationItem"><a href="#">1</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">2</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">3</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">4</a></li>
+					</ul>
+				</div>
+
+				<ul class="carousel-button">
+					<li class="ui-carousel-prev"><a href="#">Prev</a></li>
+					<li class="ui-carousel-next"><a href="#">Next</a></li>
+				</ul>
+			</div>
+			<div class="span9">
+<pre>
+$('#sample2-1').liquidCarousel({
+    loop: false
+});</pre>
+			</div>
+		</div>
+	</div>
+</div>
+
+<hr>
+
+<div id="sample2-2" class="carousel horizontal">
+	<div class="container-fluid"><h2>loopingDisabled: true</h2></div>
+	<div class="container-fluid">
+		<ul class="ui-carousel-list">
+			<li class="ui-carousel-item">1</li>
+			<li class="ui-carousel-item">2</li>
+			<li class="ui-carousel-item">3</li>
+			<li class="ui-carousel-item">4</li>
+		</ul>
+
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="carousel-pagination">
+					<ul class="ui-carousel-paginationList">
+						<li class="ui-carousel-paginationItem"><a href="#">1</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">2</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">3</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">4</a></li>
+					</ul>
+				</div>
+
+				<ul class="carousel-button">
+					<li class="ui-carousel-prev"><a href="#">Prev</a></li>
+					<li class="ui-carousel-next"><a href="#">Next</a></li>
+				</ul>
+			</div>
+			<div class="span9">
+<pre>
+$('#sample2-2').liquidCarousel({
+    speed: 0
+,   loop: false
+,   loopingDisabled: true
+});</pre>
+			</div>
+		</div>
+	</div>
+</div>
+
+<hr>
+
+<div id="sample2-3" class="carousel horizontal unit">
+	<div class="container-fluid"><h2>group: 3 , loop: false</h2></div>
+	<div class="container-fluid">
+		<div class="carousel-listWrapper">
+			<ul class="ui-carousel-list">
+				<li class="ui-carousel-item">1</li>
+				<li class="ui-carousel-item">2</li>
+				<li class="ui-carousel-item">3</li>
+				<li class="ui-carousel-item">4</li>
+				<li class="ui-carousel-item">5</li>
+				<li class="ui-carousel-item">6</li>
+				<li class="ui-carousel-item">7</li>
+				<li class="ui-carousel-item">8</li>
+				<li class="ui-carousel-item">9</li>
+				<li class="ui-carousel-item">10</li>
+				<li class="ui-carousel-item">11</li>
+			</ul>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="carousel-pagination">
+					<ul class="ui-carousel-paginationList">
+						<li class="ui-carousel-paginationItem"><a href="#">1</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">2</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">3</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">4</a></li>
+					</ul>
+				</div>
+
+				<ul class="carousel-button">
+					<li class="ui-carousel-prev"><a href="#">Prev</a></li>
+					<li class="ui-carousel-next"><a href="#">Next</a></li>
+				</ul>
+			</div>
+			<div class="span9">
+<pre>
+$('#sample2-3').liquidCarousel({
+    loop: false
+,   group: 3
+});</pre>
+			</div>
+		</div>
+	</div>
+</div>
+
+<hr>
+
+<div id="sample2-4" class="carousel horizontal unit">
+	<div class="container-fluid"><h2>group: 3 , loop: true</h2></div>
+	<div class="container-fluid">
+		<div class="carousel-listWrapper">
+			<ul class="ui-carousel-list">
+				<li class="ui-carousel-item">1</li>
+				<li class="ui-carousel-item">2</li>
+				<li class="ui-carousel-item">3</li>
+				<li class="ui-carousel-item">4</li>
+				<li class="ui-carousel-item">5</li>
+				<li class="ui-carousel-item">6</li>
+				<li class="ui-carousel-item">7</li>
+				<li class="ui-carousel-item">8</li>
+				<li class="ui-carousel-item">9</li>
+				<li class="ui-carousel-item">10</li>
+				<li class="ui-carousel-item">11</li>
+			</ul>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="carousel-pagination">
+					<ul class="ui-carousel-paginationList">
+						<li class="ui-carousel-paginationItem"><a href="#">1</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">2</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">3</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">4</a></li>
+					</ul>
+				</div>
+
+				<ul class="carousel-button">
+					<li class="ui-carousel-prev"><a href="#">Prev</a></li>
+					<li class="ui-carousel-next"><a href="#">Next</a></li>
+				</ul>
+			</div>
+			<div class="span9">
+<pre>
+$('#sample2-4').liquidCarousel({
+    group: 3
+});</pre>
+			</div>
+		</div>
+	</div>
+</div>
+
+<hr>
+
+<div id="sample3" class="carousel vertical">
+	<div class="container-fluid"><h2>#sample3 vertical: true</h2></div>
+	<div class="container-fluid">
+		<div class="carousel-listWrapper">
+			<ul class="ui-carousel-list">
+				<li class="ui-carousel-item">1</li>
+				<li class="ui-carousel-item">2</li>
+				<li class="ui-carousel-item">3</li>
+				<li class="ui-carousel-item">4</li>
+			</ul>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="carousel-pagination">
+					<ul class="ui-carousel-paginationList">
+						<li class="ui-carousel-paginationItem"><a href="#">1</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">2</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">3</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">4</a></li>
+					</ul>
+				</div>
+
+				<ul class="carousel-button">
+					<li class="ui-carousel-prev"><a href="#">Prev</a></li>
+					<li class="ui-carousel-next"><a href="#">Next</a></li>
+				</ul>
+			</div>
+			<div class="span9">
+<pre>
+$('#sample3').liquidCarousel({
+    vertical: true
+});</pre>
+			</div>
+		</div>
+	</div>
+</div>
+
+<hr>
+
+<div id="sample3-control" class="carousel vertical">
+	<div class="container-fluid"><h2>Outside the scope of #sample3 control</h2></div>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="carousel-pagination">
+					<ul class="ui-carousel-paginationList">
+						<li class="ui-carousel-paginationItem"><a href="#">1</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">2</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">3</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">4</a></li>
+					</ul>
+				</div>
+
+				<ul class="carousel-button">
+					<li class="ui-carousel-prev"><a href="#">Prev</a></li>
+					<li class="ui-carousel-next"><a href="#">Next</a></li>
+				</ul>
+
+				<p class="ui-carousel-setNum"><a href="#">3つめを表示</a></p>
+
+				<p>#sample3 index: <span id="sample3Index"></span></p>
+			</div>
+			<div class="span9">
+<pre>
+(function () {
+	var self = $('#sample3').data('carousel')
+	,   control = $('#sample3-control')
+	,   paginationItem = control.find($('.ui-carousel-paginationItem'))
+	;
+
+	paginationItem.on('click', function(e){
+		self.moveBind(paginationItem.index(this) * self.group);
+		e.preventDefault();
+	});
+
+	control.find($('.ui-carousel-prev')).on('click', function(e){
+		self.moveBind(self.index - self.group, this);
+		e.preventDefault();
+	});
+
+	control.find($('.ui-carousel-next')).on('click', function(e){
+		self.moveBind(self.index + self.group, this);
+		e.preventDefault();
+	});
+
+	control.find($('.ui-carousel-setNum')).on('click', function(e){
+		self.moveBind(2, this);
+		e.preventDefault();
+	});
+})();</pre>
+			</div>
+		</div>
+	</div>
+</div>
+
+<hr>
+
+<div id="sample4" class="carousel horizontal">
+	<div class="container-fluid"><h2>番号表示</h2></div>
+	<ul class="ui-carousel-list">
+		<li class="ui-carousel-item">1</li>
+		<li class="ui-carousel-item">2</li>
+		<li class="ui-carousel-item">3</li>
+		<li class="ui-carousel-item">4</li>
+	</ul>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="carousel-pagination">
+					<ul class="ui-carousel-paginationList">
+						<li class="ui-carousel-paginationItem"><a href="#">1</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">2</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">3</a></li>
+						<li class="ui-carousel-paginationItem"><a href="#">4</a></li>
+					</ul>
+				</div>
+
+				<ul class="carousel-button">
+					<li class="ui-carousel-prev"><a href="#">Prev</a></li>
+					<li class="ui-carousel-next"><a href="#">Next</a></li>
+				</ul>
+
+				<p><span id="sample4-showCurrentNoArea">a</span> / <span id="sample4-showItemLengthArea">a</span></p>
+			</div>
+			<div class="span9">
+<pre>
+$('#sample4').liquidCarousel({
+	pos_x: 'center'
+	,autoPlayInterval: 2000
+	,autoPlayStartDelay: 0
+	,autoPlay: true
+	,autoPlayHoverStop: true
+});
+$('#sample4').each(function () {
+	var $this = $(this)
+		,self = $this.data('carousel')
+		,$showCurrentNoArea = $this.find('#sample4-showCurrentNoArea')
+		,$showItemLengthArea = $this.find('#sample4-showItemLengthArea')
+		,ltemLength = self.$item.length
+		;
+
+	function _init () {
+		$showItemLengthArea.text(ltemLength);
+		_setIndex();
+		_eventify();
+	}
+	function _setIndex () {
+		$showCurrentNoArea.text(self.index + 1);
+	}
+	function _eventify () {
+		$this.on('carousel:moveend', function(e){
+			_setIndex();
+		});
+	}
+	_init ();
+});</pre>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<hr>
+
+<!-- /#document --></div>
+</body>
+</html>

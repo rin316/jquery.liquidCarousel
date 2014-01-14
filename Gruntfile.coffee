@@ -37,7 +37,7 @@ module.exports = (grunt) ->
         options:
           banner: '<%= banner %>'
         files: [
-          'dist/jquery.liquidCarousel.js': 'src/jquery.liquidCarousel.js'
+          'jquery.liquidCarousel.js': 'src/jquery.liquidCarousel.js'
         ]
 
     uglify:
@@ -45,7 +45,7 @@ module.exports = (grunt) ->
         options:
           banner: '<%= banner %>'
         files: [
-          'dist/jquery.liquidCarousel.min.js': 'src/jquery.liquidCarousel.js'
+          'jquery.liquidCarousel.min.js': 'src/jquery.liquidCarousel.js'
         ]
 
     shell:

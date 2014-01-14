@@ -1,7 +1,7 @@
 {
   "name": "jquery.liquidCarousel.js",
   "version": "1.5.2",
-  "description": "jQuery carousel plugin. 幅が足りない場合は要素を左右にclone。",
+  "description": "jQuery carousel plugin. 更新: ファイル位置変更",
   "main": "Gruntfile.js",
   "author": "rin316 [Yuta Hayashi]",
   "repository": {

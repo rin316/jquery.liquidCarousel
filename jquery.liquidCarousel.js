@@ -1,6 +1,6 @@
 /*! jquery.liquidCarousel.js (git@github.com:rin316/jquery.liquidCarousel.js.git)
- * jQuery carousel plugin. 幅が足りない場合は要素を左右にclone。
- * lastupdate: 2013-11-28
+ * jQuery carousel plugin. 更新: ファイル位置変更
+ * lastupdate: 2014-01-14
  * version: 1.5.2
  * author: rin316 [Yuta Hayashi]
  * License: MIT
