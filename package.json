@@ -1,14 +1,17 @@
 {
   "name": "jquery.liquidCarousel.js",
+  "description": "jQuery carousel plugin.",
   "version": "1.5.2",
-  "description": "jQuery carousel plugin. 更新: ファイル位置変更",
-  "main": "Gruntfile.js",
-  "author": "rin316 [Yuta Hayashi]",
+  "require": "jquery.js",
+  "lastUpdateComment": "ファイル位置変更",
+  "link": "http://rin316.github.io/jquery.liquidCarousel/",
+  "author": "rin316 (Yuta Hayashi) [http://5am.jp]",
   "repository": {
     "type": "git",
     "url": "git@github.com:rin316/jquery.liquidCarousel.js.git"
   },
   "license": "MIT",
+  "main": "Gruntfile.js",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-uglify": "~0.2.4",

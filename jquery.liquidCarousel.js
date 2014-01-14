@@ -1,8 +1,12 @@
-/*! jquery.liquidCarousel.js (git@github.com:rin316/jquery.liquidCarousel.js.git)
- * jQuery carousel plugin. 更新: ファイル位置変更
- * lastupdate: 2014-01-14
- * version: 1.5.2
- * author: rin316 [Yuta Hayashi]
+/*!
+ * jquery.liquidCarousel.js (git@github.com:rin316/jquery.liquidCarousel.js.git)
+ * jQuery carousel plugin.
+ *
+ * Lastupdate: 2014-01-14 ファイル位置変更
+ * Version: 1.5.2
+ * Require: jquery.js
+ * Link: http://rin316.github.io/jquery.liquidCarousel/
+ * Author: rin316 (Yuta Hayashi) [http://5am.jp]
  * License: MIT
  */
 ;(function ($, window, undefined) {
