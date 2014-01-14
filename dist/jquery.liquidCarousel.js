@@ -1,12 +1,9 @@
-/*!
- * jquery.liquidCarousel.js
- *
- * @version   1.5
- * @author    rin316 [Yuta Hayashi]
- * @require   jquery.js, jquery.effects.core.js
- * @create    2012-09-11
- * @modify    2013-06-25 - itemが1つの時は self.o.loop:false になるよう変更
- * @link      https://github.com/rin316/jquery.liquidCarousel
+/*! jquery.liquidCarousel.js (git@github.com:rin316/jquery.liquidCarousel.js.git)
+ * jQuery carousel plugin. 幅が足りない場合は要素を左右にclone。
+ * lastupdate: 2013-11-28
+ * version: 1.5.2
+ * author: rin316 [Yuta Hayashi]
+ * License: MIT
  */
 ;(function ($, window, undefined) {
 
@@ -72,7 +69,7 @@ Carousel = function ($element, options) {
 	self.$allItem  =       self.$paginationItem.add(self.$item);
 	self.$allListAndNavi = self.$allList.add(self.$prevNavi).add(self.$nextNavi);
 	
-	self.elementSize =     (self.o.vertical) ? self.$element.outerHeight(true) : self.$element.outerWidth(true);
+	self.elementSize =     (self.o.vertical) ? self.$element.height() : self.$element.width();
 	self.itemSize =        (self.o.vertical) ? self.$item.outerHeight(true)    : self.$item.outerWidth(true);
 	self.sizeProp =        (self.o.vertical) ? 'height' : 'width';
 	self.marginProp =      (self.o.vertical) ? 'marginTop' : 'marginLeft';
