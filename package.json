@@ -1,9 +1,9 @@
 {
   "name": "jquery.liquidCarousel.js",
   "description": "jQuery carousel plugin.",
-  "version": "1.5.2",
+  "version": "1.6",
   "require": "jquery.js",
-  "lastUpdateComment": "ファイル位置変更",
+  "lastUpdateComment": "fadeのロジックを自然な表示に変更。fadeDelayを削除",
   "link": "http://rin316.github.io/jquery.liquidCarousel/",
   "author": "rin316 (Yuta Hayashi) [http://5am.jp]",
   "repository": {

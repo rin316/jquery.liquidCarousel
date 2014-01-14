@@ -2,8 +2,8 @@
  * jquery.liquidCarousel.js (git@github.com:rin316/jquery.liquidCarousel.js.git)
  * jQuery carousel plugin.
  *
- * Lastupdate: 2014-01-14 ファイル位置変更
- * Version: 1.5.2
+ * Lastupdate: 2014-01-14 fadeのロジックを自然な表示に変更。fadeDelayを削除
+ * Version: 1.6
  * Require: jquery.js
  * Link: http://rin316.github.io/jquery.liquidCarousel/
  * Author: rin316 (Yuta Hayashi) [http://5am.jp]
@@ -34,7 +34,7 @@ DEFAULT_OPTIONS = {
 	,easing:    'swing' // {string} (swing, liner, easeInOutQuad(@require jquery.effects.core.js), etc...) -  easing effect
 	,speed:     500 // {number} (milli second) - animation speed
 	,vertical:  false // {boolean} - true: 移動方向を横から縦に変更
-	,fadeDelay: false // {boolean} - true: animate: 'fade'の時に、fadeOutが終わった後に次のitemがfadeInするようになる。 false: fadeOutとfadeInが同時に開始される
+	,fadeZIndexBase: 100 // {number} - 100: animate: 'fade'の時に各itemにz-index: 100がsetされる。currentは+1され101となる
 	// autoPlay setting
 	,autoPlay:             false // {boolean} - true: autoplay
 	,autoPlayHoverStop:    true // {boolean} - true: itemにマウスオーバー中はautoplayをストップ
@@ -72,7 +72,7 @@ Carousel = function ($element, options) {
 	self.$allList =        self.$paginationList.add(self.$list);
 	self.$allItem  =       self.$paginationItem.add(self.$item);
 	self.$allListAndNavi = self.$allList.add(self.$prevNavi).add(self.$nextNavi);
-	
+
 	self.elementSize =     (self.o.vertical) ? self.$element.height() : self.$element.width();
 	self.itemSize =        (self.o.vertical) ? self.$item.outerHeight(true)    : self.$item.outerWidth(true);
 	self.sizeProp =        (self.o.vertical) ? 'height' : 'width';
@@ -89,6 +89,8 @@ Carousel = function ($element, options) {
 	if(self.o.animate === 'fade' || self.$item.length <= 1) {
 		self.o.loop = false;
 		self.o.resizeRefresh = false;
+		self.$item.css({ zIndex: self.o.fadeZIndexBase });
+		self.$item.eq(self.index).css({ zIndex: self.o.fadeZIndexBase + 1 });
 	} else {
 		self.o.listHeightType = false;
 	}
@@ -108,10 +110,10 @@ Carousel = function ($element, options) {
 	 */
 	fn.init = function () {
 		var self = this;
-		
+
 		//indexを更新
 		self.indexUpdate(self.index);
-		
+
 		//左右にクローン作成
 		if (self.o.loop) { self.makeClone(); }
 
@@ -144,18 +146,18 @@ Carousel = function ($element, options) {
 			self.moveBind(self.$paginationItem.index(this) * self.group);
 			e.preventDefault();
 		});
-		
+
 		self.$prevNavi.on('click', function(e){
 			self.moveBind(self.index - self.group, this);
 			e.preventDefault();
 		});
-		
+
 		self.$nextNavi.on('click', function(e){
 			self.moveBind(self.index + self.group, this);
 			e.preventDefault();
 		});
 	};
-	
+
 	/**
 	 * indexUpdate
 	 * 引数で送られたindexを使ってself.indexを更新する。
@@ -167,9 +169,9 @@ Carousel = function ($element, options) {
 	fn.indexUpdate = function (index, moved) {
 		var self = this;
 		var indexTo = index;
-		
+
 		if (!self.isMoving) {
-			
+
 			//loopが有効 && move前
 			if (self.o.loop && moved !== 'moved') {
 				if (index < - self.group                        ) { indexTo = self.$item.length - 1; }
@@ -185,7 +187,7 @@ Carousel = function ($element, options) {
 				} else {
 				    if (index < 0) {                               indexTo = self.$item.length - 1; }
 				}
-				
+
 				if (index > self.$item.length - 1){ indexTo = 0; }
 			}
 			//self.index = indexTo;
@@ -201,7 +203,7 @@ Carousel = function ($element, options) {
 			return false;
 		}
 	};
-	
+
 	/**
 	 * makeClone
 	 * roop用のcloneを$itemの左右に追加
@@ -211,13 +213,13 @@ Carousel = function ($element, options) {
 		var self = this;
 		var i;
 		var j;
-		
+
 		//作成要素数
 		self.clonePrependNum = self.cloneAppendNum = Math.ceil(self.elementSize / self.itemSize);
-		
+
 		//既に作成された要素があれば削除
 		self.$list.find($('.' + self.o.cloneClass)).remove();
-		
+
 		//prepend
 		for (i = 0, j = self.$item.length - 1; i < self.clonePrependNum; i++) {
 			self.$list.prepend(
@@ -225,7 +227,7 @@ Carousel = function ($element, options) {
 			);
 			(j <= 0)? j = self.$item.length - 1 : j--;
 		}
-		
+
 		//append
 		for (i = 0, j = 0; i < self.cloneAppendNum; i++) {
 			self.$list.append(
@@ -249,7 +251,7 @@ Carousel = function ($element, options) {
 		}
 		self.$list.css(prop);
 	};
-	
+
 	/**
 	 * calcListSize
 	 * $listのsizeを返す
@@ -266,7 +268,7 @@ Carousel = function ($element, options) {
 			return (self.$item.length + self.clonePrependNum + self.cloneAppendNum ) * self.itemSize;
 		}
 	};
-	
+
 	/**
 	 * calcListMargin
 	 * $listのmarginLeftを返す
@@ -277,7 +279,7 @@ Carousel = function ($element, options) {
 		var self = this;
 		return  - ( (self.itemSize * (self.index + self.clonePrependNum)) - self.calcPos_x() );
 	};
-	
+
 	/**
 	 * calcPos_x
 	 * カレントアイテムの初期位置
@@ -298,22 +300,22 @@ Carousel = function ($element, options) {
 				case 'left':
 					return 0 + self.o.pos_x_fix;
 					break;
-					
+
 				case 'center':
 					return (self.elementSize / 2) - (self.itemSize / 2) + self.o.pos_x_fix;
 					break;
-					
+
 				case 'right':
 					return (self.elementSize - self.itemSize) + self.o.pos_x_fix;
 					break;
-					
+
 				default:
 					return 0;
 					break;
 			}
 		}
 	};
-	
+
 	/**
 	 * moveBind
 	 * カルーセル移動, カレント表示を1つにバインド
@@ -371,7 +373,7 @@ Carousel = function ($element, options) {
 	fn.animateSlide = function () {
 		var self = this;
 		var prop = {};
-		
+
 		prop[self.marginProp] = self.calcListMargin() + 'px';//marginTop, marginLeft
 
 		if (!self.isMoving) {
@@ -389,7 +391,7 @@ Carousel = function ($element, options) {
 						//位置をリセット
 						self.setListStyle();
 					}
-					
+
 					//移動後にcurrent表示
 					self.addCurrentClass();
 					if (self.o.currentHighlight) { self.highlightEffect(); }
@@ -410,18 +412,17 @@ Carousel = function ($element, options) {
 		var self = this;
 
 		if (!self.isMoving) {
-			var timer = (self.o.fadeDelay) ? self.o.speed : 0;
 			self.$element.trigger('carousel:movestart');
 			self.isMoving = true;
-
-			self.$item.fadeOut(self.o.speed);
-			setTimeout(function () {
-				self.$item.eq(self.index).fadeIn(self.o.speed, function () {
+			self.$item.css({ zIndex: self.o.fadeZIndexBase });
+			self.$item.eq(self.index)
+				.css({ zIndex: self.o.fadeZIndexBase + 1 })
+				.fadeIn(self.o.speed, function () {
+					self.$item.not(self.$item.eq(self.index)).hide();
 					self.setListStyle();
 					self.isMoving = false;
 					self.$element.trigger('carousel:moveend');
 				});
-			}, timer);
 		}
 	};
 
@@ -433,13 +434,13 @@ Carousel = function ($element, options) {
 	fn.addCurrentClass = function () {
 		var self = this;
 		var paginationIndex;
-		
+
 		//currentClass削除
 		self.$allList.children().removeClass(self.o.currentClass);
-		
+
 		//$itemをcurrent
 		self.$list.children().eq(self.clonePrependNum  + self.index).addClass(self.o.currentClass);
-		
+
 		//$itemの最大値より大きい場合は、0番目の$paginationItemをcurrent
 		if (self.index > self.$item.length -1) {
 			paginationIndex = 0;
@@ -451,7 +452,7 @@ Carousel = function ($element, options) {
 		}
 		self.$paginationItem.eq(paginationIndex).addClass(self.o.currentClass);
 	};
-	
+
 	/**
 	 * highlightEffect
 	 * currentClass が付いた要素をハイライト表示
@@ -462,7 +463,7 @@ Carousel = function ($element, options) {
 		self.$paginationItem.animate({opacity: 0.4}, {duration: 300, queue: false});
 		self.$paginationItem + $('.' + self.o.currentClass).animate({opacity: 1}, {duration: 300, queue: false});
 	}
-	
+
 	/**
 	 * autoPlay
 	 * 一定間隔でmoveBindを実行しカルーセルを自動で動かす
@@ -471,7 +472,7 @@ Carousel = function ($element, options) {
 	fn.autoPlay = function () {
 		var self = this, timer, autoPlay, autoPlayInterval;
 		autoPlayInterval = (self.o.autoPlayInterval >= 40) ? self.o.autoPlayInterval : 40;
-		
+
 		autoPlay = function(){
 			if (self.o.autoPlayStopLastItem && self.index >= self.$item.length - self.group) {
 				clearInterval(timer);
@@ -482,7 +483,7 @@ Carousel = function ($element, options) {
 		setTimeout(function () {
 			timer = setInterval(autoPlay, autoPlayInterval);
 		}, self.o.autoPlayStartDelay);
-		
+
 		//マウスオーバーされている間はautoPlayを停止。
 		if (self.o.autoPlayHoverStop) {
 			self.$allListAndNavi.hover(
