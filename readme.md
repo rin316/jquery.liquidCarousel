@@ -1,5 +1,7 @@
 # jquery.liquidCarousel.js
 
+## Demo
+http://rin316.github.io/jquery.liquidCarousel/
 
 ## 設定
 ### 基本使用方法 main.js に下記を記載する
